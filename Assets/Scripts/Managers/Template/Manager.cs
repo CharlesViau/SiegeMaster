@@ -79,8 +79,7 @@ namespace Managers.Template
         #endregion
 
         #region Variables & Properties
-
-        protected HashSet<T1> Collection;
+        public HashSet<T1> Collection { get; protected set; }
         protected Stack<T1> ToAdd;
         protected Stack<T1> ToRemove;
 
