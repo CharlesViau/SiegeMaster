@@ -5,7 +5,7 @@ namespace Unit.Template
 {
     public abstract class Unit : MonoBehaviour, IUpdaptable, IPoolable
     {
-        public void Init()
+        public virtual void Init()
         {
             throw new System.NotImplementedException();
         }
