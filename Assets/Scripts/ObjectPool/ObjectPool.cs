@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
         private ObjectPool()
         {
-            _poolDict = new Dictionary<Type, Stack<IPoolable>>();
+            _poolDict = new Dictionary<ValueType, Stack<IPoolable>>();
         }
 
         public static ObjectPool Instance
@@ -17,9 +17,9 @@ using System.Collections.Generic;
         }
         #endregion
 
-        private Dictionary<Type, Stack<IPoolable>> _poolDict;
+        private readonly Dictionary<ValueType, Stack<IPoolable>> _poolDict;
         
-        public void Pool(Type componentType, IPoolable toPool)
+        public void Pool(ValueType componentType, IPoolable toPool)
         {
             if(!_poolDict.ContainsKey(componentType))
                 _poolDict.Add(componentType, new Stack<IPoolable>());
@@ -29,7 +29,7 @@ using System.Collections.Generic;
         }
         
 
-        public IPoolable Depool(Type componentType)
+        public IPoolable Depool(ValueType componentType)
         {
             if (!_poolDict.ContainsKey(componentType))
                 return null; 

@@ -1,22 +1,52 @@
-using System.Numerics;
 using Factories;
+using Managers.Template;
+using UnityEngine;
 
-namespace Unit.Types
+public class Enemy : MonoBehaviour, IUpdaptable, IPoolable, ICreatable<Enemy.Args>
 {
-    public class Enemy : Template.Unit, ICreatable<Enemy.ConstructionArgs>
+    public class Args : ConstructionArgs
     {
-        public class ConstructionArgs : IArgs
-        {
-            public ConstructionArgs()
-            {
-                
-            }
-            private Vector3 position;
-        }
+        public Vector3 Position;
 
-        public void Construct(ConstructionArgs constructionArgs)
+        public Args(Vector3 position)
         {
-            throw new System.NotImplementedException();
+            this.Position = position;
         }
+    }
+
+    public void Init()
+    {
+
+    }
+
+    public void PostInit()
+    {
+
+    }
+
+    public void Refresh()
+    {
+
+    }
+
+    public void FixedRefresh()
+    {
+
+    }
+
+    public void Pool()
+    {
+
+    }
+
+    public void Depool()
+    {
+
+    }
+
+
+    public void Construct(Args constructionArgs)
+    {
+        transform.position = constructionArgs.Position;
     }
 }

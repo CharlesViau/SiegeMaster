@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Managers;
 using Managers.Template;
 using UnityEngine;
 
@@ -8,7 +10,7 @@ namespace MainEntry
 {
     public class GameManager : MonoBehaviour
     {
-        private readonly List<IWrapperManager> _managers = new List<IWrapperManager>();
+        private readonly List<WrapperManager> _managers = new List<WrapperManager>();
 
         #region GameFlow (MainEntry)
 
@@ -83,12 +85,33 @@ namespace MainEntry
         }
 
         private void AddManagersToList()
-        {
-            foreach (var type in
-                     Assembly.GetAssembly(typeof(IWrapperManager)).GetTypes().Where(myType =>
-                         myType.IsClass && !myType.IsAbstract && myType.IsSubclassOf(typeof(IWrapperManager))))
+        {/*
+            var v = Assembly.GetAssembly(typeof(WrapperManager));
+            var vv = v.GetTypes();
+            var vvv = vv.Where(myType => myType.IsClass);
+
+            foreach (var vvvv in vvv)
             {
-                _managers.Add((IWrapperManager) type.GetProperty("Instance")?.GetValue(type));
+                bool isAbstract = vvvv.IsAbstract;
+                bool isSubclasses = vvvv.IsSubclassOf(typeof(WrapperManager));
+
+                if (!isAbstract && isSubclasses)
+                {
+                    var x = vvvv;
+                    var xx = x.GetProperty("Instance", BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy); //null
+
+                    var xxx = xx.GetValue(null);
+                    var xxxx = (WrapperManager) xxx;
+                    _managers.Add(xxxx);
+                }
+            }
+            */
+        
+            foreach (var type in
+                     Assembly.GetAssembly(typeof(WrapperManager)).GetTypes().Where(myType =>
+                         myType.IsClass && !myType.IsAbstract && myType.IsSubclassOf(typeof(WrapperManager))))
+            {
+                _managers.Add((WrapperManager)type.GetProperty("Instance", BindingFlags.Static|BindingFlags.Public|BindingFlags.FlattenHierarchy)?.GetValue(null));
             }
         }
 

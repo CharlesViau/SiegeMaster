@@ -16,13 +16,18 @@ namespace Managers.Template
     }
 
     /// <summary>
-    /// Classes Implementing that interface are Singleton Manager.
+    /// Classes that inherit that class are Singleton Manager.
     /// </summary>
-    public interface IWrapperManager : IManager
+    public abstract class WrapperManager : IManager
     {
+        public abstract void Init();
+        public abstract void PostInit();
+        public abstract void Refresh();
+        public abstract void FixedRefresh();
+        public abstract void Clean();
     }
 
-    public interface ICollectionManager<in T> where T : Object, IUpdaptable
+    public interface ICollectionManager<in T> where T :IUpdaptable
     {
         abstract void Add(T obj);
         public abstract void Remove(T obj);
@@ -32,7 +37,7 @@ namespace Managers.Template
     /// Manager that can manage any collection of any type of object. can be instantiated with the new operator.
     /// </summary>
     /// <typeparam name="T">Type of  the objects to Manage</typeparam>
-    public class Manager<T> : IManager, ICollectionManager<T> where T : Object, IUpdaptable
+    public class Manager<T> : IManager, ICollectionManager<T> where T : IUpdaptable
     {
         #region Variables & Properties
 
@@ -91,7 +96,7 @@ namespace Managers.Template
         #endregion
 
         #region Protected Method
-
+/*
         /// <summary>
         /// !!!DANGEROUS METHOD!!!
         /// <list type="bullet"><item>
@@ -112,7 +117,7 @@ namespace Managers.Template
 
             Debug.LogWarning(
                 "Be sure this 'FindAllObjectsOfTypeToCollection()' is called during an initialization phase or in other optimal condition");
-        }
+        }*/
 
         #endregion
 
@@ -181,8 +186,8 @@ namespace Managers.Template
     /// </summary>
     /// <typeparam name="T">Type to Manage</typeparam>
     /// <typeparam name="M">Manager type</typeparam>
-    public abstract class Manager<T, M> : IWrapperManager, ICollectionManager<T>
-        where T : Object, IUpdaptable where M : class, IManager, new()
+    public abstract class Manager<T, M> : WrapperManager, ICollectionManager<T>
+        where T : IUpdaptable where M : class, IManager, new()
     {
         #region Singleton
 
@@ -202,27 +207,27 @@ namespace Managers.Template
 
         #endregion
 
-        public virtual void Init()
+        public override void Init()
         {
             manager.Init();
         }
 
-        public virtual void PostInit()
+        public override void PostInit()
         {
             manager.PostInit();
         }
 
-        public void Refresh()
+        public override void Refresh()
         {
             manager.Refresh();
         }
 
-        public void FixedRefresh()
+        public sealed override void FixedRefresh()
         {
             manager.FixedRefresh();
         }
 
-        public void Clean()
+        public sealed override void Clean()
         {
             manager.Clean();
         }
@@ -248,8 +253,8 @@ namespace Managers.Template
     /// <typeparam name="A">Arguments to provide to the factory</typeparam>
     /// <typeparam name="M">Manager Type</typeparam>
     public abstract class Manager<T, E, A, M> : Manager<T, M>, IFactory<T, E, A>
-        where T : Object, IUpdaptable, ICreatable<A>, IPoolable
-        where A : IArgs
+        where T : IUpdaptable, ICreatable<A>, IPoolable
+        where A : ConstructionArgs
         where M : class, IManager, new()
         where E : Enum
     {
@@ -273,7 +278,7 @@ namespace Managers.Template
             manager.Init();
         }
 
-        public T Create(Type type, A constructionArgs)
+        public T Create(ValueType type, A constructionArgs)
         {
             var toReturn = _factory.Create(type, constructionArgs);
             manager.Add(toReturn);
