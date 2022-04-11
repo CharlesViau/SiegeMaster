@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Unit.Template
 {
-    public abstract class Unit : MonoBehaviour, IUpdaptable, IPoolable
+    public abstract class Unit : MonoBehaviour, IUpdatable, IPoolable
     {
         public virtual void Init()
         {

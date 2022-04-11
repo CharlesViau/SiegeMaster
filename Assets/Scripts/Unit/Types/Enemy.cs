@@ -2,51 +2,54 @@ using Factories;
 using Managers.Template;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour, IUpdaptable, IPoolable, ICreatable<Enemy.Args>
+namespace Unit.Types
 {
-    public class Args : ConstructionArgs
+    public class Enemy : MonoBehaviour, IUpdatable, IPoolable, ICreatable<Enemy.Args>
     {
-        public Vector3 Position;
-
-        public Args(Vector3 position)
+        public class Args : ConstructionArgs
         {
-            this.Position = position;
+            public Vector3 Position;
+
+            public Args(Vector3 position)
+            {
+                this.Position = position;
+            }
         }
-    }
 
-    public void Init()
-    {
+        public void Init()
+        {
 
-    }
+        }
 
-    public void PostInit()
-    {
+        public void PostInit()
+        {
 
-    }
+        }
 
-    public void Refresh()
-    {
+        public void Refresh()
+        {
 
-    }
+        }
 
-    public void FixedRefresh()
-    {
+        public void FixedRefresh()
+        {
 
-    }
+        }
 
-    public void Pool()
-    {
+        public void Pool()
+        {
 
-    }
+        }
 
-    public void Depool()
-    {
+        public void Depool()
+        {
 
-    }
+        }
 
 
-    public void Construct(Args constructionArgs)
-    {
-        transform.position = constructionArgs.Position;
+        public void Construct(Args constructionArgs)
+        {
+            transform.position = constructionArgs.Position;
+        }
     }
 }

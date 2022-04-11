@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Managers;
 using Managers.Template;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -24,7 +23,7 @@ namespace Factories
     /// <typeparam name="E">Enum of the types of thing it can instantiate</typeparam>
     /// <typeparam name="A">Argument Class for the create method</typeparam>
     public class Factory<T, E, A> : IFactory<T, E, A>
-        where T : ICreatable<A>, IUpdaptable, IPoolable
+        where T : ICreatable<A>, IUpdatable, IPoolable
         where E : Enum
         where A : ConstructionArgs
     {
@@ -101,7 +100,7 @@ namespace Factories
 
     // ReSharper disable once UnusedTypeParameter
     public interface IFactory<out T, in E, in A>
-        where T : ICreatable<A>, IUpdaptable, IPoolable
+        where T : ICreatable<A>, IUpdatable, IPoolable
         where E : Enum
         where A : ConstructionArgs
     {

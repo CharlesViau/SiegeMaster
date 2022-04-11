@@ -85,28 +85,7 @@ namespace MainEntry
         }
 
         private void AddManagersToList()
-        {/*
-            var v = Assembly.GetAssembly(typeof(WrapperManager));
-            var vv = v.GetTypes();
-            var vvv = vv.Where(myType => myType.IsClass);
-
-            foreach (var vvvv in vvv)
-            {
-                bool isAbstract = vvvv.IsAbstract;
-                bool isSubclasses = vvvv.IsSubclassOf(typeof(WrapperManager));
-
-                if (!isAbstract && isSubclasses)
-                {
-                    var x = vvvv;
-                    var xx = x.GetProperty("Instance", BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy); //null
-
-                    var xxx = xx.GetValue(null);
-                    var xxxx = (WrapperManager) xxx;
-                    _managers.Add(xxxx);
-                }
-            }
-            */
-        
+        {
             foreach (var type in
                      Assembly.GetAssembly(typeof(WrapperManager)).GetTypes().Where(myType =>
                          myType.IsClass && !myType.IsAbstract && myType.IsSubclassOf(typeof(WrapperManager))))

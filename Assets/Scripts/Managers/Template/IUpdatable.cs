@@ -1,7 +1,7 @@
 
   namespace Managers.Template
   {
-    public interface IUpdaptable 
+    public interface IUpdatable 
     {
       void Init();
       void PostInit();

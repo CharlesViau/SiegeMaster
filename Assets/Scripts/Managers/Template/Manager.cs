@@ -1,16 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Factories;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 // ReSharper disable VirtualMemberCallInConstructor
 // ReSharper disable InconsistentNaming
 
 namespace Managers.Template
 {
-    public interface IManager : IUpdaptable
+    public interface IManager : IUpdatable
     {
         public abstract void Clean();
     }
@@ -27,17 +25,18 @@ namespace Managers.Template
         public abstract void Clean();
     }
 
-    public interface ICollectionManager<in T> where T :IUpdaptable
+    public interface ICollectionManager<in T> where T :IUpdatable
     {
         abstract void Add(T obj);
         public abstract void Remove(T obj);
     }
 
+    
     /// <summary>
     /// Manager that can manage any collection of any type of object. can be instantiated with the new operator.
     /// </summary>
     /// <typeparam name="T">Type of  the objects to Manage</typeparam>
-    public class Manager<T> : IManager, ICollectionManager<T> where T : IUpdaptable
+    public class Manager<T> : IManager, ICollectionManager<T> where T : IUpdatable
     {
         #region Variables & Properties
 
@@ -187,7 +186,7 @@ namespace Managers.Template
     /// <typeparam name="T">Type to Manage</typeparam>
     /// <typeparam name="M">Manager type</typeparam>
     public abstract class Manager<T, M> : WrapperManager, ICollectionManager<T>
-        where T : IUpdaptable where M : class, IManager, new()
+        where T : IUpdatable where M : class, IManager, new()
     {
         #region Singleton
 
@@ -253,7 +252,7 @@ namespace Managers.Template
     /// <typeparam name="A">Arguments to provide to the factory</typeparam>
     /// <typeparam name="M">Manager Type</typeparam>
     public abstract class Manager<T, E, A, M> : Manager<T, M>, IFactory<T, E, A>
-        where T : IUpdaptable, ICreatable<A>, IPoolable
+        where T : IUpdatable, ICreatable<A>, IPoolable
         where A : ConstructionArgs
         where M : class, IManager, new()
         where E : Enum
