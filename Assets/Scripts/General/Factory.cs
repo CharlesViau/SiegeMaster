@@ -13,7 +13,7 @@ namespace General
     /// <list type="bullet"><item>
     /// <description>Prefabs MUST be named the Same way as they are in the Enum.</description></item><item>
     /// <description>'T' Must have an internal public class that inherit from ConstructionArgs.
-    /// it will contain the construction Args for the create function.</description></item></list>
+    /// it will contain the construction Args for the "create" function.</description></item></list>
     /// Example of inheritance:
     ///<list type="bullet"><item>
     /// <description>EnemyFactory : &lt;Enemy, EnemyTypes, Enemy.Args&gt;</description></item></list>
@@ -35,7 +35,7 @@ namespace General
         #region Properties and Variables
 
         /// <summary>
-        /// It will start Loading automatically from "Resources/" root. Write the rest of the path.
+        /// It will start Loading automatically from "Resources/" root. Write the rest of the path and don't forget to put the " / " at the end.
         /// </summary>
         private readonly string PrefabLocation;
 
