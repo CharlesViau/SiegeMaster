@@ -1,5 +1,4 @@
-using Factories;
-using Managers.Template;
+using General;
 using UnityEngine;
 
 namespace Unit.Types

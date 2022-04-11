@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 
+namespace General
+{
     public class ObjectPool
     {
         #region Singleton
@@ -39,4 +41,5 @@ using System.Collections.Generic;
             return _poolDict[componentType].Pop();
         }
     }
+}
 

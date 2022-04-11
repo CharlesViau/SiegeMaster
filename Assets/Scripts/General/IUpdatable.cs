@@ -1,5 +1,5 @@
 
-  namespace Managers.Template
+  namespace General
   {
     public interface IUpdatable 
     {

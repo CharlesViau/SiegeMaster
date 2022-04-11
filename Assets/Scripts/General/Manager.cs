@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
-using Factories;
 using UnityEngine;
 
 // ReSharper disable VirtualMemberCallInConstructor
 // ReSharper disable InconsistentNaming
 
-namespace Managers.Template
+namespace General
 {
     public interface IManager : IUpdatable
     {

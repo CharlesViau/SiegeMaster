@@ -1,4 +1,4 @@
-using Managers.Template;
+using General;
 using UnityEngine;
 
 namespace Unit.Template

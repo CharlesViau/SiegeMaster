@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Managers.Template;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
 // ReSharper disable InconsistentNaming
 
-namespace Factories
+namespace General
 {
     /// <summary>
     /// Factory Class made to Instantiate Unity Prefabs.
