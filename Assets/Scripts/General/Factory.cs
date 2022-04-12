@@ -40,7 +40,7 @@ namespace General
         private readonly string PrefabLocation;
 
         private readonly Dictionary<ValueType, GameObject> _prefabDictionary;
-        
+
         #endregion
 
         #region Public Methods
@@ -49,7 +49,7 @@ namespace General
         {
             //Get all Prefab types from the enum and put them in an Array.
             var allPrefabTypes = Enum.GetValues(typeof(E)).Cast<ValueType>().ToArray();
-            
+
 
             //Load all Prefabs to the Dictionary
             foreach (var element in allPrefabTypes)
@@ -60,7 +60,6 @@ namespace General
                     Debug.Log("Can't add " + element + "to prefab dictionary at location : " + PrefabLocation);
                 }
             }
-
         }
 
         /// <summary>
@@ -76,16 +75,7 @@ namespace General
 
             if (obj == null)
             {
-                try
-                {
-                    obj = Object.Instantiate(_prefabDictionary[type]).GetComponent<T>();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    throw;
-                }
-                
+                obj = Object.Instantiate(_prefabDictionary[type]).GetComponent<T>();
                 obj.Init();
             }
 
