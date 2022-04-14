@@ -35,7 +35,7 @@ using General;
 
     private void OnCollisionEnter(Collision collision)
     {
-        damage_SO.OnCollisionEnter();
+        damage_SO.OnCollisionEnter(collision.contacts[0].point);
         IHittable ihit = collision.gameObject.GetComponent<IHittable>();
         if (ihit != null)
             ihit.GotShot(damage_SO.damage);

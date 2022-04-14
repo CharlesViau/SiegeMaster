@@ -24,8 +24,8 @@ public class DamageSO : ScriptableObject
     {
 
     }
-    public virtual void OnCollisionEnter()
+    public virtual void OnCollisionEnter(Vector3 position)
     {
-
+        
     }
 }
