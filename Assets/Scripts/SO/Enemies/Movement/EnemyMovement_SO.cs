@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Enemy Movement", menuName = "ScriptableObjects/Movement/Enemy")]
-public class EnemyMovement_SO : ScriptableObject, General.IUpdatable
+public class EnemyMovement_SO : ScriptableObject
 {
     protected GameObject unit;
     protected Rigidbody rb;
     protected float speed;
     protected Transform target;
 
-    public void Init()
+    public void Init(GameObject _unit, Transform _target, float _speed)
     {
-        rb = unit.GetComponent<Rigidbody>();
+        unit = _unit;   
+        speed = _speed;
+        target = _target;
+        rb = _unit.GetComponent<Rigidbody>();
     }
 
     public void PostInit()
@@ -27,14 +30,11 @@ public class EnemyMovement_SO : ScriptableObject, General.IUpdatable
 
     public void Refresh()
     {
-
+        MoveToPoint();
     }
 
-    public void MoveToPoint(Transform target, float speed)
-    {
-        target = target;
-        speed = speed;
-                
+    public void MoveToPoint()
+    { 
         Debug.Log("Moving");
     }
 }
