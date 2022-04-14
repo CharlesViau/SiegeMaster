@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using Units.Types;
+using Managers;
 using UnityEngine;
 
 public class FakeEntry : MonoBehaviour
