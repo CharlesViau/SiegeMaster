@@ -39,7 +39,7 @@ using General;
     private void OnCollisionEnter(Collision collision)
     {
 
-        onCollision_SO.OnEnterCollision(collision.contacts[0].point);
+        onCollision_SO.OnEnterCollision(collision.contacts[0].point, type,this);
      //   ObjectPool.Instance.Pool(type,this);
     }
 

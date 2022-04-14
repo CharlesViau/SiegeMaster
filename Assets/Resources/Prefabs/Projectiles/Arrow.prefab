@@ -127,6 +127,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  damage_SO: {fileID: 11400000, guid: 51e5edb40713b8b469be33d5789ba6f5, type: 2}
+  damage_SO: {fileID: 11400000, guid: fb8029befc7fa5844bda97bd6353c746, type: 2}
   movement_SO: {fileID: 11400000, guid: bfa8f950e95ce98448392833b44becfc, type: 2}
-  onCollision_SO: {fileID: 11400000, guid: 44678103dce8fda43b1ed068a776453c, type: 2}
+  onCollision_SO: {fileID: 11400000, guid: edb97fc1a3e4ef74b8c6a49ecfdeda81, type: 2}

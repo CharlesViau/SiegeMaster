@@ -17,8 +17,8 @@ public class Enemy : MonoBehaviour, IUpdatable, IPoolable, ICreatable<Enemy.Args
 
     public void Init()
     {
-        movement_SO.Init();
-        Debug.Log("hey");
+      //  movement_SO.Init();
+       // Debug.Log("hey");
     }
 
     public void PostInit()
@@ -28,7 +28,7 @@ public class Enemy : MonoBehaviour, IUpdatable, IPoolable, ICreatable<Enemy.Args
 
     public void Refresh()
     {
-        movement_SO.MoveToPoint(point, 5f);
+        movement_SO.MoveToPoint();
     }
 
     public void FixedRefresh()
