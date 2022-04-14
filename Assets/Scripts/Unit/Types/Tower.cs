@@ -5,17 +5,15 @@ namespace Unit.Types
     public class Tower : Template.Unit
     {
         public Transform target;
+        public ProjectileType projectiletype;
         public float projectileSpeed;
         public float projectileDamage;
-        public GameObject bullet;
         public Transform head;
         public Transform shootPos;
         public Transform SmokePosition;
-        private ProjectileType projectiletype;
-        public ParticleType particleType;
+        public ParticleType towerParticleType;
         private void Start()
         {
-            projectiletype = bullet.GetComponent<Projectile>().type;  
         }
         private void Update()
         {
@@ -33,7 +31,7 @@ namespace Unit.Types
         {
 
 
-            ParticleSystemManager.Instance.Create(particleType, new ParticleSystemScript.Args(SmokePosition.position));
+            ParticleSystemManager.Instance.Create(towerParticleType, new ParticleSystemScript.Args(SmokePosition.position));
             ProjectileManager.Instance.Create(projectiletype, new Projectile.Args(shootPos.position,target, projectileSpeed,projectileDamage));
             //projectile.damage_SO.damage = projectileDamage;
             ///pro.
