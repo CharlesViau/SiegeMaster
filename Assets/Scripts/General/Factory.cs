@@ -76,16 +76,8 @@ namespace General
 
             if (obj == null)
             {
-                try
-                {
-                    obj = Object.Instantiate(_prefabDictionary[type]).GetComponent<T>();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    throw;
-                }
-                
+
+                obj = Object.Instantiate(_prefabDictionary[type]).GetComponent<T>();   
                 obj.Init();
             }
 

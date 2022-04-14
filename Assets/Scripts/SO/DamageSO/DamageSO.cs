@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DamageSO : ScriptableObject
 {
-    protected GameObject unit;
+    protected GameObject gameObject;
     protected Rigidbody rb;
     public float damage;
     public GameObject particleEffect;
@@ -13,10 +13,11 @@ public class DamageSO : ScriptableObject
     {
     }
 
-    public virtual void Init(GameObject _unit)
+    public virtual void Init(GameObject gameobject, float _damage)
     {
-        unit = _unit;
-        rb = _unit.GetComponent<Rigidbody>();
+        this.gameObject = gameobject;
+        rb = gameobject.GetComponent<Rigidbody>();
+        damage = _damage;
     }
 
     public virtual void Refresh()
