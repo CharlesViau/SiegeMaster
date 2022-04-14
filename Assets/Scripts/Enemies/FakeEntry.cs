@@ -1,6 +1,6 @@
 using Managers;
 using UnityEngine;
-using Unit.Types;
+using Units.Types;
 
 public class FakeEntry : MonoBehaviour
 {

@@ -2,7 +2,7 @@ using General;
 using Managers;
 using UnityEngine;
 
-namespace Unit.Types
+namespace Units.Types
 {
     [RequireComponent(typeof(Rigidbody))]
     public class Enemy : MonoBehaviour, IUpdatable, IPoolable, ICreatable<Enemy.Args>, IHittable

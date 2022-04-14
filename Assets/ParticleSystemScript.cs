@@ -11,7 +11,9 @@ public class ParticleSystemScript : MonoBehaviour,IUpdatable,ICreatable<Particle
     public void Init()
     {
         ps = GetComponent<ParticleSystem>();
+#pragma warning disable CS0618
         timeToPool = ps.duration;
+#pragma warning restore CS0618
     }
 
 
