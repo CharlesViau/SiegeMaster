@@ -242,7 +242,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 31069099}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -29.4, y: 1.7, z: -31.5}
+  m_LocalPosition: {x: -29.4, y: 1.7, z: -27.66}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -768,7 +768,7 @@ MonoBehaviour:
   head: {fileID: 1513313147}
   shootPos: {fileID: 488521314}
   SmokePosition: {fileID: 2303088}
-  particleType: 1
+  particleType: 0
 --- !u!82 &650200603
 AudioSource:
   m_ObjectHideFlags: 0

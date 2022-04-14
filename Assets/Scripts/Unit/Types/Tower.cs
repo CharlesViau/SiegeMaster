@@ -33,7 +33,7 @@ namespace Unit.Types
         {
 
 
-            ParticleSystemManager.Instance.Create(particleType, new ParticleSystemSc.Args(SmokePosition.position));
+            ParticleSystemManager.Instance.Create(particleType, new ParticleSystemScript.Args(SmokePosition.position));
             ProjectileManager.Instance.Create(projectiletype, new Projectile.Args(shootPos.position,target, projectileSpeed,projectileDamage));
             //projectile.damage_SO.damage = projectileDamage;
             ///pro.

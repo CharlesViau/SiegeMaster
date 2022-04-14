@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using General;
-public class ParticleSystemSc : MonoBehaviour,IUpdatable,ICreatable<ParticleSystemSc.Args>,IPoolable
+public class ParticleSystemScript : MonoBehaviour,IUpdatable,ICreatable<ParticleSystemScript.Args>,IPoolable
 {
     public  ParticleType type;
     private ParticleSystem ps;

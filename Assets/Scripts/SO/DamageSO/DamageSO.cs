@@ -7,7 +7,7 @@ public class DamageSO : ScriptableObject
     protected GameObject gameObject;
     protected Rigidbody rb;
     public float damage;
-    public GameObject particleEffect;
+    public ParticleType onCollitionParticleType;
    
     public void FixedRefresh()
     {
@@ -24,7 +24,7 @@ public class DamageSO : ScriptableObject
     {
 
     }
-    public virtual void OnCollisionEnter(Vector3 position)
+    public virtual void OnEnterCollision(Vector3 position)
     {
         
     }

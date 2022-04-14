@@ -5,12 +5,14 @@ using General;
 [RequireComponent(typeof(Rigidbody))]
  public class Projectile : MonoBehaviour,IUpdatable,IPoolable,ICreatable<Projectile.Args>
 {
+
     public ProjectileType type;
     public DamageSO damage_SO;
     public Movement_SO movement_SO;
 
     public void Init()
     {
+        //only called on the 
         damage_SO = Instantiate(damage_SO);
         movement_SO = Instantiate(movement_SO);
     }
@@ -35,7 +37,7 @@ using General;
 
     private void OnCollisionEnter(Collision collision)
     {
-        damage_SO.OnCollisionEnter(collision.contacts[0].point);
+        damage_SO.OnEnterCollision(collision.contacts[0].point);
         IHittable ihit = collision.gameObject.GetComponent<IHittable>();
         if (ihit != null)
             ihit.GotShot(damage_SO.damage);

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: FireDamage
   m_EditorClassIdentifier: 
   damage: 200
-  particleEffect: {fileID: 4232078689407195919, guid: 379b086507b55da429db1071eafaed2c, type: 3}
+  onCollitionParticleType: 0

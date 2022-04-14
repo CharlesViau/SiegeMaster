@@ -13,9 +13,9 @@ public class Dmg_Fire_SO : DamageSO
 
     }
 
-    public override void OnCollisionEnter(Vector3 position)
+    public override void OnEnterCollision(Vector3 position)
     {
         
-        ParticleSystemManager.Instance.Create(ParticleType.Blood, new ParticleSystemSc.Args(position));
+        ParticleSystemManager.Instance.Create(onCollitionParticleType, new ParticleSystemScript.Args(position));
     }
 }
