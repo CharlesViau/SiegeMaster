@@ -8,9 +8,9 @@ public class M_Seeking_SO : Movement_SO
     public override void Refresh()
     {
         base.Refresh();
-        rb.velocity = (target.position - unit.transform.position).normalized * initialSpeed;
+        rb.velocity = (target.position - gameobject.transform.position).normalized * initialSpeed;
 
-        unit.transform.forward = rb.velocity.normalized;
+        gameobject.transform.forward = rb.velocity.normalized;
     }
 
 }

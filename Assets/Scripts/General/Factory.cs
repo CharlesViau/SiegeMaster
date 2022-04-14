@@ -76,16 +76,8 @@ namespace General
 
             if (obj == null)
             {
-                try
-                {
-                    obj = Object.Instantiate(_prefabDictionary[type]).GetComponent<T>();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    throw;
-                }
-                
+
+                obj = Object.Instantiate(_prefabDictionary[type]).GetComponent<T>();   
                 obj.Init();
             }
 
@@ -109,6 +101,11 @@ namespace General
 
     public abstract class ConstructionArgs
     {
+        public Vector3 spawningPosition;
+        public ConstructionArgs(Vector3 _spawningPosition)
+        {
+            spawningPosition = _spawningPosition;
+        }
     }
 
     public interface ICreatable<in A> where A : ConstructionArgs

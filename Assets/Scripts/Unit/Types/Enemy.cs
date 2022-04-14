@@ -9,8 +9,10 @@ namespace Unit.Types
         public Transform point;
 
         public class Args : ConstructionArgs
-        {            
-
+        {
+            public Args(Vector3 _spawningPosition) : base(_spawningPosition)
+            {
+            }
         }
 
         public void Init()
@@ -46,6 +48,7 @@ namespace Unit.Types
 
         public void Construct(Args constructionArgs)
         {
+           
         }
     }
 }

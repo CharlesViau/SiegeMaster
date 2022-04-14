@@ -5,20 +5,10 @@ using General;
 [RequireComponent(typeof(Rigidbody))]
  public class Projectile : MonoBehaviour,IUpdatable,IPoolable,ICreatable<Projectile.Args>
 {
-    [HideInInspector]
-    protected float speed;
-    [HideInInspector]
-    protected Transform target;
-    // public Vector3 direction;
-    [HideInInspector]
+    public ProjectileType type;
     public DamageSO damage_SO;
     public Movement_SO movement_SO;
 
-
-    private void Awake()
-    {
-
-    }
     public void Init()
     {
         damage_SO = Instantiate(damage_SO);
@@ -28,15 +18,7 @@ using General;
     public void PostInit()
     {
 
-        damage_SO.Init(gameObject);
-        if (target)
-        {
-            movement_SO.Init(gameObject, target, speed);
-        }
-        else
-        {
-            Debug.Log("target is null");
-        }
+
     }
 
     public void Refresh()
@@ -53,37 +35,46 @@ using General;
 
     private void OnCollisionEnter(Collision collision)
     {
-        damage_SO.OnCollisionEnter();
+        damage_SO.OnCollisionEnter(collision.contacts[0].point);
         IHittable ihit = collision.gameObject.GetComponent<IHittable>();
         if (ihit != null)
             ihit.GotShot(damage_SO.damage);
-        this.gameObject.SetActive(false);
+        ObjectPool.Instance.Pool(type,this);
     }
 
     public void Pool()
     {
+       this.gameObject.SetActive(false);    
     }
 
     public void Depool()
     {
+        this.gameObject.SetActive(true);
+        movement_SO.rb.velocity = Vector3.zero;
+        movement_SO.rb.angularVelocity = Vector3.zero;
+
     }
 
     public void Construct(Args constructionArgs)
     {
-
+        
+        transform.position = constructionArgs.spawningPosition;
+        damage_SO.Init(gameObject, constructionArgs.bulletDamage);
+        movement_SO.Init(gameObject, constructionArgs.target, constructionArgs.bulletSpeed);
     }
 
     public class Args :ConstructionArgs
     {
         public float bulletSpeed;
         public Transform target;
-       
-        public Args(float _bulletSpeed, Transform _target)
+        public float bulletDamage;
+
+        public Args(Vector3 _spawningPosition,Transform _target, float _bulletSpeed, float _bulletDamage) : base(_spawningPosition)
         {
             bulletSpeed = _bulletSpeed;
             target = _target;
+            bulletDamage = _bulletDamage;
         }
-
 
     }
 }
