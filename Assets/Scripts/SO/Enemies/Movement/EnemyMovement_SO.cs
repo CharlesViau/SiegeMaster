@@ -37,4 +37,5 @@ public class EnemyMovement_SO : ScriptableObject
     { 
         rb.velocity = speed * (target.position - unit.transform.position).normalized;
     }
+    
 }
