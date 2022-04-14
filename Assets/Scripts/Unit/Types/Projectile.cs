@@ -58,7 +58,7 @@ using General;
     public void Construct(Args constructionArgs)
     {
         
-        transform.position = constructionArgs.respawnPosition;
+        transform.position = constructionArgs.spawningPosition;
         damage_SO.Init(gameObject, constructionArgs.bulletDamage);
         movement_SO.Init(gameObject, constructionArgs.target, constructionArgs.bulletSpeed);
     }
@@ -68,16 +68,13 @@ using General;
         public float bulletSpeed;
         public Transform target;
         public float bulletDamage;
-        public Vector3 respawnPosition;
-       
-        public Args(Transform _target,Vector3 _respawnPosition, float _bulletSpeed , float _bulletDamage)
+
+        public Args(Vector3 _spawningPosition,Transform _target, float _bulletSpeed, float _bulletDamage) : base(_spawningPosition)
         {
             bulletSpeed = _bulletSpeed;
             target = _target;
             bulletDamage = _bulletDamage;
-            respawnPosition = _respawnPosition;     
         }
-
 
     }
 }

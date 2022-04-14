@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ProjectileType {Arrow,Sphere}
+public enum ProjectileType {Arrow,Seeking}
 public class ProjectileManager : General.Manager<Projectile, ProjectileType, Projectile.Args, ProjectileManager>
 {
     protected override string PrefabLocation => "Prefabs/Projectiles/";

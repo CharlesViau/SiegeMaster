@@ -31,7 +31,7 @@ namespace Unit.Types
         {
 
            
-            ProjectileManager.Instance.Create(projectiletype, new Projectile.Args(target, shootPos.position, projectileSpeed,projectileDamage));
+            ProjectileManager.Instance.Create(projectiletype, new Projectile.Args(shootPos.position,target, projectileSpeed,projectileDamage));
             //projectile.damage_SO.damage = projectileDamage;
             ///pro.
 

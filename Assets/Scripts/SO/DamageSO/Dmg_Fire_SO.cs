@@ -16,6 +16,6 @@ public class Dmg_Fire_SO : DamageSO
     public override void OnCollisionEnter()
     {
         base.OnCollisionEnter();
-        GameObject p = Instantiate(particleEffect, gameObject.transform.position, Quaternion.identity);
+        ParticleSystemManager.Instance.Create(ParticleType.Blood, new ParticleSystemSc.Args(gameObject.transform.position));
     }
 }

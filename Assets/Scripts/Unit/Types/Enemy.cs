@@ -7,11 +7,8 @@ namespace Unit.Types
     {
         public class Args : ConstructionArgs
         {
-            public Vector3 Position;
-
-            public Args(Vector3 position)
+            public Args(Vector3 _spawningPosition) : base(_spawningPosition)
             {
-                this.Position = position;
             }
         }
 
@@ -48,7 +45,7 @@ namespace Unit.Types
 
         public void Construct(Args constructionArgs)
         {
-            transform.position = constructionArgs.Position;
+           
         }
     }
 }
