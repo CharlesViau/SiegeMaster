@@ -4,7 +4,10 @@ using UnityEngine;
 using General;
 using System.Linq;
 using Unit.Types;
-public class EnemyManager : General.Manager<Enemy, EnemyType, Enemy.Args, EnemyManager>
+
+public enum EnemyType { Archer, Sneaky }
+
+public class EnemyManager : Manager<Enemy, EnemyType, Enemy.Args, EnemyManager>
 {
     protected override string PrefabLocation => "Prefabs/Enemies/";
 
