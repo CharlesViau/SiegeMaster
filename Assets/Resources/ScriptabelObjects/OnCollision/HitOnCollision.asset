@@ -9,11 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a6172a9a23393147abdd14251a031d3, type: 3}
-  m_Name: FireDamage
+  m_Script: {fileID: 11500000, guid: d071990e069d4b343970d7eacaf0989a, type: 3}
+  m_Name: HitOnCollision
   m_EditorClassIdentifier: 
-  myLayerMask:
-    serializedVersion: 2
-    m_Bits: 128
-  damage: 200
-  onCollitionParticleType: 0
+  onCollisionParticleType: 0

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace General
 {
@@ -29,7 +30,11 @@ namespace General
             _poolDict[componentType].Push(toPool);
             toPool.Pool();
         }
-        
+
+        internal void Pool(ProjectileType type, GameObject gameObject)
+        {
+            throw new NotImplementedException();
+        }
 
         public IPoolable Depool(ValueType componentType)
         {

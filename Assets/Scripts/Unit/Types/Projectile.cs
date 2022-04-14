@@ -9,12 +9,13 @@ using General;
     public ProjectileType type;
     public DamageSO damage_SO;
     public Movement_SO movement_SO;
-
+    public OnCollisionSO onCollision_SO;
     public void Init()
     {
         //only called on the 
         damage_SO = Instantiate(damage_SO);
         movement_SO = Instantiate(movement_SO);
+        onCollision_SO = Instantiate(onCollision_SO);
     }
 
     public void PostInit()
@@ -37,11 +38,9 @@ using General;
 
     private void OnCollisionEnter(Collision collision)
     {
-        damage_SO.OnEnterCollision(collision.contacts[0].point);
-        IHittable ihit = collision.gameObject.GetComponent<IHittable>();
-        if (ihit != null)
-            ihit.GotShot(damage_SO.damage);
-        ObjectPool.Instance.Pool(type,this);
+
+        onCollision_SO.OnEnterCollision(collision.contacts[0].point);
+     //   ObjectPool.Instance.Pool(type,this);
     }
 
     public void Pool()
@@ -63,6 +62,7 @@ using General;
         transform.position = constructionArgs.spawningPosition;
         damage_SO.Init(gameObject, constructionArgs.bulletDamage);
         movement_SO.Init(gameObject, constructionArgs.target, constructionArgs.bulletSpeed);
+        onCollision_SO.Init(gameObject, constructionArgs.bulletDamage);
     }
 
     public class Args :ConstructionArgs

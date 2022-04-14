@@ -12,7 +12,7 @@ public class EnemyMovement_SO : ScriptableObject, General.IUpdatable
 
     public void Init()
     {
-        rb = unit.GetComponent<Rigidbody>();
+      //  rb = unit.GetComponent<Rigidbody>();
     }
 
     public void PostInit()
@@ -35,6 +35,6 @@ public class EnemyMovement_SO : ScriptableObject, General.IUpdatable
         target = target;
         speed = speed;
                 
-        Debug.Log("Moving");
+      //  Debug.Log("Moving");
     }
 }

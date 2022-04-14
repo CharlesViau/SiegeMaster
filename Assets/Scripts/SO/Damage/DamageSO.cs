@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DamageSO : ScriptableObject
 {
+    public LayerMask myLayerMask;
     protected GameObject gameObject;
     protected Rigidbody rb;
     public float damage;
@@ -24,8 +25,5 @@ public class DamageSO : ScriptableObject
     {
 
     }
-    public virtual void OnEnterCollision(Vector3 position)
-    {
-        
-    }
+
 }
