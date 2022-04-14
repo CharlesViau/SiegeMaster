@@ -4,13 +4,11 @@ using UnityEngine;
 
 namespace Units.Types
 {
-    [RequireComponent(typeof(Rigidbody))]
-    public class Enemy : MonoBehaviour, IUpdatable, IPoolable, ICreatable<Enemy.Args>, IHittable
+    public class Enemy : Unit, ICreatable<Enemy.Args>, IHittable
     {
         public EnemyType EnemyType;
         public EnemyMovement_SO movement_SO;
         public Transform target;
-        float speed = 10f;
 
         public class Args : ConstructionArgs
         {
@@ -19,35 +17,39 @@ namespace Units.Types
             }
         }
 
-        public void Init()
+        public override void Init()
         {
+            base.Init();
             movement_SO = Instantiate(movement_SO);
             movement_SO.Init(gameObject, target, speed);
             //Debug.Log("hey");
         }
 
-        public void PostInit()
+        public override void PostInit()
         {
-
+            base.PostInit();
         }
 
-        public void Refresh()
+        public override void Refresh()
         {
+            base.Refresh();
             movement_SO.MoveToPoint();
         }
 
-        public void FixedRefresh()
+        public override void FixedRefresh()
         {
 
         }
 
-        public void Pool()
+        public override void Pool()
         {
+            base.Pool();
             gameObject.SetActive(false);
         }
 
-        public void Depool()
+        public override void Depool()
         {
+            base.Depool();
             gameObject.SetActive(true);
         }
 
