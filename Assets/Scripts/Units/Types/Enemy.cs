@@ -1,31 +1,59 @@
 using General;
 using UnityEngine;
 
-namespace Units.Types
+
+public class Enemy : MonoBehaviour, IUpdatable, IPoolable, ICreatable<Enemy.Args>,IHittable
 {
-    public class Enemy : Unit, ICreatable<Enemy.Args>
+    public EnemyType EnemyType;
+    public EnemyMovement_SO movement_SO;
+    public Transform point;
+
+    public class Args : ConstructionArgs
     {
-        public class Args : ConstructionArgs
+        public Args(Vector3 _spawningPosition) : base(_spawningPosition)
         {
-            public Vector3 Position;
-
-            public Args(Vector3 position)
-            {
-                this.Position = position;
-            }
         }
+    }
 
-        
+    public void Init()
+    {
+        movement_SO.Init();
+        Debug.Log("hey");
+    }
+
+    public void PostInit()
+    {
+
+    }
+
+    public void Refresh()
+    {
+        movement_SO.MoveToPoint(point, 5f);
+    }
+
+    public void FixedRefresh()
+    {
+
+    }
+
+    public void Pool()
+    {
+       gameObject.SetActive(false);
+    }
+
+    public void Depool()
+    {
+        gameObject.SetActive(true);
+    }
 
 
-        public void Construct(Args constructionArgs)
-        {
-            transform.position = constructionArgs.Position;
-        }
+    public void Construct(Args constructionArgs)
+    {
+        transform.position = constructionArgs.spawningPosition;
+    }
 
-        public override void Move(Vector3 direction)
-        {
-            
-        }
+    public void GotShot(float damage)
+    {
+        ObjectPool.Instance.Pool(EnemyType, this);
     }
 }

@@ -113,7 +113,7 @@ namespace General
         /// </summary>
         protected void FindAllObjectsOfTypeToCollection()
         {
-            var hashSet = new HashSet<T>(Object.FindObjectsOfType<T>().ToList());
+            var hashSet = new HashSet<T>(UnityEngine.Object.FindObjectsOfType<T>().ToList());
 
             foreach (var item in hashSet)
             {
@@ -122,8 +122,8 @@ namespace General
 
             Debug.LogWarning(
                 "Be sure this 'FindAllObjectsOfTypeToCollection()' is called during an initialization phase or in other optimal condition");
-        }*/
-
+        }
+*/
         #endregion
 
         #region Private Methods
