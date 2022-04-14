@@ -5,19 +5,17 @@ namespace Unit.Types
 {
     public class Enemy : MonoBehaviour, IUpdatable, IPoolable, ICreatable<Enemy.Args>
     {
-        public class Args : ConstructionArgs
-        {
-            public Vector3 Position;
+        public EnemyMovement_SO movement_SO;
+        public Transform point;
 
-            public Args(Vector3 position)
-            {
-                this.Position = position;
-            }
+        public class Args : ConstructionArgs
+        {            
+
         }
 
         public void Init()
         {
-
+            movement_SO.Init();
         }
 
         public void PostInit()
@@ -27,7 +25,7 @@ namespace Unit.Types
 
         public void Refresh()
         {
-
+            movement_SO.MoveToPoint(point, 5f);
         }
 
         public void FixedRefresh()
@@ -48,7 +46,6 @@ namespace Unit.Types
 
         public void Construct(Args constructionArgs)
         {
-            transform.position = constructionArgs.Position;
         }
     }
 }
