@@ -1,25 +1,26 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using General;
 using System.Linq;
-using Unit.Types;
+using General;
+using Units.Types;
 
-public enum EnemyType { Archer, Sneaky }
-
-public class EnemyManager : Manager<Enemy, EnemyType, Enemy.Args, EnemyManager>
+namespace Managers
 {
-    protected override string PrefabLocation => "Prefabs/Enemies/";
+    public enum EnemyType { Archer, Sneaky }
 
-    public override void Init()
+    public class EnemyManager : Manager<Enemy, EnemyType, Enemy.Args, EnemyManager>
     {
-        var hashSet = new HashSet<Enemy>(UnityEngine.Object.FindObjectsOfType<Enemy>().ToList());
-        foreach (var item in hashSet)
+        protected override string PrefabLocation => "Prefabs/Enemies/";
+
+        public override void Init()
         {
-            Add(item);
+            var hashSet = new HashSet<Enemy>(UnityEngine.Object.FindObjectsOfType<Enemy>().ToList());
+            foreach (var item in hashSet)
+            {
+                Add(item);
+            }
+
+            base.Init();    
         }
 
-        base.Init();    
     }
-
 }

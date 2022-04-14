@@ -99,6 +99,11 @@ namespace General
 
     public abstract class ConstructionArgs
     {
+        public Vector3 spawningPosition;
+        public ConstructionArgs(Vector3 _spawningPosition)
+        {
+            spawningPosition = _spawningPosition;
+        }
     }
 
     public interface ICreatable<in A> where A : ConstructionArgs

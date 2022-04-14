@@ -32,11 +32,6 @@ namespace General
             
         }
 
-        internal void Pool(ProjectileType type, GameObject gameObject)
-        {
-            throw new NotImplementedException();
-        }
-
         public IPoolable Depool(ValueType componentType)
         {
             if (!_poolDict.ContainsKey(componentType))

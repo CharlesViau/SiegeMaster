@@ -37,4 +37,5 @@ public class EnemyMovement_SO : ScriptableObject
     { 
         Debug.Log("Moving");
     }
+    
 }
