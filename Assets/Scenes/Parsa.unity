@@ -266,7 +266,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 457895646}
   projectiletype: 0
-  projectileSpeed: 50
+  projectileSpeed: 5
   projectileDamage: 10
   head: {fileID: 1214305999}
   shootPos: {fileID: 532070513}
