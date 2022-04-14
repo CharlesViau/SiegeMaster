@@ -35,7 +35,7 @@ public class EnemyMovement_SO : ScriptableObject
 
     public void MoveToPoint()
     { 
-        Debug.Log("Moving");
+        rb.velocity = speed * (target.position - unit.transform.position).normalized;
     }
     
 }
