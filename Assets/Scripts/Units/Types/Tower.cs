@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Unit.Types
+namespace Units.Types
 {
-    public class Tower : Template.Unit
+    public class Tower : Unit
     {
         private Transform target;
         public ProjectileType projectiletype;

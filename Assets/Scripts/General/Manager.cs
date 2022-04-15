@@ -7,6 +7,8 @@ using UnityEngine;
 
 namespace General
 {
+    #region Interfaces and Abstract Classes for Managers
+
     public interface IManager : IUpdatable
     {
         public abstract void Clean();
@@ -24,13 +26,16 @@ namespace General
         public abstract void Clean();
     }
 
-    public interface ICollectionManager<in T> where T :IUpdatable
+    public interface ICollectionManager<in T>
     {
         abstract void Add(T obj);
         public abstract void Remove(T obj);
     }
 
-    
+    #endregion
+
+    #region Manager<T> (Generic Manager that can be instantiated, not a Singleton)
+
     /// <summary>
     /// Manager that can manage any collection of any type of object. can be instantiated with the new operator.
     /// </summary>
@@ -96,6 +101,7 @@ namespace General
         #endregion
 
         #region Protected Method
+
 /*
         /// <summary>
         /// !!!DANGEROUS METHOD!!!
@@ -181,6 +187,10 @@ namespace General
         #endregion
     }
 
+    #endregion
+
+    #region Manager <T,M> (Singleton Wrapper for Manager)
+
     /// <summary>
     /// Manager that is a Singleton.
     /// </summary>
@@ -191,8 +201,8 @@ namespace General
     {
         #region Singleton
 
-        private static M instance;
-        public static M Instance => instance ??= new M();
+        private static M _instance;
+        public static M Instance => _instance ??= new M();
 
         protected Manager()
         {
@@ -206,6 +216,8 @@ namespace General
         protected readonly Manager<T> manager;
 
         #endregion
+
+        #region Public Methods
 
         public override void Init()
         {
@@ -241,7 +253,13 @@ namespace General
         {
             manager.Remove(obj);
         }
+
+        #endregion
     }
+
+    #endregion
+
+    #region Manager<T,E,A,M> (Singleton Wrapper that includes Manager, Factory and Object Pool)
 
     /// <summary>
     /// Singleton Manager that also contains a Factory using an Object Pool.
@@ -254,9 +272,9 @@ namespace General
     /// <typeparam name="M">Manager Type</typeparam>
     public abstract class Manager<T, E, A, M> : Manager<T, M>, IFactory<T, E, A>
         where T : IUpdatable, ICreatable<A>, IPoolable
+        where E : Enum
         where A : ConstructionArgs
         where M : class, IManager, new()
-        where E : Enum
     {
         protected Manager()
         {
@@ -272,6 +290,8 @@ namespace General
 
         #endregion
 
+        #region Public Methods
+
         public override void Init()
         {
             _factory.Init();
@@ -284,5 +304,10 @@ namespace General
             manager.Add(toReturn);
             return toReturn;
         }
+
+        #endregion
     }
+
+    #endregion
+    
 }
