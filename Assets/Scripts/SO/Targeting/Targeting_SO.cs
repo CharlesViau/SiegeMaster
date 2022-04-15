@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using General;
+using System;
+using System.Reflection;
 
 public class Targeting_SO : ScriptableObject
 {
@@ -20,4 +23,5 @@ public class Targeting_SO : ScriptableObject
     {
 
     }
+
 }

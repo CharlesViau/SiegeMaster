@@ -21,5 +21,22 @@ public class EnemyManager : Manager<Enemy, EnemyType, Enemy.Args, EnemyManager>
 
         base.Init();    
     }
+    public Transform GetClosest(Transform correntPosition)
+    {
+        Transform transform = null;
+        float closest=500;
+        foreach (var enemy in manager.Collection)
+        {
+            float newDistance=Vector3.SqrMagnitude(correntPosition.position-enemy.transform.position);
 
+            if (newDistance < closest)
+            {
+                closest = newDistance;
+                transform = enemy.transform;
+            }
+        }
+
+        return transform;
+
+    }
 }

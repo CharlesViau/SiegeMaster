@@ -4,7 +4,7 @@ namespace Unit.Types
 {
     public class Tower : Template.Unit
     {
-        public Transform target;
+        private Transform target;
         public ProjectileType projectiletype;
         public float projectileSpeed;
         public float projectileDamage;
@@ -12,18 +12,35 @@ namespace Unit.Types
         public Transform shootPos;
         public Transform SmokePosition;
         public ParticleType towerParticleType;
+
+
+        public float timeToGetTarget;
+        float timer;
         private void Start()
         {
+            
         }
-        private void Update()
+        private void Update()   
         {
+            timer += Time.deltaTime;
 
-            head.up = (target.position - head.position).normalized;
-
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (timer>timeToGetTarget)
             {
-                Fire();
+                target = Helper.GetCloset(typeof(EnemyManager), this.transform);
+                timer=0;
             }
+
+            if (target)
+            {
+                head.up = (target.position - head.position).normalized;
+
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    Fire();
+                }
+            }
+
+            
 
         }
 

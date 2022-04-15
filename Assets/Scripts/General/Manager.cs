@@ -39,10 +39,11 @@ namespace General
     {
         #region Variables & Properties
 
-        private readonly HashSet<T> _collection;
+        private  readonly HashSet<T> _collection;
         private readonly Stack<T> ToAdd;
         private readonly Stack<T> ToRemove;
 
+        public  HashSet<T> Collection => _collection;
         #endregion
 
         public Manager()
