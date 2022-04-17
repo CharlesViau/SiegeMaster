@@ -1,3 +1,4 @@
+using Managers;
 using UnityEngine;
 
 namespace Units.Types
@@ -8,14 +9,15 @@ namespace Units.Types
         public ProjectileType projectiletype;
         public float projectileSpeed;
         public float projectileDamage;
-        public Transform head;
-        public Transform shootPos;
-        public Transform SmokePosition;
-        public ParticleType towerParticleType;
 
+        public ParticleType towerParticleType;
+        public float towerAttackRange;
 
         public float timeToGetTarget;
         float timer;
+        public Transform head;
+        public Transform shootPos;
+        public Transform SmokePosition;
         private void Start()
         {
             
@@ -26,18 +28,19 @@ namespace Units.Types
 
             if (timer>timeToGetTarget)
             {
-                target = Helper.GetCloset(typeof(EnemyManager), this.transform);
+                target = Helper.GetClosetInRange(typeof(EnemyManager), this.transform,towerAttackRange);
                 timer=0;
+                if (target)
+                {
+                    head.up = (target.position - head.position).normalized;
+                    Fire();
+                }
+                
             }
 
             if (target)
             {
                 head.up = (target.position - head.position).normalized;
-
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    Fire();
-                }
             }
 
             

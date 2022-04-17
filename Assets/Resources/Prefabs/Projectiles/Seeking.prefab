@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 03cd2cec76bb4174cad7c3234686f834, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -126,5 +126,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
-  damage_SO: {fileID: 11400000, guid: 51e5edb40713b8b469be33d5789ba6f5, type: 2}
+  damage_SO: {fileID: 11400000, guid: fb8029befc7fa5844bda97bd6353c746, type: 2}
   movement_SO: {fileID: 11400000, guid: d16643ff7ea8b5c42b2875c795ef7818, type: 2}
+  onCollision_SO: {fileID: 11400000, guid: edb97fc1a3e4ef74b8c6a49ecfdeda81, type: 2}

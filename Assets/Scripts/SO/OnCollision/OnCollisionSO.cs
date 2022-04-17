@@ -15,7 +15,7 @@ public class OnCollisionSO : ScriptableObject
         damage = _damage;
     }
 
-    public virtual void OnEnterCollision(Vector3 position, ValueType type, IPoolable type2)
+    public virtual void OnEnterCollision(Vector3 position, ValueType type, IPoolable type2,Collision collisionObject)
     {
     }
 

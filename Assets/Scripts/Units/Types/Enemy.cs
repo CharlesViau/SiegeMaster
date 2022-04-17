@@ -9,7 +9,7 @@ namespace Units.Types
         public EnemyType EnemyType;
         public EnemyMovement_SO movement_SO;
         public Transform target;
-
+        public bool alive;
         public class Args : ConstructionArgs
         {
             public Args(Vector3 _spawningPosition) : base(_spawningPosition)
@@ -20,6 +20,7 @@ namespace Units.Types
         public override void Init()
         {
             base.Init();
+            alive = true;
             movement_SO = Instantiate(movement_SO);
             movement_SO.Init(gameObject, target, speed);
             //Debug.Log("hey");
@@ -44,12 +45,14 @@ namespace Units.Types
         public override void Pool()
         {
             base.Pool();
+            alive = false;
             gameObject.SetActive(false);
         }
 
         public override void Depool()
         {
             base.Depool();
+            alive = true;
             gameObject.SetActive(true);
         }
 
