@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using General;
 using Units.Types;
+using UnityEngine;
 
 namespace Managers
 {
@@ -21,24 +22,26 @@ namespace Managers
 
             base.Init();    
         }
-
-    }
-    public Transform GetClosest(Transform correntPosition)
-    {
-        Transform transform = null;
-        float closest=500;
-        foreach (var enemy in manager.Collection)
+        
+        public Transform GetClosest(Transform correntPosition)
         {
-            float newDistance=Vector3.SqrMagnitude(correntPosition.position-enemy.transform.position);
-
-            if (newDistance < closest)
+            Transform transform = null;
+            float closest=500;
+            foreach (var enemy in manager.Collection)
             {
-                closest = newDistance;
-                transform = enemy.transform;
+                float newDistance=Vector3.SqrMagnitude(correntPosition.position-enemy.transform.position);
+
+                if (newDistance < closest)
+                {
+                    closest = newDistance;
+                    transform = enemy.transform;
+                }
             }
+
+            return transform;
+
         }
 
-        return transform;
-
     }
+    
 }
