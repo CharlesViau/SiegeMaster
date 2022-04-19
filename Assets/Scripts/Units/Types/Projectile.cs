@@ -61,7 +61,7 @@ using General;
         
         transform.position = constructionArgs.spawningPosition;
         damage_SO.Init(gameObject, constructionArgs.bulletDamage);
-        movement_SO.Init(gameObject, constructionArgs.target, constructionArgs.bulletSpeed);
+        movement_SO.Init(gameObject, constructionArgs.target, constructionArgs.bulletSpeed, constructionArgs.velocityDirection);
         onCollision_SO.Init(gameObject, constructionArgs.bulletDamage);
     }
 
@@ -70,12 +70,14 @@ using General;
         public float bulletSpeed;
         public Transform target;
         public float bulletDamage;
+        public Vector3 velocityDirection;
 
-        public Args(Vector3 _spawningPosition,Transform _target, float _bulletSpeed, float _bulletDamage) : base(_spawningPosition)
+        public Args(Vector3 _spawningPosition,Transform _target, float _bulletSpeed, float _bulletDamage,Vector3 _velocityDirection) : base(_spawningPosition)
         {
             bulletSpeed = _bulletSpeed;
             target = _target;
             bulletDamage = _bulletDamage;
+            velocityDirection = _velocityDirection; 
         }
 
     }

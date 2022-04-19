@@ -9,7 +9,7 @@ namespace Units.Types
         public EnemyType EnemyType;
         public EnemyMovement_SO movement_SO;
         public Transform[] target;
-        int i;
+        int WaypointCounter = 0;
         public bool alive;
         public class Args : ConstructionArgs
         {
@@ -36,11 +36,11 @@ namespace Units.Types
         {
             base.Refresh();
 
-            if (transform.position.x - target[i].position.x < 0.001f)
-                i++;
-            if (target.Length == i)
-                i = 0;
-            movement_SO.MoveToPoint(target[i].position);
+            if (Vector3.Distance(transform.position, target[WaypointCounter].position) < 0.001f)
+                WaypointCounter++;
+            if (target.Length == WaypointCounter)
+                WaypointCounter = 0;
+            movement_SO.MoveToPoint(target[WaypointCounter].position);
         }
 
         public override void FixedRefresh()

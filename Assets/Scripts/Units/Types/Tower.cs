@@ -1,10 +1,12 @@
+using General;
 using Managers;
 using UnityEngine;
 
 namespace Units.Types
 {
-    public class Tower : Unit
+    public class Tower : Unit,ICreatable<Tower.Args>
     {
+
         private Transform target;
         public ProjectileType projectiletype;
         public float projectileSpeed;
@@ -16,26 +18,23 @@ namespace Units.Types
         public float timeToGetTarget;
         float timer;
         public Transform head;
-        public Transform shootPos;
+        public Transform barrel;
         public Transform SmokePosition;
-        private void Start()
+        public override void Refresh()
         {
-            
-        }
-        private void Update()   
-        {
+            base.Refresh();
             timer += Time.deltaTime;
 
-            if (timer>timeToGetTarget)
+            if (timer > timeToGetTarget)
             {
-                target = Helper.GetClosetInRange(typeof(EnemyManager), this.transform,towerAttackRange);
-                timer=0;
+                target = Helper.GetClosetInRange(typeof(EnemyManager), this.transform, towerAttackRange);
+                timer = 0;
                 if (target)
                 {
                     head.up = (target.position - head.position).normalized;
                     Fire();
                 }
-                
+
             }
 
             if (target)
@@ -43,19 +42,34 @@ namespace Units.Types
                 head.up = (target.position - head.position).normalized;
             }
 
-            
+
 
         }
 
-        public void Fire()
+        protected virtual void Fire()
         {
-
-
             ParticleSystemManager.Instance.Create(towerParticleType, new ParticleSystemScript.Args(SmokePosition.position));
-            ProjectileManager.Instance.Create(projectiletype, new Projectile.Args(shootPos.position,target, projectileSpeed,projectileDamage));
+            
+            ProjectileManager.Instance.Create(projectiletype, new Projectile.Args(barrel.position,target, projectileSpeed,projectileDamage,Vector3.zero));
             //projectile.damage_SO.damage = projectileDamage;
             ///pro.
 
         }
+
+        public void Construct(Args constructionArgs)
+        {
+            transform.position = constructionArgs.spawningPosition;
+        }
+
+        public class Args : ConstructionArgs
+        {
+
+            public Args(Vector3 _spawningPosition) : base(_spawningPosition)
+            {
+
+            }
+
+        }
+
     }
 }

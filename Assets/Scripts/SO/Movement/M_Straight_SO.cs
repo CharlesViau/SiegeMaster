@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class M_Straight_SO : Movement_SO
 {
-    public override void Init(GameObject _unit, Transform _targetTransform, float speed)
+    public override void Init(GameObject _unit, Transform _targetTransform, float speed,Vector3 _projectileInitialDIrection)
     {
+        base.Init(_unit, _targetTransform, speed, _projectileInitialDIrection);
         _unit.transform.forward = (_targetTransform.position - _unit.transform.position).normalized;
-        base.Init(_unit, _targetTransform, speed);
         rb.velocity = (_targetTransform.position - _unit.transform.position).normalized * initialSpeed;
     }
 
