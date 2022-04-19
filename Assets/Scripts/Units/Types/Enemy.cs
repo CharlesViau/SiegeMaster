@@ -8,7 +8,8 @@ namespace Units.Types
     {
         public EnemyType EnemyType;
         public EnemyMovement_SO movement_SO;
-        public Transform target;
+        public Transform[] target;
+        int i;
         public bool alive;
         public class Args : ConstructionArgs
         {
@@ -34,7 +35,12 @@ namespace Units.Types
         public override void Refresh()
         {
             base.Refresh();
-            movement_SO.MoveToPoint();
+
+            if (transform.position.x - target[i].position.x < 0.001f)
+                i++;
+            if (target.Length == i)
+                i = 0;
+            movement_SO.MoveToPoint(target[i].position);
         }
 
         public override void FixedRefresh()
@@ -65,6 +71,11 @@ namespace Units.Types
         public void GotShot(float damage)
         {
             ObjectPool.Instance.Pool(EnemyType, this);
+        }
+
+        public override void Move(Vector3 direction)
+        {
+            base.Move(direction);
         }
     }
 }

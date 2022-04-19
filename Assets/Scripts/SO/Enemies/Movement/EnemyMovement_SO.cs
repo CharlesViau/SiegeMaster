@@ -8,11 +8,11 @@ public class EnemyMovement_SO : ScriptableObject
     protected GameObject unit;
     protected Rigidbody rb;
     protected float speed;
-    protected Transform target;
+    protected Transform[] target;
 
-    public void Init(GameObject _unit, Transform _target, float _speed)
+    public void Init(GameObject _unit, Transform[] _target, float _speed)
     {
-        unit = _unit;   
+        unit = _unit;
         speed = _speed;
         target = _target;
         rb = _unit.GetComponent<Rigidbody>();
@@ -30,11 +30,11 @@ public class EnemyMovement_SO : ScriptableObject
 
     public void Refresh()
     {
-        MoveToPoint();
+
     }
 
-    public void MoveToPoint()
-    { 
-        rb.velocity = speed * (target.position - unit.transform.position).normalized;
+    public void MoveToPoint(Vector3 target)
+    {
+        rb.velocity = speed * (target - unit.transform.position).normalized;
     }
 }

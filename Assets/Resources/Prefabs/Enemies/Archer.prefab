@@ -12,7 +12,9 @@ GameObject:
   - component: {fileID: 7739809500777251601}
   - component: {fileID: 7739809500777251600}
   - component: {fileID: 7739809500777251607}
-  - component: {fileID: 2036077463658719064}
+  - component: {fileID: 8677349952736906239}
+  - component: {fileID: 1735152712752662432}
+  - component: {fileID: 7766097365497899996}
   m_Layer: 0
   m_Name: Archer
   m_TagString: Untagged
@@ -96,7 +98,42 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2036077463658719064
+--- !u!54 &8677349952736906239
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7739809500777251606}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!95 &1735152712752662432
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7739809500777251606}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &7766097365497899996
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -105,9 +142,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 7739809500777251606}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce26b95ab5e94e34ea8886bb285bbfe3, type: 3}
+  m_Script: {fileID: 11500000, guid: 0930e2d161a5f964d89e0b8cb928b0dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  turningSpeed: 0
+  speed: 10
   EnemyType: 0
   movement_SO: {fileID: 11400000, guid: 12c3ff3e48a540748aca02716d57c38d, type: 2}
-  target: {fileID: 7273399938414567856, guid: b5baa5e916c65cd44a07f5da1cd28479, type: 3}
+  target:
+  - {fileID: 4776040042721456145, guid: 794a1d3edcf55394aba19ab0a4a2ab52, type: 3}
+  - {fileID: 7273399938414567856, guid: b5baa5e916c65cd44a07f5da1cd28479, type: 3}
+  - {fileID: 4538411871165199857, guid: 99eec685333e2354d9f07f8512b04f99, type: 3}
+  alive: 0
