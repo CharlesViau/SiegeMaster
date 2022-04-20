@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5763328661242200679}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -30, y: 8.6, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 0}
@@ -129,3 +129,4 @@ MonoBehaviour:
   damage_SO: {fileID: 11400000, guid: 51e5edb40713b8b469be33d5789ba6f5, type: 2}
   movement_SO: {fileID: 11400000, guid: bfa8f950e95ce98448392833b44becfc, type: 2}
   onCollision_SO: {fileID: 11400000, guid: 44678103dce8fda43b1ed068a776453c, type: 2}
+  timeToPoolIfDidntHitAnything: 10

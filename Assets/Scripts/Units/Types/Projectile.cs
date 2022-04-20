@@ -5,14 +5,18 @@ using General;
 [RequireComponent(typeof(Rigidbody))]
  public class Projectile : MonoBehaviour,IUpdatable,IPoolable,ICreatable<Projectile.Args>
 {
-
+    
     public ProjectileType type;
     public DamageSO damage_SO;
     public Movement_SO movement_SO;
     public OnCollisionSO onCollision_SO;
+    public float timeToPoolIfDidntHitAnything;
+   
+    float timer;
     public void Init()
     {
-        //only called on the 
+        timer = 0;
+           //only called on the 
         damage_SO = Instantiate(damage_SO);
         movement_SO = Instantiate(movement_SO);
         onCollision_SO = Instantiate(onCollision_SO);
@@ -26,6 +30,13 @@ using General;
 
     public void Refresh()
     {
+        timer += Time.deltaTime;
+        if (timer> timeToPoolIfDidntHitAnything)
+        {
+            ObjectPool.Instance.Pool(type, this);
+        }
+
+
         damage_SO.Refresh();
         movement_SO.Refresh();
     }
@@ -45,7 +56,8 @@ using General;
 
     public void Pool()
     {
-       this.gameObject.SetActive(false);    
+       this.gameObject.SetActive(false);  
+        
     }
 
     public void Depool()
@@ -58,7 +70,7 @@ using General;
 
     public void Construct(Args constructionArgs)
     {
-        
+        timer = 0;
         transform.position = constructionArgs.spawningPosition;
         damage_SO.Init(gameObject, constructionArgs.bulletDamage);
         movement_SO.Init(gameObject, constructionArgs.target, constructionArgs.bulletSpeed, constructionArgs.velocityDirection);

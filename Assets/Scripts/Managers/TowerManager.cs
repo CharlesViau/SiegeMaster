@@ -4,7 +4,7 @@ using UnityEngine;
 using Units.Types;
 using System.Linq;
 
-public enum TowerType { Tower, Catapult }
+public enum TowerType { NormalTower, Catapult }
 public class TowerManager : General.Manager<Tower, TowerType, Tower.Args, TowerManager>
 {
     protected override string PrefabLocation => "Prefabs/Towers/";

@@ -25,4 +25,9 @@ public class Helper
         return (Transform)info.Invoke(manager, new object[] { correntTransfrom ,range });
 
     }
+
+    internal static Transform GetClosetInRange(Type type, Transform transform, object towerAttackRange)
+    {
+        throw new NotImplementedException();
+    }
 }
