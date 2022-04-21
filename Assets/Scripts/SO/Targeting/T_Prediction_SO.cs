@@ -5,9 +5,9 @@ using UnityEngine;
 public class T_Prediction_SO : Targeting_SO
 {
     Rigidbody rb;
-    public override void Init(GameObject _unit,float _range)
+    public override void Init(GameObject _unit)
     {
-        base.Init(_unit, _range);
+        base.Init(_unit);
         rb = _unit.GetComponent<Rigidbody>();
     }
     public Vector3 GetBulletVlocirtDirection(Transform target, Vector3 targetVlocity, float bulletSpeed, Transform barrel, Transform head)

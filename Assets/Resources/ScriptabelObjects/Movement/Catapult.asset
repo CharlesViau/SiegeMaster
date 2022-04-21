@@ -16,4 +16,3 @@ MonoBehaviour:
   rb: {fileID: 0}
   projectileInitialDIrection: {x: 0, y: 0, z: 0}
   initialSpeed: 0
-  type: 3

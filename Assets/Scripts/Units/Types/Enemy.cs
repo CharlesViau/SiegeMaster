@@ -45,7 +45,7 @@ namespace Units.Types
                 waypointsCounter = 0;
             movement_SO.MoveToPoint(targets[waypointsCounter].position);
 
-            Shoot();
+            //Shoot();
         }
 
         public override void FixedRefresh()
@@ -82,18 +82,18 @@ namespace Units.Types
             base.Move(direction);
         }
 
-        public void CreateProjectile(Transform target)
-        {
-            ProjectileManager.Instance.Create(projectiletype, 
-                new Projectile.Args(transform.position, target, 
-                projectileSpeed, projectileDamage, Vector3.zero));
-        }
+        //public void CreateProjectile(Transform target)
+        //{
+        //    ProjectileManager.Instance.Create(projectiletype, 
+        //        new Projectile.Args(transform.position, target, 
+        //        projectileSpeed, projectileDamage, Vector3.zero));
+        //}
 
-        public void Shoot()
+        /*public void Shoot()
         {            
             if (Vector3.Distance(player.position, transform.position) <= attackRange)
-                CreateProjectile(player);
-        }
+               // CreateProjectile(player);
+        }*/
 
         public class Args : ConstructionArgs
         {

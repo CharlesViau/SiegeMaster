@@ -12,8 +12,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b085a55ea29b234bb6fe52982073c05, type: 3}
   m_Name: Seeking
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  rb: {fileID: 0}
-  projectileInitialDIrection: {x: 0, y: 0, z: 0}
-  initialSpeed: 0
-  type: 1

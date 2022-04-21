@@ -8,8 +8,17 @@ namespace Units.Types
     public class CatapulTower :Tower
 {
 
-        private const float towerXrotation = 45; // fixed value for the rotation to shoot bullet
-
+        private float towerXrotation = 45; // fixed value for the rotation to shoot bullet
+        float timer = 0;
+        public override void Refresh()
+        {
+            timer += Time.deltaTime;
+            if (timer > attackSpeed)
+            {
+                Fire(Helper.GetClosetInRange(typeof(EnemyManager), this.transform, towerAttackRange));
+                timer = 0;
+            }
+        }
         public override void Fire(Transform target)
         {
             Vector3 catapultPosition = new Vector3(transform.position.x, target.transform.position.y, transform.position.z);
@@ -19,11 +28,10 @@ namespace Units.Types
             head.eulerAngles = new Vector3(towerXrotation, vector32.y, vector32.z);
             float distanceTotarget = Vector3.Distance(catapultPosition, target.position);
             Vector3 finalvelocity = distanceTotarget* Mathf.Sqrt(-Physics.gravity.y / (barrel.position.y - target.transform.position.y + distanceTotarget)) * barrel.transform.forward;
-            ProjectileManager.Instance.Create(projectiletype, new Projectile.Args(barrel.position, projectiletype, target, 0, 0, finalvelocity));
+            ProjectileManager.Instance.Create(projectiletype, new Projectile.Args(barrel.position, target, 0, 0, finalvelocity));
 
         }
 
-        //
 
     }
 }

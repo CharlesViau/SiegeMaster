@@ -7,22 +7,18 @@ using System.Reflection;
 
 public class Targeting_SO : ScriptableObject
 {
-    protected GameObject gameObject;
-    public float range;
+    protected GameObject unit;
+
     
     public void FixedRefresh()
     {
     }
 
-    public virtual void Init(GameObject _unit,float _range)
+    public virtual void Init(GameObject _unit)
     {
-        gameObject = _unit;
-        range = _range;
+        unit = _unit;
     }
-    public virtual Transform GetTheTarget()
-    {
-        return null;
-    }
+
     public virtual void Refresh()
     {
 
