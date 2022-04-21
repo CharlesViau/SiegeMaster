@@ -10,7 +10,6 @@ namespace Units.Types
         public Transform target;
         public ProjectileType projectiletype;
         public ParticleType towerParticleType;
-        public EnemyType enemytype;
         public Targeting_SO targeting_SO;
         public float projectileDamage;
         public float towerAttackRange;
@@ -24,7 +23,12 @@ namespace Units.Types
         public override void Init()
         {
             targeting_SO = Instantiate(targeting_SO);
+          
             base.Init();
+        }
+        public override void PostInit()
+        {
+            targeting_SO.Init(this.gameObject, towerAttackRange);
         }
         public override void Refresh()
         {
@@ -33,11 +37,11 @@ namespace Units.Types
 
         protected virtual Transform GetTarget()
         {
-            return null;
+            return targeting_SO.GetTheTarget();
         }
         public void CoolDown(float _attackSpeed)
         {
-            timer += Time.time;
+            timer += Time.deltaTime;
             if (timer > _attackSpeed)
             {
                 Fire(GetTarget());
@@ -58,6 +62,7 @@ namespace Units.Types
         public void Construct(Args constructionArgs)
         {
             transform.position = constructionArgs.spawningPosition;
+            targeting_SO.Init(this.gameObject, towerAttackRange);
         }
 
         public class Args : ConstructionArgs

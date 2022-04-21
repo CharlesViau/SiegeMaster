@@ -22,7 +22,8 @@ namespace Units.Types
             ProjectileManager.Instance.Create(projectiletype, new Projectile.Args(barrel.position, projectiletype, target, 0, 0, finalvelocity));
 
         }
-        //Helper.GetClosetInRange(typeof(EnemyManager), this.transform, towerAttackRange)
+
+        //
 
     }
 }
