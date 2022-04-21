@@ -7,7 +7,7 @@ using System.Reflection;
 
 public class Targeting_SO : ScriptableObject
 {
-    protected GameObject unit;
+    protected GameObject gameObject;
 
     
     public void FixedRefresh()
@@ -16,7 +16,7 @@ public class Targeting_SO : ScriptableObject
 
     public virtual void Init(GameObject _unit)
     {
-        unit = _unit;
+        gameObject = _unit;
     }
 
     public virtual void Refresh()

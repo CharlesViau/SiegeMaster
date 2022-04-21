@@ -36,9 +36,9 @@ namespace Units.Types
         {
             base.Refresh();
 
-            if (Vector3.Distance(transform.position, target[WaypointCounter].position) < 0.001f)
+            if (Vector3.Distance(transform.position, target[WaypointCounter].position) <= 0.1f)
                 WaypointCounter++;
-            if (target.Length == WaypointCounter)
+            if (target.Length <= WaypointCounter)
                 WaypointCounter = 0;
             movement_SO.MoveToPoint(target[WaypointCounter].position);
         }
