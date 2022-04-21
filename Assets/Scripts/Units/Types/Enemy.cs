@@ -8,23 +8,23 @@ namespace Units.Types
     {
         public EnemyType EnemyType;
         public EnemyMovement_SO movement_SO;
-        public Transform[] target;
-        int WaypointCounter = 0;
+        public Transform[] targets;
+        int waypointsCounter = 0;
         public bool alive;
-        public class Args : ConstructionArgs
-        {
-            public Args(Vector3 _spawningPosition) : base(_spawningPosition)
-            {
-            }
-        }
 
+        public Transform player;
+        public ProjectileType projectiletype;
+        public float projectileSpeed;
+        public float projectileDamage;
+        public float attackRange;
+        
         public override void Init()
         {
             base.Init();
             alive = true;
             movement_SO = Instantiate(movement_SO);
-            movement_SO.Init(gameObject, target, speed);
-            //Debug.Log("hey");
+            movement_SO.Init(gameObject, targets, speed);
+            //Debug.Log("Enemy init");
         }
 
         public override void PostInit()
@@ -36,11 +36,16 @@ namespace Units.Types
         {
             base.Refresh();
 
-            if (Vector3.Distance(transform.position, target[WaypointCounter].position) < 0.001f)
-                WaypointCounter++;
-            if (target.Length == WaypointCounter)
-                WaypointCounter = 0;
-            movement_SO.MoveToPoint(target[WaypointCounter].position);
+            if (Vector3.Distance(transform.position, targets[waypointsCounter].position) <= 0.1f)
+            {
+                waypointsCounter++;
+                //Debug.Log(waypointsCounter);
+            }
+            if (targets.Length <= waypointsCounter)
+                waypointsCounter = 0;
+            movement_SO.MoveToPoint(targets[waypointsCounter].position);
+
+            Shoot();
         }
 
         public override void FixedRefresh()
@@ -62,7 +67,6 @@ namespace Units.Types
             gameObject.SetActive(true);
         }
 
-
         public void Construct(Args constructionArgs)
         {
             transform.position = constructionArgs.spawningPosition;
@@ -76,6 +80,26 @@ namespace Units.Types
         public override void Move(Vector3 direction)
         {
             base.Move(direction);
+        }
+
+        public void CreateProjectile(Transform target)
+        {
+            ProjectileManager.Instance.Create(projectiletype, 
+                new Projectile.Args(transform.position, target, 
+                projectileSpeed, projectileDamage, Vector3.zero));
+        }
+
+        public void Shoot()
+        {            
+            if (Vector3.Distance(player.position, transform.position) <= attackRange)
+                CreateProjectile(player);
+        }
+
+        public class Args : ConstructionArgs
+        {
+            public Args(Vector3 _spawningPosition) : base(_spawningPosition)
+            {
+            }
         }
     }
 }

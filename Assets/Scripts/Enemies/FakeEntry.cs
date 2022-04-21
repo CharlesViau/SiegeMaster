@@ -9,8 +9,8 @@ public class FakeEntry : MonoBehaviour
 
     EnemyType[] enemyTypes;
 
-    int nbArchertoSpawn = 3;
-    int nbSneakyToSpawn = 5;
+    int nbArchertoSpawn = 1;
+    int nbSneakyToSpawn = 2;
 
     private int TotalToSpawn => nbArchertoSpawn + nbSneakyToSpawn;
     float spawnSpeed = 3;
