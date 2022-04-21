@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+/*
 [CreateAssetMenu(fileName = "Movenemt", menuName = "ScriptableObjects/Movement/Stright")]
+
 
 public class M_Straight_SO : Movement_SO
 {
@@ -14,3 +16,4 @@ public class M_Straight_SO : Movement_SO
     }
 
 }
+*/
