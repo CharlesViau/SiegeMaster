@@ -14,6 +14,7 @@ public class Helper
 
     public static Transform GetClosetInRange(Type type, Transform correntTransfrom, float range) // 
     {
+        Transform newtransform = null;
         //using reflextion to find the manager and get the method 
         var manager = type.GetProperty("Instance", BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy)?.GetValue(null);
         
@@ -21,13 +22,16 @@ public class Helper
         if (info==null)
         {
             Debug.Log("we couldnt found the Method in manager ");
+            return null;
         }
-        return (Transform)info.Invoke(manager, new object[] { correntTransfrom ,range });
+        newtransform = (Transform)info.Invoke(manager, new object[] { correntTransfrom, range });
+        if (newtransform ==null)
+        {
+            return null;
+        }
+        return newtransform;
 
     }
 
-    internal static Transform GetClosetInRange(Type type, Transform transform, object towerAttackRange)
-    {
-        throw new NotImplementedException();
-    }
+
 }

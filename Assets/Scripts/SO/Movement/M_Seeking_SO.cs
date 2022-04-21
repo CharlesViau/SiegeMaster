@@ -13,13 +13,12 @@ public class M_Seeking_SO : Movement_SO
     public override void Refresh()
     {
 
-        if (target.GetComponent<Enemy>().alive ==false)
+        if (!target)
         {
-
-            target = Helper.GetClosetInRange(type, gameobject.transform, 1000);
-
+            IPoolable p = gameobject.GetComponent<IPoolable>();
+            ObjectPool.Instance.Pool(type, p);
+            return;
         }
-        base.Refresh();
         rb.velocity = (target.position - gameobject.transform.position).normalized * initialSpeed;
         gameobject.transform.forward = rb.velocity.normalized;
 
