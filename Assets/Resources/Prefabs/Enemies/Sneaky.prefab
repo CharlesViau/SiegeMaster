@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6476346842950564319}
   - component: {fileID: 8290638212651483402}
   - component: {fileID: 557233460072457544}
+  - component: {fileID: -5844931435505835298}
   m_Layer: 0
   m_Name: Sneaky
   m_TagString: Untagged
@@ -31,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 1120081735536114994}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -149,13 +150,32 @@ MonoBehaviour:
   speed: 10
   EnemyType: 1
   movement_SO: {fileID: 11400000, guid: 12c3ff3e48a540748aca02716d57c38d, type: 2}
-  target:
-  - {fileID: 4538411871165199857, guid: 99eec685333e2354d9f07f8512b04f99, type: 3}
-  - {fileID: 4776040042721456145, guid: 794a1d3edcf55394aba19ab0a4a2ab52, type: 3}
-  - {fileID: 7273399938414567856, guid: b5baa5e916c65cd44a07f5da1cd28479, type: 3}
+  targets: []
   alive: 0
   player: {fileID: 587839916917572032, guid: 0e0288a7078aabf4ab4929a392289c83, type: 3}
   projectiletype: 0
   projectileDamage: 5
   attackRange: 20
   projectileSpeed: 5
+--- !u!195 &-5844931435505835298
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120081735536114994}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4

@@ -120,8 +120,8 @@ Material:
     - _AlphaSrcBlend: 1
     - _AlphaToMask: 0
     - _AlphaToMaskInspectorValue: 0
-    - _BASE_COLOR_WEIGHT: 1
-    - _BUMP_MAP_STRENGTH: 0.3
+    - _BASE_COLOR_WEIGHT: 0.5
+    - _BUMP_MAP_STRENGTH: 0.4
     - _BlendMode: 0
     - _BumpScale: 1
     - _COAT_IOR: 1.4
@@ -142,7 +142,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _METALNESS: 0
+    - _METALNESS: 1
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -185,7 +185,7 @@ Material:
     - _ZTestTransparent: 4
     - _ZWrite: 1
     m_Colors:
-    - _BASE_COLOR: {r: 1, g: 1, b: 1, a: 1}
+    - _BASE_COLOR: {r: 0.8396226, g: 0.71160775, b: 0.53387326, a: 1}
     - _COAT_COLOR: {r: 1, g: 1, b: 1, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DoubleSidedConstants: {r: 1, g: 1, b: 1, a: 0}

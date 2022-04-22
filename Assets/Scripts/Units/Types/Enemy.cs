@@ -1,6 +1,7 @@
 using General;
 using Managers;
 using UnityEngine;
+using UnityEngine.AI;
 using System.Collections.Generic;
 
 namespace Units.Types
@@ -9,7 +10,7 @@ namespace Units.Types
     {
         public EnemyType EnemyType;
         public EnemyMovement_SO movement_SO;
-        public List<Transform> targets;
+        //public List<Transform> targets;
         int waypointCounter = 0;
         public bool alive;
 
@@ -29,10 +30,10 @@ namespace Units.Types
         public override void Init()
         {
             base.Init();
-            targets = new List<Transform>();
+            //targets = new List<Transform>();
             alive = true;
             movement_SO = Instantiate(movement_SO);
-            movement_SO.Init(gameObject, targets, speed);
+            movement_SO.Init(gameObject, player, speed);
             //Debug.Log("init enemy");
         }
 
@@ -45,18 +46,13 @@ namespace Units.Types
         {
             base.Refresh();
 
-            //WaypointsCheck();
-            if (Vector3.Distance(transform.position, targets[waypointCounter].position) < 0.1f)
-            {
-                waypointCounter++;
-                //Debug.Log(waypointCounter);
-            }
-            if (targets.Count <= waypointCounter)
-            {
-                waypointCounter = 0;
-            }
-            movement_SO.MoveToPoint(targets[waypointCounter].position);
+            movement_SO.MoveToPoint(player.position);
             //Shoot();
+            
+            
+            
+            //WaypointsCheck();            
+            //movement_SO.MoveToPoint(targets[waypointCounter].position);            
         }
 
         public override void FixedRefresh()
@@ -90,12 +86,21 @@ namespace Units.Types
 
         public void Construct(Args constructionArgs)
         {
-            transform.position = constructionArgs.spawningPosition;
+            transform.GetComponent<NavMeshAgent>().Move(constructionArgs.spawningPosition);
+            //transform.position = constructionArgs.spawningPosition;
         }
 
         void WaypointsCheck()
         {
-            
+            /*if (Vector3.Distance(transform.position, targets[waypointCounter].position) < 0.1f)
+            {
+                waypointCounter++;
+                //Debug.Log(waypointCounter);
+            }
+            if (targets.Count <= waypointCounter)
+            {
+                waypointCounter = 0;
+            }*/
         }
 
         void CreateProjectile(Transform target)
