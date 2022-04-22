@@ -145,18 +145,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0930e2d161a5f964d89e0b8cb928b0dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turningSpeed: 2
+  turningSpeed: 0
   speed: 10
   EnemyType: 0
   movement_SO: {fileID: 11400000, guid: 12c3ff3e48a540748aca02716d57c38d, type: 2}
-  targets:
-  - {fileID: 367390507202982564, guid: cc94708a02064634badcfab5c50cfaff, type: 3}
-  - {fileID: 1146927563388099849, guid: 188fdfaa8a031e246a2bb473c0f36ae7, type: 3}
+  target:
+  - {fileID: 4776040042721456145, guid: 794a1d3edcf55394aba19ab0a4a2ab52, type: 3}
   - {fileID: 7273399938414567856, guid: b5baa5e916c65cd44a07f5da1cd28479, type: 3}
+  - {fileID: 4538411871165199857, guid: 99eec685333e2354d9f07f8512b04f99, type: 3}
   alive: 0
-  projectiletype: 2
-  projectileSpeed: 10
-  projectileDamage: 5
-  attackRange: 10
-  player: {fileID: 4620848600485590970, guid: 0e0288a7078aabf4ab4929a392289c83, type: 3}
-  timeToGetTarget: 5

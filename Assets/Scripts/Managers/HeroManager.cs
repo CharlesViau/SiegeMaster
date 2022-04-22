@@ -5,11 +5,11 @@ using UnityEngine;
 
 namespace Managers
 {
-    public class PlayerUnitManager : Manager<PlayerUnit, PlayerUnitManager>
+    public class HeroManager : Manager<Hero, HeroManager>
     {
         public override void Init()
         {
-            foreach (var player in Object.FindObjectsOfType<PlayerUnit>().ToList())
+            foreach (var player in Object.FindObjectsOfType<Hero>().ToList())
             {
                 Add(player);
             }

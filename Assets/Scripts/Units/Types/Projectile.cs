@@ -31,12 +31,10 @@ using General;
     public void Refresh()
     {
         timer += Time.deltaTime;
-        if (timer> timeToPoolIfDidntHitAnything)
+        if (timer> timeToPoolIfDidntHitAnything )
         {
             ObjectPool.Instance.Pool(type, this);
         }
-
-
         damage_SO.Refresh();
         movement_SO.Refresh();
     }
@@ -73,7 +71,7 @@ using General;
         timer = 0;
         transform.position = constructionArgs.spawningPosition;
         damage_SO.Init(gameObject, constructionArgs.bulletDamage);
-        movement_SO.Init(gameObject, constructionArgs.target, constructionArgs.bulletSpeed, constructionArgs.velocityDirection);
+        movement_SO.Init(gameObject, constructionArgs.type , constructionArgs.target, constructionArgs.bulletSpeed, constructionArgs.velocityDirection);
         onCollision_SO.Init(gameObject, constructionArgs.bulletDamage);
     }
 
@@ -83,10 +81,12 @@ using General;
         public Transform target;
         public float bulletDamage;
         public Vector3 velocityDirection;
+        public ProjectileType type;
 
-        public Args(Vector3 _spawningPosition,Transform _target, float _bulletSpeed, float _bulletDamage,Vector3 _velocityDirection) : base(_spawningPosition)
+        public Args(Vector3 _spawningPosition,ProjectileType _type,Transform _target, float _bulletSpeed, float _bulletDamage,Vector3 _velocityDirection) : base(_spawningPosition)
         {
             bulletSpeed = _bulletSpeed;
+            type = _type;
             target = _target;
             bulletDamage = _bulletDamage;
             velocityDirection = _velocityDirection; 

@@ -9,11 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c6219eeb2e8d724388c7a5f5bdf7464, type: 3}
-  m_Name: Catapult
+  m_Script: {fileID: 11500000, guid: 712e9a5a2560ca94a8bf8c021c74c2d0, type: 3}
+  m_Name: Targeting
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  rb: {fileID: 0}
-  projectileInitialDIrection: {x: 0, y: 0, z: 0}
-  initialSpeed: 0
-  type: 3
+  managerType: 0
