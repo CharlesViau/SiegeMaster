@@ -8,13 +8,13 @@ public class EnemyMovement_SO : ScriptableObject
     protected GameObject unit;
     protected Rigidbody rb;
     protected float speed;
-    protected Transform[] target;
+    protected List<Transform> targets;
 
-    public void Init(GameObject _unit, Transform[] _target, float _speed)
+    public void Init(GameObject _unit, List<Transform> _targets, float _speed)
     {
         unit = _unit;
         speed = _speed;
-        target = _target;
+        targets = _targets;
         rb = _unit.GetComponent<Rigidbody>();
     }
 

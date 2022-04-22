@@ -9,8 +9,8 @@ public class FakeEntry : MonoBehaviour
 
     EnemyType[] enemyTypes;
 
-    int nbArchertoSpawn = 3;
-    int nbSneakyToSpawn = 5;
+    int nbArchertoSpawn = 2;
+    int nbSneakyToSpawn = 2;
 
     private int TotalToSpawn => nbArchertoSpawn + nbSneakyToSpawn;
     float spawnSpeed = 3;
@@ -25,7 +25,7 @@ public class FakeEntry : MonoBehaviour
     private void Update()
     {
         timer += Time.deltaTime;
-        float random = Random.Range(0.0f, 20.0f);
+        float random = Random.Range(5.0f, 20.0f);
 
         if (timer < spawnSpeed || TotalToSpawn == 0) 
             return;

@@ -154,3 +154,8 @@ MonoBehaviour:
   - {fileID: 4776040042721456145, guid: 794a1d3edcf55394aba19ab0a4a2ab52, type: 3}
   - {fileID: 7273399938414567856, guid: b5baa5e916c65cd44a07f5da1cd28479, type: 3}
   alive: 0
+  player: {fileID: 587839916917572032, guid: 0e0288a7078aabf4ab4929a392289c83, type: 3}
+  projectiletype: 0
+  projectileDamage: 5
+  attackRange: 20
+  projectileSpeed: 5

@@ -150,7 +150,12 @@ MonoBehaviour:
   EnemyType: 0
   movement_SO: {fileID: 11400000, guid: 12c3ff3e48a540748aca02716d57c38d, type: 2}
   target:
-  - {fileID: 4776040042721456145, guid: 794a1d3edcf55394aba19ab0a4a2ab52, type: 3}
-  - {fileID: 7273399938414567856, guid: b5baa5e916c65cd44a07f5da1cd28479, type: 3}
+  - {fileID: 3602672790272894985, guid: 989ba45424f0ec54593c7ae7037f5cf0, type: 3}
+  - {fileID: 6911073885631677788, guid: 0dd027ff0c3bb6745a2f59f32be19da6, type: 3}
   - {fileID: 4538411871165199857, guid: 99eec685333e2354d9f07f8512b04f99, type: 3}
   alive: 0
+  player: {fileID: 587839916917572032, guid: 0e0288a7078aabf4ab4929a392289c83, type: 3}
+  projectiletype: 0
+  projectileDamage: 5
+  attackRange: 10
+  projectileSpeed: 5

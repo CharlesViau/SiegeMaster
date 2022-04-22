@@ -1,6 +1,7 @@
 using General;
 using Managers;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace Units.Types
 {
@@ -8,9 +9,16 @@ namespace Units.Types
     {
         public EnemyType EnemyType;
         public EnemyMovement_SO movement_SO;
-        public Transform[] target;
-        int WaypointCounter = 0;
+        public List<Transform> targets;
+        int waypointCounter = 0;
         public bool alive;
+
+        public Transform player;
+        public ProjectileType projectiletype;
+        public float projectileDamage;
+        public float attackRange;
+        public float projectileSpeed;
+
         public class Args : ConstructionArgs
         {
             public Args(Vector3 _spawningPosition) : base(_spawningPosition)
@@ -21,10 +29,11 @@ namespace Units.Types
         public override void Init()
         {
             base.Init();
+            targets = new List<Transform>();
             alive = true;
             movement_SO = Instantiate(movement_SO);
-            movement_SO.Init(gameObject, target, speed);
-            //Debug.Log("hey");
+            movement_SO.Init(gameObject, targets, speed);
+            //Debug.Log("init enemy");
         }
 
         public override void PostInit()
@@ -36,11 +45,18 @@ namespace Units.Types
         {
             base.Refresh();
 
-            if (Vector3.Distance(transform.position, target[WaypointCounter].position) <= 0.1f)
-                WaypointCounter++;
-            if (target.Length <= WaypointCounter)
-                WaypointCounter = 0;
-            movement_SO.MoveToPoint(target[WaypointCounter].position);
+            //WaypointsCheck();
+            if (Vector3.Distance(transform.position, targets[waypointCounter].position) < 0.1f)
+            {
+                waypointCounter++;
+                //Debug.Log(waypointCounter);
+            }
+            if (targets.Count <= waypointCounter)
+            {
+                waypointCounter = 0;
+            }
+            movement_SO.MoveToPoint(targets[waypointCounter].position);
+            //Shoot();
         }
 
         public override void FixedRefresh()
@@ -62,12 +78,6 @@ namespace Units.Types
             gameObject.SetActive(true);
         }
 
-
-        public void Construct(Args constructionArgs)
-        {
-            transform.position = constructionArgs.spawningPosition;
-        }
-
         public void GotShot(float damage)
         {
             ObjectPool.Instance.Pool(EnemyType, this);
@@ -76,6 +86,31 @@ namespace Units.Types
         public override void Move(Vector3 direction)
         {
             base.Move(direction);
+        }
+
+        public void Construct(Args constructionArgs)
+        {
+            transform.position = constructionArgs.spawningPosition;
+        }
+
+        void WaypointsCheck()
+        {
+            
+        }
+
+        void CreateProjectile(Transform target)
+        {
+            ProjectileManager.Instance.Create(projectiletype,
+                new Projectile.Args(transform.position, projectiletype,
+                target, projectileSpeed, projectileDamage, Vector3.zero));
+        }
+
+        void Shoot()
+        {
+            if(Vector3.Distance(transform.position, player.position) <= attackRange)
+            {
+                CreateProjectile(player);
+            }
         }
     }
 }
