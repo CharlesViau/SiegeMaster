@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine;
 using Units.Types;
 public class Movement_SO : ScriptableObject
 {

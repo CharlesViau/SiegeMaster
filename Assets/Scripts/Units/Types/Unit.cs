@@ -10,8 +10,8 @@ namespace Units.Types
         #region Properties and Variables
 
         //Component Cache
-        private Rigidbody _rigidbody;
-        private Animator _animator;
+        protected Rigidbody Rigidbody;
+        protected Animator Animator;
 
         //Variables
         [SerializeField] public float turningSpeed;
@@ -23,8 +23,8 @@ namespace Units.Types
         public virtual void Init()
         {
             //Caching Components
-            _rigidbody = GetComponent<Rigidbody>();
-            _animator = GetComponent<Animator>();
+            Rigidbody = GetComponent<Rigidbody>();
+            Animator = GetComponent<Animator>();
         }
 
         public virtual void PostInit()
@@ -55,7 +55,7 @@ namespace Units.Types
 
             transform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
 
-            _rigidbody.MovePosition(transform.position + direction * speed * Time.deltaTime);
+            Rigidbody.MovePosition(transform.position + direction * speed * Time.deltaTime);
         }
     }
 }
