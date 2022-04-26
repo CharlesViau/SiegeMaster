@@ -7,7 +7,7 @@ namespace Units.Types
     public class Tower : Unit,ICreatable<Tower.Args>
     {
 
-        public Transform target;
+        [HideInInspector]public Transform target;
         public ProjectileType projectiletype;
         public ParticleType towerParticleType;
         public Targeting_SO targeting_SO;
@@ -18,12 +18,17 @@ namespace Units.Types
         public Transform barrel;
         public Transform ParticlePosition;
 
+
+        // for the animation you have to have fire animation and one trigger prameter , the name of trigger must be  "Fire"
+        private Animator animator; 
+
+
         float timer = 0;
 
         public override void Init()
         {
             targeting_SO = Instantiate(targeting_SO);
-          
+            animator = GetComponent<Animator>();
             base.Init();
         }
         public override void PostInit()
@@ -59,6 +64,8 @@ namespace Units.Types
         }
         public  virtual void Fire(Transform target)
         {
+            animator.SetTrigger("Fire");
+            ParticleSystemManager.Instance.Create(towerParticleType, new ParticleSystemScript.Args(ParticlePosition.position));
 
         }
 

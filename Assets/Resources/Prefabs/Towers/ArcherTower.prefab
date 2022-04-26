@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1395364589715930464}
   - component: {fileID: 1395364589715930470}
   m_Layer: 0
-  m_Name: Archer
+  m_Name: ArcherTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -85,7 +85,7 @@ MonoBehaviour:
   turningSpeed: 0
   speed: 0
   target: {fileID: 0}
-  projectiletype: 1
+  projectiletype: 0
   towerParticleType: 1
   targeting_SO: {fileID: 11400000, guid: 39976aa8fee26ac4690be1badbe5fe68, type: 2}
   projectileDamage: 50

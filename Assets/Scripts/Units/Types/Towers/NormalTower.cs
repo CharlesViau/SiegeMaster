@@ -11,8 +11,8 @@ namespace Units.Types
 
         public override void Fire(Transform target)
         {
-            ParticleSystemManager.Instance.Create(towerParticleType, new ParticleSystemScript.Args(ParticlePosition.position));
             ProjectileManager.Instance.Create(projectiletype, new Projectile.Args(barrel.position, projectiletype, target, projectileSpeed, projectileDamage, Vector3.zero));
+            base.Fire(target);
         }
         public override void Extrabehavior()
         {

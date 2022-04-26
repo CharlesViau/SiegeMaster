@@ -21,6 +21,7 @@ namespace Units.Types
             Vector3 finalvelocity = distanceTotarget* Mathf.Sqrt(-Physics.gravity.y / (barrel.position.y - target.transform.position.y + distanceTotarget)) * barrel.transform.forward;
             ProjectileManager.Instance.Create(projectiletype, new Projectile.Args(barrel.position, projectiletype, target, 0, 0, finalvelocity));
 
+            base.Fire(target);
         }
 
         //
