@@ -43,6 +43,10 @@ using General;
     {
     }
 
+    public void LateRefresh()
+    {
+        
+    }
 
 
     private void OnCollisionEnter(Collision collision)

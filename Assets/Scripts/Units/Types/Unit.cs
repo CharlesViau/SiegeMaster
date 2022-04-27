@@ -39,6 +39,11 @@ namespace Units.Types
         {
         }
 
+        public void LateRefresh()
+        {
+            
+        }
+
         public virtual void Pool()
         {
         }
@@ -55,7 +60,7 @@ namespace Units.Types
 
             transform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
 
-            Rigidbody.MovePosition(transform.position + direction * speed * Time.deltaTime);
+            Rigidbody.MovePosition(transform.position + direction * (speed * Time.deltaTime));
         }
     }
 }

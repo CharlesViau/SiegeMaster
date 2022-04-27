@@ -100,7 +100,8 @@ namespace General
     public abstract class ConstructionArgs
     {
         public Vector3 spawningPosition;
-        public ConstructionArgs(Vector3 _spawningPosition)
+
+        protected ConstructionArgs(Vector3 _spawningPosition)
         {
             spawningPosition = _spawningPosition;
         }
@@ -108,6 +109,6 @@ namespace General
 
     public interface ICreatable<in A> where A : ConstructionArgs
     {
-        void Construct(A constructionArgs);
+        public void Construct(A constructionArgs);
     }
 }

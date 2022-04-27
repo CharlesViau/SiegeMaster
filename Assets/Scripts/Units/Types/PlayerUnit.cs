@@ -6,15 +6,13 @@ namespace Units.Types
 {
     public class PlayerUnit : Unit, ICameraController
     {
-        public Stats stats;
-
         public override void FixedRefresh()
         {
         }
 
         public override void Move(Vector3 direction)
         {
-            Rigidbody.MovePosition(transform.position + direction * speed * Time.fixedDeltaTime);
+            Rigidbody.MovePosition(transform.position + direction * (speed * Time.fixedDeltaTime));
         }
 
         public void Look(float cameraYAxis)

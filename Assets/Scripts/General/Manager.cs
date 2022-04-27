@@ -23,12 +23,14 @@ namespace General
         public abstract void PostInit();
         public abstract void Refresh();
         public abstract void FixedRefresh();
+        public abstract void LateRefresh();
+
         public abstract void Clean();
     }
 
     public interface ICollectionManager<in T>
     {
-        abstract void Add(T obj);
+        public abstract void Add(T obj);
         public abstract void Remove(T obj);
     }
 
@@ -44,18 +46,17 @@ namespace General
     {
         #region Variables & Properties
 
-        private  readonly HashSet<T> _collection;
-        private readonly Stack<T> ToAdd;
-        private readonly Stack<T> ToRemove;
-
-        public  HashSet<T> Collection => _collection;
+        protected readonly HashSet<T> _collection;
+        private readonly Stack<T> _toAdd;
+        private readonly Stack<T> _toRemove;
+        
         #endregion
 
         public Manager()
         {
             _collection = new HashSet<T>();
-            ToAdd = new Stack<T>();
-            ToRemove = new Stack<T>();
+            _toAdd = new Stack<T>();
+            _toRemove = new Stack<T>();
         }
 
         #region Public Methods
@@ -83,14 +84,19 @@ namespace General
             FixedUpdateCollection();
         }
 
+        public void LateRefresh()
+        {
+            LateRefreshCollection();
+        }
+
         public void Add(T item)
         {
-            ToAdd.Push(item);
+            _toAdd.Push(item);
         }
 
         public void Remove(T item)
         {
-            ToRemove.Push(item);
+            _toRemove.Push(item);
         }
 
         public void Clean()
@@ -147,17 +153,17 @@ namespace General
 
         private void AddStackItemsToCollection()
         {
-            while (ToAdd.Count > 0)
+            while (_toAdd.Count > 0)
             {
-                _collection.Add(ToAdd.Pop());
+                _collection.Add(_toAdd.Pop());
             }
         }
 
         private void RemoveStackItemsFromCollection()
         {
-            while (ToRemove.Count > 0)
+            while (_toRemove.Count > 0)
             {
-                _collection.Remove(ToRemove.Pop());
+                _collection.Remove(_toRemove.Pop());
             }
         }
 
@@ -176,12 +182,19 @@ namespace General
                 item.FixedRefresh();
             }
         }
+        private void LateRefreshCollection()
+        {
+            foreach (var item in _collection)
+            {
+                item.LateRefresh();
+            }
+        }
 
         private void CleanManager()
         {
             _collection.Clear();
-            ToAdd.Clear();
-            ToRemove.Clear();
+            _toAdd.Clear();
+            _toRemove.Clear();
         }
 
         #endregion
@@ -206,14 +219,19 @@ namespace General
 
         protected Manager()
         {
-            manager = new Manager<T>();
+            collection = new HashSet<T>();
+            _toAdd = new Stack<T>();
+            _toRemove = new Stack<T>();
         }
 
         #endregion
 
         #region Variables & Properties
 
-        protected readonly Manager<T> manager;
+        protected readonly HashSet<T> collection;
+        private readonly Stack<T> _toAdd;
+        private readonly Stack<T> _toRemove;
+        
 
         #endregion
 
@@ -221,37 +239,111 @@ namespace General
 
         public override void Init()
         {
-            manager.Init();
+            AddStackItemsToCollection();
+            InitCollection();
         }
 
         public override void PostInit()
         {
-            manager.PostInit();
+            PostInitCollection();
         }
 
         public override void Refresh()
         {
-            manager.Refresh();
+            RemoveStackItemsFromCollection();
+            UpdateCollection();
+            AddStackItemsToCollection();
         }
 
-        public sealed override void FixedRefresh()
+        public override void FixedRefresh()
         {
-            manager.FixedRefresh();
+            FixedUpdateCollection();
         }
 
-        public sealed override void Clean()
+        public override void LateRefresh()
         {
-            manager.Clean();
+            LateRefreshCollection();
         }
 
-        public void Add(T obj)
+        public void Add(T item)
         {
-            manager.Add(obj);
+            _toAdd.Push(item);
         }
 
-        public void Remove(T obj)
+        public void Remove(T item)
         {
-            manager.Remove(obj);
+            _toRemove.Push(item);
+        }
+
+        public override void Clean()
+        {
+            CleanManager();
+        }
+
+        #endregion
+        
+        #region Private Methods
+
+        private void InitCollection()
+        {
+            foreach (var item in collection)
+            {
+                item.Init();
+            }
+        }
+
+        private void PostInitCollection()
+        {
+            foreach (var item in collection)
+            {
+                item.PostInit();
+            }
+        }
+
+        private void AddStackItemsToCollection()
+        {
+            while (_toAdd.Count > 0)
+            {
+                collection.Add(_toAdd.Pop());
+            }
+        }
+
+        private void RemoveStackItemsFromCollection()
+        {
+            while (_toRemove.Count > 0)
+            {
+                collection.Remove(_toRemove.Pop());
+            }
+        }
+
+        private void UpdateCollection()
+        {
+            foreach (var item in collection)
+            {
+                item.Refresh();
+            }
+        }
+
+        private void FixedUpdateCollection()
+        {
+            foreach (var item in collection)
+            {
+                item.FixedRefresh();
+            }
+        }
+        private void LateRefreshCollection()
+        {
+            foreach (var item in collection)
+            {
+                item.LateRefresh();
+            }
+        }
+
+        private void CleanManager()
+        {
+            collection.Clear();
+            _toAdd.Clear();
+            _toRemove.Clear();
         }
 
         #endregion
@@ -295,13 +387,13 @@ namespace General
         public override void Init()
         {
             _factory.Init();
-            manager.Init();
+           base.Init();
         }
 
         public T Create(ValueType type, A constructionArgs)
         {
             var toReturn = _factory.Create(type, constructionArgs);
-            manager.Add(toReturn);
+            Add(toReturn);
             return toReturn;
         }
 

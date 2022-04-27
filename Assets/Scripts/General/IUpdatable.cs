@@ -7,6 +7,7 @@
       void PostInit();
       void Refresh();
       void FixedRefresh();
+      void LateRefresh();
     }
   }
 

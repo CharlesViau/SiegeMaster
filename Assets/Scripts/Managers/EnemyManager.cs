@@ -14,7 +14,7 @@ namespace Managers
         
         public override void Init()
         {
-            var hashSet = new HashSet<Enemy>(UnityEngine.Object.FindObjectsOfType<Enemy>().ToList());
+            var hashSet = new HashSet<Enemy>(Object.FindObjectsOfType<Enemy>().ToList());
             foreach (var item in hashSet)
             {
                 Add(item);
@@ -22,13 +22,15 @@ namespace Managers
 
             base.Init();    
         }
-        public Transform GetClosest(Transform correntPosition, float range)
+        
+
+        public Transform GetClosest(Transform currentPosition, float range)
         {
             Transform transform = null;
             range *=range;
-            foreach (var enemy in manager.Collection)
+            foreach (var enemy in collection)
             {
-                float newDistance = Vector3.SqrMagnitude(correntPosition.position - enemy.transform.position);
+                var newDistance = Vector3.SqrMagnitude(currentPosition.position - enemy.transform.position);
 
                 if (newDistance < range && enemy.alive) // if in the range and they are alive (not in the pool)
                 {

@@ -57,6 +57,10 @@ namespace Managers
             ExecuteFixedRefreshCommands();
         }
 
+        public override void LateRefresh()
+        {
+            
+        }
 
         public override void Clean()
         {

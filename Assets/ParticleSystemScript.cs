@@ -36,6 +36,11 @@ public class ParticleSystemScript : MonoBehaviour,IUpdatable,ICreatable<Particle
     {
     }
 
+    public void LateRefresh()
+    {
+        
+    }
+
     public void Construct(Args constructionArgs)
     {
         transform.position = constructionArgs.spawningPosition;
