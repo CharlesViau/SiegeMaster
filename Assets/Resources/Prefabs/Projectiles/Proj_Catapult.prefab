@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6600075391217019525}
   - component: {fileID: 5100479702310397444}
   m_Layer: 10
-  m_Name: Catapult
+  m_Name: Proj_Catapult
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -129,4 +129,4 @@ MonoBehaviour:
   behavior_SO: {fileID: 11400000, guid: fb8029befc7fa5844bda97bd6353c746, type: 2}
   movement_SO: {fileID: 11400000, guid: b7e621c9d7a24be4dbb4655c3b3242d6, type: 2}
   onCollision_SO: {fileID: 11400000, guid: edb97fc1a3e4ef74b8c6a49ecfdeda81, type: 2}
-  timeToPoolIfDidntHitAnything: 50
+  timeToPoolIfDidntHitAnything: 5

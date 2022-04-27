@@ -5,7 +5,7 @@ using General;
 using Managers;
 namespace Units.Types
 {
-    public class NormalTower : Tower
+    public class NormalTower : Tower    
     {
         public float projectileSpeed;
 
@@ -16,7 +16,11 @@ namespace Units.Types
         }
         public override void Extrabehavior()
         {
-            head.up = (target.position - head.position).normalized;
+            if (target)
+            {
+                head.up = (target.position - head.position).normalized;
+            }
+           
         }
     }
     

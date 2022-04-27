@@ -11,6 +11,7 @@ public class Movement_Catapult_SO : Movement_SO
         base.Init(_unit,_targetTransform, _speed, _projectileInitialDIrection);
         try
         {
+
             rb.velocity = _projectileInitialDIrection;
         }
         catch (System.Exception)

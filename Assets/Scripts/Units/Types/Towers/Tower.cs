@@ -52,7 +52,11 @@ namespace Units.Types
             {
                 GetTarget();
                 Extrabehavior();
-                Fire(target);
+                if (target)
+                {
+                    Fire(target);
+                }
+                
                 timer = 0;
 
             }
@@ -64,7 +68,10 @@ namespace Units.Types
         }
         public  virtual void Fire(Transform target)
         {
-            animator.SetTrigger("Fire");
+
+                animator.SetTrigger("Fire");
+         
+            
             ParticleSystemManager.Instance.Create(towerParticleType, new ParticleSystemScript.Args(ParticlePosition.position));
 
         }
