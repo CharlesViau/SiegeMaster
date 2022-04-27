@@ -10,7 +10,6 @@ using General;
 
 public class Movement_Seeking_SO : Movement_SO
 {
-
     private Enemy enemy;
     public override void Refresh()
     {
@@ -21,15 +20,10 @@ public class Movement_Seeking_SO : Movement_SO
             gameobject.transform.forward = rb.velocity.normalized;
 
         }
-
-
-
-
     }
     public override void Init(GameObject _gameObject, Transform _target, float speed, Vector3 _projectileInitialDIrection)
     {
         base.Init(_gameObject, _target, speed, _projectileInitialDIrection);
         enemy = _target.gameObject.GetComponent<Enemy>();
     }
-
 }
