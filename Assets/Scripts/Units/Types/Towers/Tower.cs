@@ -38,7 +38,9 @@ namespace Units.Types
         public override void Refresh()
         {
             CoolDown(attackSpeed);
+            
         }
+        
 
         protected virtual void GetTarget()
         {

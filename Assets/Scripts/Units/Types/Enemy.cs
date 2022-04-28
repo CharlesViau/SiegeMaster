@@ -70,7 +70,8 @@ namespace Units.Types
 
         public void GotShot(float damage)
         {
-            ObjectPool.Instance.Pool(EnemyType, this);
+            GetComponent<MeshRenderer>().material.color = Random.ColorHSV();
+           ObjectPool.Instance.Pool(EnemyType, this);
         }
 
         public override void Move(Vector3 direction)
