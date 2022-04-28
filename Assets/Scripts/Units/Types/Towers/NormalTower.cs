@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using General;
 using Managers;
+using UnityEngine.AI;
 namespace Units.Types
 {
     public class NormalTower : Tower    
@@ -16,8 +17,9 @@ namespace Units.Types
         {
             if (predict)
             {
-                Vector3 targetMovementDirection = target.gameObject.GetComponent<Rigidbody>().velocity;
-                float targetMovementVlovity = Vector3.Magnitude(targetMovementDirection);
+                Vector3 targetMovementDirection = target.GetComponent<NavMeshAgent>().velocity;
+                //float targetMovementVlovity = target.GetComponent<NavMeshAgent>().velocity.magnitude;
+                float targetMovementVlovity = target.GetComponent<NavMeshAgent>().speed;
                 //float distanceBarrelToTarget = Vector3.Magnitude(target.position - barrel.position);
                 float AncleTargetToPlayer = Vector3.Angle(targetMovementDirection.normalized, (head.position - target.position).normalized);
                 float playerAngle = Mathf.Asin((Mathf.Sin(AncleTargetToPlayer * Mathf.Deg2Rad) * targetMovementVlovity) / projectileSpeed ) * Mathf.Rad2Deg;

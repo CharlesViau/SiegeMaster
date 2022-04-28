@@ -41,12 +41,14 @@ namespace Units.Types
         public override void PostInit()
         {
             base.PostInit();
+
         }
 
         public override void Refresh()
         {
             base.Refresh();
             Move(player.position);
+            movement_SO.Refresh();
             //Shoot();      
         }
 
@@ -77,7 +79,7 @@ namespace Units.Types
 
         public override void Move(Vector3 direction)
         {
-            movement_SO.MoveToPoint(direction);
+            movement_SO.MoveToPoint(direction,alive);
         }
 
         public void Construct(Args constructionArgs)
