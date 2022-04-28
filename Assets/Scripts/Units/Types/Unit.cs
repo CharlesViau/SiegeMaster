@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Units.Types
 {
-    [RequireComponent(typeof(Rigidbody), typeof(Animator))]
+    [RequireComponent(typeof(Animator))]
     public abstract class Unit : MonoBehaviour, IUpdatable, IPoolable, IMovable
     {
         #region Properties and Variables
@@ -23,7 +23,7 @@ namespace Units.Types
         public virtual void Init()
         {
             //Caching Components
-            Rigidbody = GetComponent<Rigidbody>();
+            TryGetComponent<Rigidbody>(out Rigidbody);
             Animator = GetComponent<Animator>();
         }
 
@@ -49,6 +49,7 @@ namespace Units.Types
 
         public virtual void Move(Vector3 direction)
         {
+            if (Rigidbody == null) return;
             var smoothAngle =
                 Mathf.SmoothDampAngle(transform.eulerAngles.y, Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg,
                     ref _turnSmoothVelocity, turningSpeed);

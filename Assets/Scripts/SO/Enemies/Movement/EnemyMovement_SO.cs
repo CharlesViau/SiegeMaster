@@ -7,7 +7,6 @@ using UnityEngine.AI;
 public class EnemyMovement_SO : ScriptableObject
 {
     protected GameObject unit;
-    //protected Rigidbody rb;
     protected float speed;
     protected NavMeshAgent agent;
     protected Transform target;
@@ -17,7 +16,6 @@ public class EnemyMovement_SO : ScriptableObject
         unit = _unit;
         speed = _speed;
         target = _target;
-        //rb = _unit.GetComponent<Rigidbody>();
         agent = _unit.GetComponent<NavMeshAgent>();
     }
 
@@ -33,12 +31,12 @@ public class EnemyMovement_SO : ScriptableObject
 
     public void Refresh()
     {
-
+        
     }
 
     public void MoveToPoint(Vector3 target)
     {
-        agent.SetDestination(target);
-        //rb.velocity = speed * (target - unit.transform.position).normalized;
+        if (target != null)
+            agent.SetDestination(target);
     }
 }

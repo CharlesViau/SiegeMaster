@@ -8,13 +8,14 @@ namespace Units.Types
 {
     public class Enemy : Unit, ICreatable<Enemy.Args>, IHittable
     {
+        /*public Transform[] targets;
+        int waypointCounter = 0;*/
+
         public EnemyType EnemyType;
         public EnemyMovement_SO movement_SO;
-        //public List<Transform> targets;
-        int waypointCounter = 0;
         public bool alive;
 
-        public Transform player;
+        protected Transform player;
         public ProjectileType projectiletype;
         public float projectileDamage;
         public float attackRange;
@@ -30,10 +31,10 @@ namespace Units.Types
         public override void Init()
         {
             base.Init();
-            //targets = new List<Transform>();
             alive = true;
-            movement_SO = Instantiate(movement_SO);
+            movement_SO = Instantiate(movement_SO);            
             movement_SO.Init(gameObject, player, speed);
+            player = PlayerUnitManager.Instance.GetTransform;
             //Debug.Log("init enemy");
         }
 
@@ -45,14 +46,8 @@ namespace Units.Types
         public override void Refresh()
         {
             base.Refresh();
-
-            movement_SO.MoveToPoint(player.position);
-            //Shoot();
-            
-            
-            
-            //WaypointsCheck();            
-            //movement_SO.MoveToPoint(targets[waypointCounter].position);            
+            Move(player.position);
+            //Shoot();      
         }
 
         public override void FixedRefresh()
@@ -81,7 +76,7 @@ namespace Units.Types
 
         public override void Move(Vector3 direction)
         {
-            base.Move(direction);
+            movement_SO.MoveToPoint(direction);
         }
 
         public void Construct(Args constructionArgs)
@@ -90,18 +85,20 @@ namespace Units.Types
             //transform.position = constructionArgs.spawningPosition;
         }
 
-        void WaypointsCheck()
+        /*void WaypointsCheck()
         {
-            /*if (Vector3.Distance(transform.position, targets[waypointCounter].position) < 0.1f)
+            if (Vector3.Distance(targets[waypointCounter].position, player.position) < 0.1f)
             {
                 waypointCounter++;
-                //Debug.Log(waypointCounter);
+                Debug.Log(waypointCounter);
             }
-            if (targets.Count <= waypointCounter)
+            if (targets.Length <= waypointCounter)
             {
                 waypointCounter = 0;
-            }*/
-        }
+            }
+            //movement_SO.MoveToPoint(targets[waypointCounter].position);
+            //rb.velocity = 20 * (targets[waypointCounter].position - player.position).normalized;
+        }*/
 
         void CreateProjectile(Transform target)
         {
@@ -112,7 +109,7 @@ namespace Units.Types
 
         void Shoot()
         {
-            if(Vector3.Distance(transform.position, player.position) <= attackRange)
+            if (Vector3.Distance(transform.position, player.position) <= attackRange)
             {
                 CreateProjectile(player);
             }
