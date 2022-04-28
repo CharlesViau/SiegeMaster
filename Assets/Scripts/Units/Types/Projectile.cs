@@ -7,7 +7,7 @@ using General;
 {
     
     public ProjectileType type;
-    public DamageSO damage_SO;
+    public RefreshBehaviorSO behavior_SO;
     public Movement_SO movement_SO;
     public OnCollisionSO onCollision_SO;
     public float timeToPoolIfDidntHitAnything;
@@ -17,7 +17,7 @@ using General;
     {
         timer = 0;
            //only called on the 
-        damage_SO = Instantiate(damage_SO);
+        behavior_SO = Instantiate(behavior_SO);
         movement_SO = Instantiate(movement_SO);
         onCollision_SO = Instantiate(onCollision_SO);
     }
@@ -35,7 +35,7 @@ using General;
         {
             ObjectPool.Instance.Pool(type, this);
         }
-        damage_SO.Refresh();
+        behavior_SO.Refresh();
         movement_SO.Refresh();
     }
 
@@ -70,8 +70,8 @@ using General;
     {
         timer = 0;
         transform.position = constructionArgs.spawningPosition;
-        damage_SO.Init(gameObject, constructionArgs.bulletDamage);
-        movement_SO.Init(gameObject, constructionArgs.type , constructionArgs.target, constructionArgs.bulletSpeed, constructionArgs.velocityDirection);
+        behavior_SO.Init(gameObject, constructionArgs.bulletDamage);
+        movement_SO.Init(gameObject, constructionArgs.target, constructionArgs.bulletSpeed, constructionArgs.velocityDirection);
         onCollision_SO.Init(gameObject, constructionArgs.bulletDamage);
     }
 

@@ -37,6 +37,7 @@ namespace Inputs
 
             //Locking mouse
             Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
 
         public void PostInit()
