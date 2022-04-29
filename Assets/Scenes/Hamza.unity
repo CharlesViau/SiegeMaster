@@ -480,8 +480,8 @@ GameObject:
   - component: {fileID: 257013115}
   - component: {fileID: 257013114}
   - component: {fileID: 257013113}
-  m_Layer: 0
-  m_Name: MainTower
+  m_Layer: 6
+  m_Name: Nexus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -11,12 +11,16 @@ namespace Units.Types
         /*public Transform[] targets;
         int waypointCounter = 0;*/
 
-        public EnemyType EnemyType;
-        public EnemyMovement_SO movement_SO;
+        private float fullHP;
+        public float Hp =0;
         public bool alive;
+        public EnemyType enemyType;
+        public ProjectileType projectiletype;
+        public EnemyMovement_SO movement_SO;
+        public Targeting_SO targeting_SO;
 
         protected Transform player;
-        public ProjectileType projectiletype;
+        protected GameObject objective;
         public float projectileDamage;
         public float attackRange;
         public float projectileSpeed;
@@ -31,10 +35,15 @@ namespace Units.Types
         public override void Init()
         {
             base.Init();
+            fullHP = Hp;
             alive = true;
-            movement_SO = Instantiate(movement_SO);            
+            movement_SO = Instantiate(movement_SO);
+            targeting_SO = Instantiate(targeting_SO);
+
             movement_SO.Init(gameObject, player, speed);
+            targeting_SO.Init(objective, attackRange);
             player = PlayerUnitManager.Instance.GetTransform;
+            
             //Debug.Log("init enemy");
         }
 
@@ -47,8 +56,14 @@ namespace Units.Types
         public override void Refresh()
         {
             base.Refresh();
-            Move(player.position);
+            Move(objective.transform.position);
+            DetectPlayer();
             movement_SO.Refresh();
+
+            if (Hp <0)
+            {
+                ObjectPool.Instance.Pool(enemyType, this);
+            }
             //Shoot();      
         }
 
@@ -67,19 +82,22 @@ namespace Units.Types
         public override void Depool()
         {
             base.Depool();
+            Hp = fullHP;
             alive = true;
             gameObject.SetActive(true);
         }
 
         public void GotShot(float damage)
         {
+            Hp -= damage;
             GetComponent<MeshRenderer>().material.color = Random.ColorHSV();
-           ObjectPool.Instance.Pool(EnemyType, this);
+
+            
         }
 
         public override void Move(Vector3 direction)
         {
-            movement_SO.MoveToPoint(direction,alive);
+            movement_SO.MoveToPoint(direction, alive);
         }
 
         public void Construct(Args constructionArgs)
@@ -102,6 +120,20 @@ namespace Units.Types
             //movement_SO.MoveToPoint(targets[waypointCounter].position);
             //rb.velocity = 20 * (targets[waypointCounter].position - player.position).normalized;
         }*/
+
+
+        void DetectPlayer()
+        {
+            if (Vector3.Distance(transform.position, player.position) < 0.1f)
+            {
+                Move(player.position);
+            }
+            else
+            {
+                Move(objective.transform.position);
+            }
+        }
+
 
         void CreateProjectile(Transform target)
         {
