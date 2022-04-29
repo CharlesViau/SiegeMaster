@@ -24,10 +24,11 @@ namespace Units.Types
         public float projectileSpeed;
 
         private int fullHP;
-        public int currentHP = 0;
+        public int currentHP;
         public Canvas canvasParent;
-        public GameObject hpPrefab;
-        private Stack<GameObject> hpList;
+
+
+        private Stack<HP> hpStack;
 
         public class Args : ConstructionArgs
         {
@@ -42,34 +43,30 @@ namespace Units.Types
             fullHP = currentHP;
             alive = true;
             movement_SO = Instantiate(movement_SO);
-            //targeting_SO = Instantiate(targeting_SO);
-
-            movement_SO.Init(gameObject, player, speed);
-            //targeting_SO.Init(objective, attackRange);
+            hpStack = new Stack<HP>();
             player = PlayerUnitManager.Instance.GetTransform;
-            hpList = new Stack<GameObject>();
-            for (int i = 0; i < currentHP; i++)
-            {
-                GameObject h = Instantiate(hpPrefab, canvasParent.transform);
-                hpList.Push(h);
-            }
+            movement_SO.Init(gameObject, objective.transform, speed);
+            CreateHp();
+
+
+            //targeting_SO = Instantiate(targeting_SO);
+            //targeting_SO.Init(objective, attackRange);
             //Debug.Log("init enemy");
         }
 
         public override void PostInit()
         {
             base.PostInit();
-
         }
 
         public override void Refresh()
         {
             base.Refresh();
             Move(objective.transform.position);
-            DetectPlayer();
-            movement_SO.Refresh();
+            //DetectPlayer();
+            //movement_SO.Refresh();
 
-            if (currentHP < 0)
+            if (currentHP <= 0)
             {
                 ObjectPool.Instance.Pool(enemyType, this);
             }
@@ -91,15 +88,17 @@ namespace Units.Types
         public override void Depool()
         {
             base.Depool();
-            currentHP = fullHP;
             alive = true;
             gameObject.SetActive(true);
+            
+            currentHP = fullHP;
+            CreateHp();
         }
 
         public void GotShot(float damage)
         {
             currentHP -= (int)damage;
-            hpList.Pop().SetActive(false);
+            ObjectPool.Instance.Pool(HPType.EnemyHp, hpStack.Pop());
             GetComponent<MeshRenderer>().material.color = Random.ColorHSV();
         }
 
@@ -112,6 +111,42 @@ namespace Units.Types
         {
             transform.GetComponent<NavMeshAgent>().Move(constructionArgs.spawningPosition);
             //transform.position = constructionArgs.spawningPosition;
+        }
+
+        void CreateHp()
+        {
+            for (int i = 0; i < fullHP; i++)
+            {
+                HP h = HPManager.Instance.Create(HPType.EnemyHp, new HP.Args(Vector3.zero, canvasParent.transform));
+                hpStack.Push(h);
+            }
+        }
+
+        void DetectPlayer()
+        {
+            if (Vector3.Distance(transform.position, player.position) < 0.1f)
+            {
+                Move(player.position);
+            }
+            else
+            {
+                Move(objective.transform.position);
+            }
+        }
+
+        void CreateProjectile(Transform target)
+        {
+            ProjectileManager.Instance.Create(projectiletype,
+                new Projectile.Args(transform.position, projectiletype,
+                target, projectileSpeed, projectileDamage, Vector3.zero));
+        }
+
+        void Shoot()
+        {
+            if (Vector3.Distance(transform.position, player.position) <= attackRange)
+            {
+                CreateProjectile(player);
+            }
         }
 
         /*void WaypointsCheck()
@@ -128,34 +163,6 @@ namespace Units.Types
             //movement_SO.MoveToPoint(targets[waypointCounter].position);
             //rb.velocity = 20 * (targets[waypointCounter].position - player.position).normalized;
         }*/
-
-
-        void DetectPlayer()
-        {
-            if (Vector3.Distance(transform.position, player.position) < 0.1f)
-            {
-                Move(player.position);
-            }
-            else
-            {
-                Move(objective.transform.position);
-            }
-        }
-
-
-        void CreateProjectile(Transform target)
-        {
-            ProjectileManager.Instance.Create(projectiletype,
-                new Projectile.Args(transform.position, projectiletype,
-                target, projectileSpeed, projectileDamage, Vector3.zero));
-        }
-
-        void Shoot()
-        {
-            if (Vector3.Distance(transform.position, player.position) <= attackRange)
-            {
-                CreateProjectile(player);
-            }
-        }
     }
+
 }

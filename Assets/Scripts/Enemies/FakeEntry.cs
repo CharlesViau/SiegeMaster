@@ -43,7 +43,7 @@ public class FakeEntry : MonoBehaviour
             randomType = EnemyType.Archer;
         }
 
-        EnemyManager.Instance.Create(randomType, new Enemy.Args(random * spawnPos.position));
+        EnemyManager.Instance.Create(randomType, new Enemy.Args(spawnPos.position));
 
         switch (randomType)
         {

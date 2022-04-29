@@ -31,14 +31,15 @@ public class EnemyMovement_SO : ScriptableObject
 
     public void Refresh()
     {
-      //  Debug.Log(agent.velocity);
+        //Debug.Log(agent.velocity);
         //Debug.Log(agent.speed);
         //Debug.Log(agent.speed + agent.acceleration);
     }
 
-    public void MoveToPoint(Vector3 target,bool alive)
+    public void MoveToPoint(Vector3 target, bool alive)
     {
         if (target != null && alive)
             agent.SetDestination(target);
+
     }
 }

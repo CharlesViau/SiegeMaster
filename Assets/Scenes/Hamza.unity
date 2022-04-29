@@ -732,6 +732,7 @@ MonoBehaviour:
   spawnPos: {fileID: 266649714}
   nbArchertoSpawn: 5
   nbSneakyToSpawn: 5
+  spawnSpeed: 3
 --- !u!1 &334677817
 GameObject:
   m_ObjectHideFlags: 0
