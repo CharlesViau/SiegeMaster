@@ -17,10 +17,10 @@ namespace Units.Types
         public EnemyType enemyType;
         public ProjectileType projectiletype;
         public EnemyMovement_SO movement_SO;
-        public Targeting_SO targeting_SO;
+    //    public Targeting_SO targeting_SO;
 
         protected Transform player;
-        protected GameObject objective;
+        public GameObject objective;
         public float projectileDamage;
         public float attackRange;
         public float projectileSpeed;
@@ -38,10 +38,10 @@ namespace Units.Types
             fullHP = Hp;
             alive = true;
             movement_SO = Instantiate(movement_SO);
-            targeting_SO = Instantiate(targeting_SO);
+          //  targeting_SO = Instantiate(targeting_SO);
 
             movement_SO.Init(gameObject, player, speed);
-            targeting_SO.Init(objective, attackRange);
+          //  targeting_SO.Init(objective, attackRange);
             player = PlayerUnitManager.Instance.GetTransform;
             
             //Debug.Log("init enemy");

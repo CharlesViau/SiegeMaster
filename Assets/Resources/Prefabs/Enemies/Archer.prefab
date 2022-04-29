@@ -131,10 +131,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turningSpeed: 20
   speed: 50
-  EnemyType: 0
-  movement_SO: {fileID: 11400000, guid: 12c3ff3e48a540748aca02716d57c38d, type: 2}
+  Hp: 100
   alive: 0
+  enemyType: 0
   projectiletype: 0
+  movement_SO: {fileID: 11400000, guid: 12c3ff3e48a540748aca02716d57c38d, type: 2}
+  objective: {fileID: 704412987611704845, guid: 65a45767e1dee0441a520c269ad28bf8, type: 3}
   projectileDamage: 5
   attackRange: 10
   projectileSpeed: 5
