@@ -31,7 +31,7 @@ public class EnemyMovement_SO : ScriptableObject
 
     public void Refresh()
     {
-        Debug.Log(agent.velocity);
+      //  Debug.Log(agent.velocity);
         //Debug.Log(agent.speed);
         //Debug.Log(agent.speed + agent.acceleration);
     }

@@ -26,7 +26,10 @@ namespace Units.Types
                 Vector3 dir = (target.position - head.position).normalized;
                 Vector3 left = Vector3.Cross(dir, targetMovementDirection.normalized);
                 head.LookAt(target.position, left);
-                head.RotateAround(head.transform.position, head.transform.up, playerAngle);
+                if (!float.IsNaN(playerAngle))
+                {
+                    head.RotateAround(head.transform.position, head.transform.up, playerAngle);
+                }
                 ProjectileVlocity = head.forward * projectileSpeed;
                 //calculate the prediction
             }

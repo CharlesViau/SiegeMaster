@@ -23,11 +23,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 833737523209293078}
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 48, z: -0}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 4.67}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 6592554438504343144}
+  m_Father: {fileID: 833737523921360983}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &833737523921360980
@@ -58,6 +58,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6592554438504343144}
+  - {fileID: 833737523209293073}
   m_Father: {fileID: 7231741418436089902}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -121,7 +122,6 @@ Transform:
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children:
   - {fileID: 833737524629397917}
-  - {fileID: 833737523209293073}
   m_Father: {fileID: 833737523921360983}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
@@ -234,7 +234,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 71a531780c1d26c43b5ff9ef96a3b9ac, type: 2}
+  - {fileID: 2100000, guid: e411a3579ca61dd4ca5e9742c225eb5f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -282,7 +282,7 @@ GameObject:
   - component: {fileID: 8005040781669466774}
   - component: {fileID: 8005040781669466768}
   m_Layer: 0
-  m_Name: ArcherTower
+  m_Name: ArcherTowerPrediction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -354,14 +354,14 @@ MonoBehaviour:
   turningSpeed: 0
   speed: 0
   target: {fileID: 0}
-  projectiletype: 0
+  projectiletype: 4
   towerParticleType: 1
   targeting_SO: {fileID: 11400000, guid: 39976aa8fee26ac4690be1badbe5fe68, type: 2}
   projectileDamage: 50
-  towerAttackRange: 50
+  towerAttackRange: 100
   attackSpeed: 3
   head: {fileID: 833737523921360983}
   barrel: {fileID: 833737523921360983}
   ParticlePosition: {fileID: 833737523209293073}
   projectileSpeed: 100
-  predict: 0
+  predict: 1

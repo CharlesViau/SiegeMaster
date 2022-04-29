@@ -9,11 +9,11 @@ public class FakeEntry : MonoBehaviour
 
     EnemyType[] enemyTypes;
 
-    int nbArchertoSpawn = 5;
-    int nbSneakyToSpawn = 5;
+   public  int nbArchertoSpawn = 5;
+   public  int nbSneakyToSpawn = 5;
 
     private int TotalToSpawn => nbArchertoSpawn + nbSneakyToSpawn;
-    float spawnSpeed = 3;
+    public  float spawnSpeed = 3;
     float timer;
 
     void Awake()
