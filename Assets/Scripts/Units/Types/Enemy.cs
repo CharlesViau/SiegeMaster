@@ -2,6 +2,7 @@ using General;
 using Managers;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 using System.Collections.Generic;
 
 namespace Units.Types
@@ -10,20 +11,23 @@ namespace Units.Types
     {
         /*public Transform[] targets;
         int waypointCounter = 0;*/
-
-        private float fullHP;
-        public float Hp =0;
         public bool alive;
         public EnemyType enemyType;
         public ProjectileType projectiletype;
         public EnemyMovement_SO movement_SO;
-    //    public Targeting_SO targeting_SO;
+        //public Targeting_SO targeting_SO;
 
         protected Transform player;
         public GameObject objective;
         public float projectileDamage;
         public float attackRange;
         public float projectileSpeed;
+
+        private int fullHP;
+        public int currentHP = 0;
+        public Canvas canvasParent;
+        public GameObject hpPrefab;
+        private Stack<GameObject> hpList;
 
         public class Args : ConstructionArgs
         {
@@ -35,15 +39,20 @@ namespace Units.Types
         public override void Init()
         {
             base.Init();
-            fullHP = Hp;
+            fullHP = currentHP;
             alive = true;
             movement_SO = Instantiate(movement_SO);
-          //  targeting_SO = Instantiate(targeting_SO);
+            //targeting_SO = Instantiate(targeting_SO);
 
             movement_SO.Init(gameObject, player, speed);
-          //  targeting_SO.Init(objective, attackRange);
+            //targeting_SO.Init(objective, attackRange);
             player = PlayerUnitManager.Instance.GetTransform;
-            
+            hpList = new Stack<GameObject>();
+            for (int i = 0; i < currentHP; i++)
+            {
+                GameObject h = Instantiate(hpPrefab, canvasParent.transform);
+                hpList.Push(h);
+            }
             //Debug.Log("init enemy");
         }
 
@@ -60,7 +69,7 @@ namespace Units.Types
             DetectPlayer();
             movement_SO.Refresh();
 
-            if (Hp <0)
+            if (currentHP < 0)
             {
                 ObjectPool.Instance.Pool(enemyType, this);
             }
@@ -82,17 +91,16 @@ namespace Units.Types
         public override void Depool()
         {
             base.Depool();
-            Hp = fullHP;
+            currentHP = fullHP;
             alive = true;
             gameObject.SetActive(true);
         }
 
         public void GotShot(float damage)
         {
-            Hp -= damage;
+            currentHP -= (int)damage;
+            hpList.Pop().SetActive(false);
             GetComponent<MeshRenderer>().material.color = Random.ColorHSV();
-
-            
         }
 
         public override void Move(Vector3 direction)
