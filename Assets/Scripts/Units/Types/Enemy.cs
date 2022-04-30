@@ -18,7 +18,7 @@ namespace Units.Types
         //public Targeting_SO targeting_SO;
 
         protected Transform player;
-        public GameObject objective;
+        protected Transform objective;
         public float projectileDamage;
         public float attackRange;
         public float projectileSpeed;
@@ -42,6 +42,7 @@ namespace Units.Types
             alive = true;
             movement_SO = Instantiate(movement_SO);
             player = PlayerUnitManager.Instance.GetTransform;
+            objective = NexusManager.Instance.GetTransform;
             movement_SO.Init(gameObject, objective.transform, speed);
             hpStack = new Stack<HP>();
             CreateHp();
@@ -60,8 +61,8 @@ namespace Units.Types
         public override void Refresh()
         {
             base.Refresh();
-            Move(player.position);
-            //Move(objective.transform.position);
+            //Move(player.position);
+            Move(objective.position);
             
             if (currentHP <= 0)
             {

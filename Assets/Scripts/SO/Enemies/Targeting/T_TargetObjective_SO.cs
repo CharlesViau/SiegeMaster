@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Target Objective", menuName = "ScriptableObjects/Targeting/T_TargetObject_SO")]
 public class T_TargetObjective_SO : Targeting_SO
 {    
+    // this class needs to implement
+
     public LayerMask objective;
 
     public override void Init(GameObject _unit, float _range)
