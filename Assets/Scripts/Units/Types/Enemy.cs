@@ -23,12 +23,10 @@ namespace Units.Types
         public float attackRange;
         public float projectileSpeed;
 
-        private int fullHP;
-        public int currentHP;
         public Canvas canvasParent;
-
-
-        private Stack<HP> hpStack;
+        int fullHP;
+        public int currentHP;
+        Stack<HP> hpStack;
 
         public class Args : ConstructionArgs
         {
@@ -43,9 +41,9 @@ namespace Units.Types
             fullHP = currentHP;
             alive = true;
             movement_SO = Instantiate(movement_SO);
-            hpStack = new Stack<HP>();
             player = PlayerUnitManager.Instance.GetTransform;
             movement_SO.Init(gameObject, objective.transform, speed);
+            hpStack = new Stack<HP>();
             CreateHp();
 
 
@@ -62,14 +60,14 @@ namespace Units.Types
         public override void Refresh()
         {
             base.Refresh();
-            Move(objective.transform.position);
-            //DetectPlayer();
-            //movement_SO.Refresh();
-
+            Move(player.position);
+            //Move(objective.transform.position);
+            
             if (currentHP <= 0)
             {
                 ObjectPool.Instance.Pool(enemyType, this);
             }
+            //DetectPlayer();
             //Shoot();      
         }
 
@@ -164,5 +162,4 @@ namespace Units.Types
             //rb.velocity = 20 * (targets[waypointCounter].position - player.position).normalized;
         }*/
     }
-
 }

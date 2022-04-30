@@ -9,11 +9,11 @@ public class FakeEntry : MonoBehaviour
 
     EnemyType[] enemyTypes;
 
-   public  int nbArchertoSpawn = 5;
-   public  int nbSneakyToSpawn = 5;
+    public int nbArcherToSpawn = 5;
+    public int nbSneakyToSpawn = 5;
 
-    private int TotalToSpawn => nbArchertoSpawn + nbSneakyToSpawn;
-    public  float spawnSpeed = 3;
+    int TotalToSpawn => nbArcherToSpawn + nbSneakyToSpawn;
+    public float spawnSpeed = 3;
     float timer;
 
     void Awake()
@@ -27,18 +27,17 @@ public class FakeEntry : MonoBehaviour
         timer += Time.deltaTime;
         float random = Random.Range(5.0f, 20.0f);
 
-        if (timer < spawnSpeed || TotalToSpawn == 0) 
+        if (timer < spawnSpeed || TotalToSpawn == 0)
             return;
-
 
         EnemyType randomType = (EnemyType)Random.Range(0, enemyTypes.Length - 1);
 
-        if(randomType == EnemyType.Archer && nbArchertoSpawn == 0)
+        if (randomType == EnemyType.Archer && nbArcherToSpawn == 0)
         {
             randomType = EnemyType.Sneaky;
         }
 
-        if(randomType == EnemyType.Sneaky && nbSneakyToSpawn == 0)
+        if (randomType == EnemyType.Sneaky && nbSneakyToSpawn == 0)
         {
             randomType = EnemyType.Archer;
         }
@@ -48,7 +47,7 @@ public class FakeEntry : MonoBehaviour
         switch (randomType)
         {
             case EnemyType.Archer:
-                nbArchertoSpawn--;
+                nbArcherToSpawn--;
                 break;
             case EnemyType.Sneaky:
                 nbSneakyToSpawn--;

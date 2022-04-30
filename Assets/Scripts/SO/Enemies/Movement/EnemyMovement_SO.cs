@@ -40,6 +40,5 @@ public class EnemyMovement_SO : ScriptableObject
     {
         if (target != null && alive)
             agent.SetDestination(target);
-
     }
 }
