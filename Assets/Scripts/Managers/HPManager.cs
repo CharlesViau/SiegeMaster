@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Managers
 {
-    public enum HPType { EnemyHp  }
+    public enum HPType { EnemyHp, NexusHp  }
 
     public class HPManager : Manager<HP, HPType, HP.Args, HPManager>
     {

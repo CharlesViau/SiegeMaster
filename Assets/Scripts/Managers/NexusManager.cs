@@ -5,13 +5,13 @@ using UnityEngine;
 
 namespace Managers
 {
-    public class NexusManager : Manager<PlayerUnit, NexusManager>
+    public class NexusManager : Manager<Nexus, NexusManager>
     {
         Transform nexusTransform;
         public Transform GetTransform { get { return nexusTransform; } }
         public override void Init()
         {
-            foreach (var nexus in Object.FindObjectsOfType<PlayerUnit>().ToList())
+            foreach (var nexus in Object.FindObjectsOfType<Nexus>().ToList())
             {
                 Add(nexus);
                 nexusTransform = nexus.transform;
