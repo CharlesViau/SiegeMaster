@@ -1,18 +1,22 @@
 using Units.Interfaces;
-using Units.Statistics;
 using UnityEngine;
 
 namespace Units.Types
 {
+    [RequireComponent(typeof(Rigidbody))]
     public class PlayerUnit : Unit, ICameraController
     {
-        public override void FixedRefresh()
+        private Rigidbody _rigidbody;
+
+        public override void Init()
         {
+            base.Init();
+            _rigidbody = GetComponent<Rigidbody>();
         }
 
         public override void Move(Vector3 direction)
         {
-            Rigidbody.MovePosition(transform.position + direction * (speed * Time.fixedDeltaTime));
+            _rigidbody.MovePosition(transform.position + direction * (speed * Time.fixedDeltaTime));
         }
 
         public void Look(float cameraYAxis)
