@@ -39,7 +39,7 @@ public class HP : MonoBehaviour,IUpdatable, IPoolable, ICreatable<HP.Args>
     public void Construct(Args constructionArgs)
     {
         transform.SetParent(constructionArgs.parent);
-        transform.position = constructionArgs.spawningPosition;
+        transform.position = constructionArgs.parent.position;
         transform.localScale = scale;
     }
 
