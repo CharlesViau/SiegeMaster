@@ -26,6 +26,11 @@ public class Nexus : MonoBehaviour, IUpdatable, IPoolable, ICreatable<Nexus.Args
         
     }
 
+    public void LateRefresh()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void Pool()
     {
         

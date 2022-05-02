@@ -21,6 +21,11 @@ public class HP : MonoBehaviour,IUpdatable, IPoolable, ICreatable<HP.Args>
     {
     }
 
+    public void LateRefresh()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void Refresh()
     {
        

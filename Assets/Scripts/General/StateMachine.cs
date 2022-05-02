@@ -5,15 +5,8 @@ using System.Linq;
 
 namespace General
 {
-    public abstract class State
+    public interface IState
     {
-        private Action _onRefresh;
-
-        protected State(Action onRefresh = null)
-        {
-            _onRefresh = onRefresh;
-        }
-
         public abstract void Refresh();
         public abstract void OnEnter();
         public abstract void OnExit();
@@ -21,14 +14,14 @@ namespace General
 
     public class StateMachine
     {
-        protected State CurrentState { get; private set; }
+        protected IState CurrentState { get; private set; }
         private readonly Dictionary<Type, List<Transition>> _transitions = new Dictionary<Type, List<Transition>>();
         private List<Transition> _currentTransitions = new List<Transition>();
         private readonly List<Transition> _anyTransition = new List<Transition>();
         
         private static readonly List<Transition> EmptyTransitions = new List<Transition>(0);
 
-        public void SetState(State state)
+        public void SetState(IState state)
         {
             if (state == CurrentState) return;
            
@@ -41,7 +34,7 @@ namespace General
             CurrentState.OnEnter();
         }
 
-        public void AddTransition(State from, State to, Func<bool> condition)
+        public void AddTransition(IState from, IState to, Func<bool> condition)
         {
             if (_transitions.TryGetValue(from.GetType(), out var transitions) == false)
             {
@@ -52,7 +45,7 @@ namespace General
             transitions.Add(new Transition(to, condition));
         }
 
-        public void AddAnyTransition(State state, Func<bool> condition)
+        public void AddAnyTransition(IState state, Func<bool> condition)
         {
             _anyTransition.Add(new Transition(state, condition));
         }
@@ -67,9 +60,9 @@ namespace General
         private class Transition
         {
             public Func<bool> Condition { get; }
-            public State NextState { get; }
+            public IState NextState { get; }
 
-            public Transition(State nextState, Func<bool> condition)
+            public Transition(IState nextState, Func<bool> condition)
             {
                 NextState = nextState;
                 Condition = condition;

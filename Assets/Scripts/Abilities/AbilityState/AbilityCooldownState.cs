@@ -4,27 +4,29 @@ using UnityEngine;
 
 namespace Abilities.AbilityState
 {
-    public class AbilityCooldownState : State
+    public class AbilityCooldownState : IState
     {
         private readonly AbilitySo _ability;
-        public float _cooldownTimeLeft { get; private set; }
+        private float _cooldownTimeLeft;
+
+        public bool CooldownIsOver => _cooldownTimeLeft <= 0;
         
         public AbilityCooldownState(AbilitySo ability)
         {
             _ability = ability;
         }
         
-        public override void Refresh()
+        public void Refresh()
         {
             _cooldownTimeLeft -= Time.deltaTime;
         }
 
-        public override void OnEnter()
+        public void OnEnter()
         {
             _cooldownTimeLeft = _ability.baseCooldown;
         }
 
-        public override void OnExit()
+        public void OnExit()
         {
             
         }

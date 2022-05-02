@@ -2,19 +2,19 @@
 
 namespace Abilities.AbilityState
 {
-    public class AbilityTargetingState : State
+    public class AbilityTargetingState : IState
     {
-        public override void Refresh()
+        public void Refresh()
         {
             throw new System.NotImplementedException();
         }
 
-        public override void OnEnter()
+        public void OnEnter()
         {
             throw new System.NotImplementedException();
         }
 
-        public override void OnExit()
+        public void OnExit()
         {
             throw new System.NotImplementedException();
         }

@@ -1,22 +1,29 @@
-﻿using General;
+﻿using Abilities.SO;
+using General;
 
 namespace Abilities.AbilityState
 {
-    public class AbilityReadyState : State
+    public class AbilityReadyState : IState
     {
-        public override void Refresh()
+        private readonly AbilitySo _abilitySo;
+
+        public AbilityReadyState(AbilitySo abilitySo)
+        {
+            _abilitySo = abilitySo;
+        }
+        public void Refresh()
         {
            
         }
 
-        public override void OnEnter()
+        public void OnEnter()
         {
-            throw new System.NotImplementedException();
+           
         }
 
-        public override void OnExit()
+        public void OnExit()
         {
-            throw new System.NotImplementedException();
+           
         }
     }
 }

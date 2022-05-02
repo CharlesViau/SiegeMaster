@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -33,6 +34,11 @@ namespace MainEntry
             FixedRefreshManagers();
         }
 
+        private void LateUpdate()
+        {
+            LateRefreshManagers();
+        }
+
         private void OnDestroy()
         {
             CleanManagers();
@@ -42,6 +48,13 @@ namespace MainEntry
 
         #region Class Methods
 
+        private void LateRefreshManagers()
+        {
+            foreach (var manager in _managers)
+            {
+                manager.LateRefresh();
+            }
+        }
         private void InitManagers()
         {
             foreach (var manager in _managers)
