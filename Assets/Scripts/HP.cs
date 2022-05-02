@@ -43,6 +43,10 @@ public class HP : MonoBehaviour,IUpdatable, IPoolable, ICreatable<HP.Args>
         transform.localScale = scale;
     }
 
+    public void LateRefresh()
+    {
+    }
+
     public class Args : ConstructionArgs
     {
         public Transform parent;

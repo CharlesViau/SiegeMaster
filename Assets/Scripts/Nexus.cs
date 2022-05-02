@@ -75,4 +75,8 @@ public class Nexus : MonoBehaviour, IUpdatable, IPoolable, IHittable, ICreatable
             hpStack.Push(h);
         }
     }
+
+    public void LateRefresh()
+    {
+    }
 }
