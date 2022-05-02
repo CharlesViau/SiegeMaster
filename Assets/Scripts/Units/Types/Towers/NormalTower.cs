@@ -9,10 +9,10 @@ namespace Units.Types
     public class NormalTower : Tower    
     {
         public float projectileSpeed;
-        // If you want want to use this predict bool you have to give the prediction 
+        // If you want want to use this predict bool you have to give the prediction projectile 
         // have to set a projectile that has PredictionMovement_SO, 
         public bool predict;
-        private Vector3 ProjectileVlocity =Vector3.zero;
+        private Vector3 ProjectileVlocity = Vector3.zero;
         public override void Fire(Transform target)
         {
             if (predict)
@@ -40,7 +40,7 @@ namespace Units.Types
         }
 
   
-        public override void Extrabehavior()
+        public override void ExtrabehaviorBeforFire()
         {
             if (target)
             {
