@@ -17,18 +17,20 @@ namespace Units.Types
         {
             if (predict)
             {
+
+
+                //this is the math for predict the intercept with between two object wqith different speed 
                 Vector3 targetMovementDirection = target.GetComponent<NavMeshAgent>().velocity;
-                //float targetMovementVlovity = target.GetComponent<NavMeshAgent>().velocity.magnitude;
                 float targetMovementVlovity = target.GetComponent<NavMeshAgent>().speed;
-                //float distanceBarrelToTarget = Vector3.Magnitude(target.position - barrel.position);
-                float AncleTargetToPlayer = Vector3.Angle(targetMovementDirection.normalized, (head.position - target.position).normalized);
-                float playerAngle = Mathf.Asin((Mathf.Sin(AncleTargetToPlayer * Mathf.Deg2Rad) * targetMovementVlovity) / projectileSpeed ) * Mathf.Rad2Deg;
+               float AncleTargetToPlayer = Vector3.Angle(targetMovementDirection.normalized, (head.position - target.position).normalized);
+                float TowerAngleFinalRotation = Mathf.Asin((Mathf.Sin(AncleTargetToPlayer * Mathf.Deg2Rad) * targetMovementVlovity) / projectileSpeed ) * Mathf.Rad2Deg;
+
                 Vector3 dir = (target.position - head.position).normalized;
                 Vector3 left = Vector3.Cross(dir, targetMovementDirection.normalized);
                 head.LookAt(target.position, left);
-                if (!float.IsNaN(playerAngle))
+                if (!float.IsNaN(TowerAngleFinalRotation))
                 {
-                    head.RotateAround(head.transform.position, head.transform.up, playerAngle);
+                    head.RotateAround(head.transform.position, head.transform.up, TowerAngleFinalRotation);
                 }
                 ProjectileVlocity = head.forward * projectileSpeed;
                 //calculate the prediction
