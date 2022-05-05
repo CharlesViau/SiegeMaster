@@ -6,7 +6,6 @@ using UnityEngine;
 
 namespace Abilities
 {
-    [RequireComponent(typeof(Unit))]
     public class AbilityHandler : MonoBehaviour, IUpdatable
     {
         private Unit _owner;
