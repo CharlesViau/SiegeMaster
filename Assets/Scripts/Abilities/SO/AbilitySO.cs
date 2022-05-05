@@ -9,6 +9,7 @@ namespace Abilities.SO
 {
     public enum CastMethod
     {
+        CantBeCast,
         Indicator,
         QuickCastWithIndicator,
         QuickCast,
@@ -18,12 +19,7 @@ namespace Abilities.SO
     {
         #region Properties and Variables
 
-        [Header("Spell Stats")] public new string name;
-        public int manaCost;
-        public int range;
-
-        public float baseCooldown;
-        public float baseChannelTime;
+        [Header("Stats")] public AbilityStats stats;
 
         #region Cast Method
 
@@ -60,7 +56,6 @@ namespace Abilities.SO
 
         [Header("Ready State")] public Action OnReadyEnter;
 
-        public UnityEvent onReadyExit;
 
         //[Header("Targeting State")]
         [Header("Channeling State")] public UnityEvent onChannelingEnter;
@@ -75,9 +70,9 @@ namespace Abilities.SO
         public Action OnAttackPress;
 
         protected Unit Owner;
-        protected Transform Target;
 
         public Targeting_SO targetingSo;
+        public GameObject target;
 
         #endregion
 
@@ -126,7 +121,7 @@ namespace Abilities.SO
                 #region State Creation (Bunch of "state = new state()")
 
                 _readyState = new AbilityReadyState(abilitySo);
-                _targetingState = new AbilityTargetingState();
+                _targetingState = new AbilityTargetingState(abilitySo);
                 _channelingState = new AbilityChannelingState(abilitySo, onCast);
                 _cooldownState = new AbilityCooldownState(abilitySo);
                 _activeState = new AbilityActiveState(abilitySo, onActiveCast);
@@ -136,7 +131,7 @@ namespace Abilities.SO
                 #region Transitions (from, to, Condition)
 
                 //Ready 
-                AddTransition(_readyState, _targetingState, () => abilitySo.IsPress);
+                AddTransition(_readyState, _targetingState, WasTrigger());
                 //Targeting
                 AddTransition(_targetingState, _channelingState, HasTarget());
                 //TODO: AddTransition(_targetingState, _readyState, () => ); // If spell cancel or switch spell before casting
@@ -152,7 +147,9 @@ namespace Abilities.SO
 
                 #region Conditions
 
-                Func<bool> HasTarget() => () => abilitySo.Target != null;
+                Func<bool> WasTrigger() => () => abilitySo.IsPress;
+
+                Func<bool> HasTarget() => () => abilitySo.target != null;
 
                 Func<bool> ChannelCompleteAndHasActiveState() =>
                     () => _channelingState.HasCompleted && abilitySo.hasActiveState;
@@ -167,6 +164,33 @@ namespace Abilities.SO
 
                 SetState(_readyState);
             }
+        }
+
+        [System.Serializable]
+        public class AbilityStats
+        {
+            public string name;
+            public int manaCost;
+            public int maxRange;
+
+            public float baseChannelTime;
+            public float baseCooldown;
+        }
+
+        [System.Serializable]
+        public class Event : UnityEvent
+        {
+            public AnimationClip animationClipToPlay;
+            //TODO : Wwise Event Field 
+            //TODO : Particle System 
+
+            private Animator _animator;
+
+            /*public void Init(AbilitySo abilitySo)
+            {
+                _animator = abilitySo.Owner.GetComponent<Animator>();
+                if(animationClipToPlay) AddListener(()=> _animator.;
+            }*/
         }
     }
 }

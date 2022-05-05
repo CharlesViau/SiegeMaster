@@ -23,7 +23,7 @@ namespace Abilities.AbilityState
 
         public void OnEnter()
         {
-            _cooldownTimeLeft = _ability.baseCooldown;
+            _cooldownTimeLeft = _ability.stats.baseCooldown;
         }
 
         public void OnExit()

@@ -10,7 +10,7 @@ namespace Abilities.AbilityState
         private readonly AbilitySo _abilitySo;
         private readonly Action _onCast;
         private float _channelTime;
-        public bool HasCompleted => _channelTime >= _abilitySo.baseChannelTime;
+        public bool HasCompleted => _channelTime >= _abilitySo.stats.baseChannelTime;
         public bool HasBeenInterrupt { get; set; }
 
         public AbilityChannelingState(AbilitySo abilitySo, Action onCast)
