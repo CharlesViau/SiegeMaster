@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public class Nexus : MonoBehaviour, IUpdatable, IPoolable, IHittable, ICreatable<Nexus.Args>
 {
     Transform enemy;
-    float getDamagedRange = 1f;
+    //float getDamagedRange = 1f;
 
     public Canvas canvasParent;
     int fullHP;
@@ -16,7 +16,7 @@ public class Nexus : MonoBehaviour, IUpdatable, IPoolable, IHittable, ICreatable
 
     public void Init()
     {
-        enemy = EnemyManager.Instance.GetClosest(transform, getDamagedRange);
+        //enemy = EnemyManager.Instance.GetClosest(transform, getDamagedRange);
         fullHP = currentHP;
         hpStack = new Stack<HP>();
         CreateHp();
@@ -29,8 +29,8 @@ public class Nexus : MonoBehaviour, IUpdatable, IPoolable, IHittable, ICreatable
 
     public void Refresh()
     {
-        if (enemy != null)
-            gameObject.GetComponent<IHittable>().GotShot(1);
+        /*if (enemy != null)
+            gameObject.GetComponent<IHittable>().GotShot(1);*/
     }
 
     public void FixedRefresh()
@@ -50,7 +50,6 @@ public class Nexus : MonoBehaviour, IUpdatable, IPoolable, IHittable, ICreatable
 
     public void Construct(Args constructionArgs)
     {
-        transform.position = constructionArgs.spawningPosition;
     }
 
     public class Args : ConstructionArgs

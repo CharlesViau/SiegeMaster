@@ -73,6 +73,7 @@ GameObject:
   - component: {fileID: 4661301986551827693}
   - component: {fileID: 4661301986551827692}
   - component: {fileID: 4661301986551827691}
+  - component: {fileID: 2012567074479219943}
   m_Layer: 10
   m_Name: Catapult
   m_TagString: Untagged
@@ -151,9 +152,9 @@ MonoBehaviour:
   projectiletype: 3
   towerParticleType: 4
   targeting_SO: {fileID: 11400000, guid: 39976aa8fee26ac4690be1badbe5fe68, type: 2}
-  projectileDamage: 500
+  projectileDamage: 1
   towerAttackRange: 200
-  attackSpeed: 2
+  attackSpeed: 0.2
   head: {fileID: 4661301987070183638}
   barrel: {fileID: 4661301985406220709}
   ParticlePosition: {fileID: 8904532236545101805}
@@ -170,6 +171,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 5.23, y: 5.2250314, z: 6.15}
   m_Center: {x: 0, y: 2.5247667, z: 0}
+--- !u!114 &2012567074479219943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4661301986551827690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8d409f0e9950bc45b207514544f016a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basicAttack: {fileID: 0}
+  abilities:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &4661301987053390090
 GameObject:
   m_ObjectHideFlags: 0

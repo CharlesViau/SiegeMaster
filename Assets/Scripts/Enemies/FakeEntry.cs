@@ -11,8 +11,10 @@ public class FakeEntry : MonoBehaviour
 
     public int nbArcherToSpawn = 5;
     public int nbSneakyToSpawn = 5;
+    public int nbSneakyToSpawn1 = 5;
+    public int nbArcherToSpawn1 = 5;
 
-    int TotalToSpawn => nbArcherToSpawn + nbSneakyToSpawn;
+    int TotalToSpawn => nbArcherToSpawn + nbSneakyToSpawn + nbArcherToSpawn1 + nbSneakyToSpawn1;
     public float spawnSpeed = 3;
     float timer;
 
@@ -42,6 +44,16 @@ public class FakeEntry : MonoBehaviour
             randomType = EnemyType.Archer;
         }
 
+        if (randomType == EnemyType.ArcherEnemy && nbArcherToSpawn1 == 0)
+        {
+            randomType = EnemyType.ArcherEnemy;
+        }
+
+        if (randomType == EnemyType.EnemySneaky && nbSneakyToSpawn1 == 0)
+        {
+            randomType = EnemyType.EnemySneaky;
+        }
+
         EnemyManager.Instance.Create(randomType, new Enemy.Args(spawnPos.position));
 
         switch (randomType)
@@ -51,6 +63,12 @@ public class FakeEntry : MonoBehaviour
                 break;
             case EnemyType.Sneaky:
                 nbSneakyToSpawn--;
+                break; 
+            case EnemyType.ArcherEnemy:
+                nbArcherToSpawn1--;
+                break;
+            case EnemyType.EnemySneaky:
+                nbSneakyToSpawn1--;
                 break;
         }
 
