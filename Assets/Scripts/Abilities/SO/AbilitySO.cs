@@ -1,6 +1,7 @@
 using System;
 using Abilities.AbilityState;
 using General;
+using SO.TowerSo.Targeting;
 using Units.Types;
 using UnityEngine;
 using UnityEngine.Events;
@@ -71,11 +72,12 @@ namespace Abilities.SO
 
         protected Unit Owner;
 
-        public Targeting_SO targetingSo;
+        public TargetingSo targetingSo;
         public GameObject target;
 
         #endregion
 
+        #region Public Methods
         public virtual void Init(Unit owner)
         {
             Owner = owner;
@@ -92,9 +94,15 @@ namespace Abilities.SO
             _stateMachine.Refresh();
         }
 
+        #endregion
+        
+        #region Abstract Methods
+
         protected abstract void ReadyStateRefresh();
         protected abstract void OnCast();
         protected abstract void OnActiveCast();
+
+        #endregion
 
         private class AbilityStateMachine : StateMachine
         {

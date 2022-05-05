@@ -1,10 +1,11 @@
 using General;
 using Managers;
 using System;
+using SO.TowerSo.Targeting;
 using UnityEngine;
 [CreateAssetMenu(fileName = "Targeting", menuName = "ScriptableObjects/Targeting/GetEnemyWithType")]
 
-public class T_GetEnemyWithType_SO : Targeting_SO
+public class T_GetEnemyWithType_SO : TargetingSo
 {
     public EnemyType enemyType;
     public override Transform GetTheTarget()

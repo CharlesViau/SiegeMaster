@@ -1,11 +1,12 @@
 ﻿using Abilities.SO;
 using General;
+using SO.TowerSo.Targeting;
 
 namespace Abilities.AbilityState
 {
     public class AbilityTargetingState : IState
     {
-        private Targeting_SO _targetingSo;
+        private TargetingSo _targetingSo;
         private readonly AbilitySo _abilitySo;
 
         public AbilityTargetingState(AbilitySo abilitySo)

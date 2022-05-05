@@ -1,5 +1,6 @@
 using General;
 using Managers;
+using SO.TowerSo.Targeting;
 using UnityEngine;
 
 namespace Units.Types
@@ -10,7 +11,7 @@ namespace Units.Types
         [HideInInspector]public Transform target;
         public ProjectileType projectiletype;
         public ParticleType towerParticleType;
-        public Targeting_SO targeting_SO;
+        public TargetingSo targeting_SO;
         public float projectileDamage;
         public float towerAttackRange;
         public float attackSpeed;

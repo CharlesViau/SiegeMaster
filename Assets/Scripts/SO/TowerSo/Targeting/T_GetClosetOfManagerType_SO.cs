@@ -5,10 +5,11 @@ using General;
 using Managers;
 
 using System;
+using SO.TowerSo.Targeting;
 
 [CreateAssetMenu(fileName = "Targeting", menuName = "ScriptableObjects/Targeting/T_GetClosetOfManagerType_SO")]
 
-public class T_GetClosetOfManagerType_SO : Targeting_SO
+public class T_GetClosetOfManagerType_SO : TargetingSo
 {
     public enum ManagerType {Enemy,Tower,Projectile }
     public ManagerType managerType;
@@ -35,7 +36,7 @@ public class T_GetClosetOfManagerType_SO : Targeting_SO
     public override Transform GetTheTarget()
     {
         
-        return Helper.GetClosetInRange(GetManagerType(managerType), gameObject.transform,range);
+        return Helper.GetClosetInRange(GetManagerType(managerType), Owner.transform,MaxRange);
     }
 
 }
