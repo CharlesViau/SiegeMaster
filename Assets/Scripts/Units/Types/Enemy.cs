@@ -15,7 +15,7 @@ namespace Units.Types
         public EnemyType enemyType;
         public ProjectileType projectiletype;
         public EnemyMovement_SO movement_SO;
-        //public Targeting_SO targeting_SO;
+        public Targeting_SO targeting_SO;
 
         protected NavMeshAgent enemyAgent;
         Animator anim;
@@ -42,24 +42,26 @@ namespace Units.Types
             base.Init();
             enemyAgent= GetComponent<NavMeshAgent>();
             anim = GetComponent<Animator>();
-            
+
+            enemyAgent.speed = speed;
             fullHP = currentHP;
             alive = true;
             
+            
 
             movement_SO = Instantiate(movement_SO);
+            targeting_SO = Instantiate(targeting_SO);
             
             player = PlayerUnitManager.Instance.GetTransform;
             objective = NexusManager.Instance.GetTransform;
             
-            movement_SO.Init(gameObject, objective.transform, speed);
+            movement_SO.Init(gameObject, objective, speed);
+            targeting_SO.Init(gameObject, attackRange);
             
             hpStack = new Stack<HP>();
             CreateHp();
 
 
-            //targeting_SO = Instantiate(targeting_SO);
-            //targeting_SO.Init(objective, attackRange);
             //Debug.Log("init enemy");
         }
 
@@ -71,9 +73,9 @@ namespace Units.Types
         public override void Refresh()
         {
             base.Refresh();
-            //Move(player.position);
-            Move(objective.position);
-            anim.SetFloat("Speed", enemyAgent.speed);
+            Move(targeting_SO.GetTheTarget().position);
+            anim.SetFloat("Speed", speed);
+            
             if (currentHP <= 0)
             {
                 //anim.SetTrigger("IsDead");
@@ -133,17 +135,6 @@ namespace Units.Types
             }
         }
 
-        void DetectPlayer()
-        {
-            if (Vector3.Distance(transform.position, player.position) < 0.1f)
-            {
-                Move(player.position);
-            }
-            else
-            {
-                Move(objective.transform.position);
-            }
-        }
 
         void CreateProjectile(Transform target)
         {
