@@ -7,7 +7,6 @@ using System.Collections.Generic;
 public class HP : MonoBehaviour,IUpdatable, IPoolable, ICreatable<HP.Args>
 {
     public HPType type;
-    Vector3 scale = Vector3.one;
 
     public void PostInit()
     {
@@ -44,8 +43,13 @@ public class HP : MonoBehaviour,IUpdatable, IPoolable, ICreatable<HP.Args>
     public void Construct(Args constructionArgs)
     {
         transform.SetParent(constructionArgs.parent);
-        transform.position = constructionArgs.spawningPosition;
-        transform.localScale = scale;
+        transform.position = constructionArgs.parent.position;
+        transform.localScale = Vector3.one;
+        transform.localEulerAngles = Vector3.zero;
+    }
+
+    public void LateRefresh()
+    {
     }
 
     public class Args : ConstructionArgs

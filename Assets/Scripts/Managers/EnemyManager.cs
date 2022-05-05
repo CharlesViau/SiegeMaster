@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Managers
 {
-    public enum EnemyType { Archer, Sneaky }
+    public enum EnemyType { ArcherEnemy, SneakyEnemy }
 
     public class EnemyManager : Manager<Enemy, EnemyType, Enemy.Args, EnemyManager>
     {

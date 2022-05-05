@@ -18,15 +18,19 @@ namespace Inputs
     [RequireComponent(typeof(PlayerInput), typeof(PlayerUnit))]
     public class PlayerController : MonoBehaviour, IUpdatable
     {
+
         #region Properties and Variables
+        public Transform playerRotationLook;
+      
+        public Vector3 HitPoint { get; private set; }
 
         //Camera
+        private CameraRaycast cameraRayCast;
+        public float MaxDistanceAiming;
         private Transform _mainCamera;
-
         //ComponentsCache
         private PlayerInput _playerInput;
         private PlayerUnit _unit;
-
         //ActionCache
         private InputAction _moveAction;
         private InputAction _lookAction;
@@ -52,6 +56,7 @@ namespace Inputs
         #region IUpdatable (Init, Refresh...)
         public void Init()
         {
+            cameraRayCast = FindObjectOfType<CameraRaycast>();
             //Get Camera Reference
             if (Camera.main != null) _mainCamera = Camera.main.transform;
             else Debug.Log("No Main Camera Found");
@@ -84,6 +89,7 @@ namespace Inputs
 
         public void Refresh()
         {
+            HitPoint = cameraRayCast.RayCast(MaxDistanceAiming);
             PollFireInput();
             PollAbilityInput();
         }
@@ -115,7 +121,8 @@ namespace Inputs
         {
             if (_lookAction.ReadValue<Vector2>() is var mouseDelta && mouseDelta != Vector2.zero)
             {
-                CommandManager.Instance.Add(new LookCommand(_unit, _mainCamera.transform.eulerAngles.y));
+                playerRotationLook.forward = (HitPoint - playerRotationLook.position).normalized;
+                CommandManager.Instance.Add(new LookCommand(_unit, playerRotationLook.transform.eulerAngles.y));
             }
         }
 

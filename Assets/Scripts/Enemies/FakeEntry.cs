@@ -30,26 +30,26 @@ public class FakeEntry : MonoBehaviour
         if (timer < spawnSpeed || TotalToSpawn == 0)
             return;
 
-        EnemyType randomType = (EnemyType)Random.Range(0, enemyTypes.Length - 1);
+        EnemyType randomType = (EnemyType)Random.Range(0, enemyTypes.Length);
 
-        if (randomType == EnemyType.Archer && nbArcherToSpawn == 0)
+        if (randomType == EnemyType.ArcherEnemy && nbArcherToSpawn == 0)
         {
-            randomType = EnemyType.Sneaky;
+            randomType = EnemyType.ArcherEnemy;
         }
 
-        if (randomType == EnemyType.Sneaky && nbSneakyToSpawn == 0)
+        if (randomType == EnemyType.SneakyEnemy && nbSneakyToSpawn == 0)
         {
-            randomType = EnemyType.Archer;
+            randomType = EnemyType.SneakyEnemy;
         }
 
         EnemyManager.Instance.Create(randomType, new Enemy.Args(spawnPos.position));
 
         switch (randomType)
         {
-            case EnemyType.Archer:
+            case EnemyType.ArcherEnemy:
                 nbArcherToSpawn--;
                 break;
-            case EnemyType.Sneaky:
+            case EnemyType.SneakyEnemy:
                 nbSneakyToSpawn--;
                 break;
         }

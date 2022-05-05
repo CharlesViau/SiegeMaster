@@ -17,6 +17,8 @@ namespace Units.Types
         public EnemyMovement_SO movement_SO;
         //public Targeting_SO targeting_SO;
 
+        protected NavMeshAgent enemyAgent;
+        Animator anim;
         protected Transform player;
         protected Transform objective;
         public float projectileDamage;
@@ -38,12 +40,20 @@ namespace Units.Types
         public override void Init()
         {
             base.Init();
+            enemyAgent= GetComponent<NavMeshAgent>();
+            anim = GetComponent<Animator>();
+            
             fullHP = currentHP;
             alive = true;
+            
+
             movement_SO = Instantiate(movement_SO);
+            
             player = PlayerUnitManager.Instance.GetTransform;
             objective = NexusManager.Instance.GetTransform;
+            
             movement_SO.Init(gameObject, objective.transform, speed);
+            
             hpStack = new Stack<HP>();
             CreateHp();
 
@@ -63,10 +73,11 @@ namespace Units.Types
             base.Refresh();
             //Move(player.position);
             Move(objective.position);
-            
+            anim.SetFloat("Speed", enemyAgent.speed);
             if (currentHP <= 0)
             {
-                ObjectPool.Instance.Pool(enemyType, this);
+                //anim.SetTrigger("IsDead");
+                ObjectPool.Instance.Pool(enemyType, this);                
             }
             //DetectPlayer();
             //Shoot();      
@@ -107,13 +118,14 @@ namespace Units.Types
         }
 
         public void Construct(Args constructionArgs)
-        {
-            transform.GetComponent<NavMeshAgent>().Move(constructionArgs.spawningPosition);
+        {            
+             enemyAgent.Move(constructionArgs.spawningPosition);
             //transform.position = constructionArgs.spawningPosition;
         }
 
         void CreateHp()
         {
+            //fullHP = 0;
             for (int i = 0; i < fullHP; i++)
             {
                 HP h = HPManager.Instance.Create(HPType.EnemyHp, new HP.Args(Vector3.zero, canvasParent.transform));

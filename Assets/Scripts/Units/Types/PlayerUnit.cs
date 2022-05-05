@@ -21,8 +21,8 @@ namespace Units.Types
 
         public void Look(float cameraYAxis)
         {
-            //transform.rotation = Quaternion.Slerp(Rigidbody.rotation, Quaternion.Euler(0, cameraYAxis, 0), turningSpeed * Time.fixedDeltaTime);
-            transform.rotation = Quaternion.Euler(0, cameraYAxis, 0);
+            transform.rotation = Quaternion.Slerp(Rigidbody.rotation, Quaternion.Euler(0, cameraYAxis, 0), turningSpeed * Time.fixedDeltaTime);
+            //transform.rotation = Quaternion.Euler(0, cameraYAxis, 0);
         }
     }
 }

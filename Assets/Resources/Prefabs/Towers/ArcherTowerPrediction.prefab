@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 833737523209293073}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: SmokePosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 833737523921360983}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 833737524629397917}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 6592554438504343144}
   - component: {fileID: 5662993536662635589}
   - component: {fileID: 8956193590234478775}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -186,7 +186,7 @@ GameObject:
   - component: {fileID: 3013112125351310805}
   - component: {fileID: 6689732657164642570}
   - component: {fileID: 7519485737853750688}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -281,7 +281,8 @@ GameObject:
   - component: {fileID: 8005040781669466769}
   - component: {fileID: 8005040781669466774}
   - component: {fileID: 8005040781669466768}
-  m_Layer: 0
+  - component: {fileID: 2554144636171595740}
+  m_Layer: 12
   m_Name: ArcherTowerPrediction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -357,11 +358,29 @@ MonoBehaviour:
   projectiletype: 4
   towerParticleType: 1
   targeting_SO: {fileID: 11400000, guid: 39976aa8fee26ac4690be1badbe5fe68, type: 2}
-  projectileDamage: 50
+  projectileDamage: 1
   towerAttackRange: 100
-  attackSpeed: 3
+  attackSpeed: 0.5
   head: {fileID: 833737523921360983}
   barrel: {fileID: 833737523921360983}
   ParticlePosition: {fileID: 833737523209293073}
   projectileSpeed: 100
   predict: 1
+--- !u!114 &2554144636171595740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8005040781669466772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8d409f0e9950bc45b207514544f016a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basicAttack: {fileID: 0}
+  abilities:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

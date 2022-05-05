@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d56aa92162aae9c40bdf794e6f57be08, type: 2}
+  - {fileID: 2100000, guid: 03cd2cec76bb4174cad7c3234686f834, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -113,7 +113,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &-6074030218228170313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,4 +130,4 @@ MonoBehaviour:
   behavior_SO: {fileID: 11400000, guid: fb8029befc7fa5844bda97bd6353c746, type: 2}
   movement_SO: {fileID: 11400000, guid: bfa8f950e95ce98448392833b44becfc, type: 2}
   onCollision_SO: {fileID: 11400000, guid: edb97fc1a3e4ef74b8c6a49ecfdeda81, type: 2}
-  timeToPoolIfDidntHitAnything: 10
+  timeToPoolIfDidntHitAnything: 30
