@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2516382611869557219}
   - component: {fileID: 1532392870885682758}
   - component: {fileID: 3648144927544285836}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,8 +94,8 @@ GameObject:
   - component: {fileID: 5553911213201598248}
   - component: {fileID: 5553911213201598249}
   - component: {fileID: 5553911213201598253}
-  - component: {fileID: 5085902589813781815}
-  m_Layer: 10
+  - component: {fileID: 1535246143620687926}
+  m_Layer: 12
   m_Name: SeekingTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -172,9 +172,9 @@ MonoBehaviour:
   projectiletype: 1
   towerParticleType: 3
   targeting_SO: {fileID: 11400000, guid: 39976aa8fee26ac4690be1badbe5fe68, type: 2}
-  projectileDamage: 2
+  projectileDamage: 1
   towerAttackRange: 500
-  attackSpeed: 0.5
+  attackSpeed: 1
   head: {fileID: 5553911214106163661}
   barrel: {fileID: 5553911213991681000}
   ParticlePosition: {fileID: 5553911213244386247}
@@ -193,7 +193,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.1602554, y: 3.9904451, z: 2.1335793}
   m_Center: {x: 0.04857254, y: -2.0242896, z: -0.013692856}
---- !u!114 &5085902589813781815
+--- !u!114 &1535246143620687926
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -220,7 +220,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5553911213244386247}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Fire ParticleSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -250,7 +250,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5553911213991681000}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -280,7 +280,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5553911214106163661}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -314,7 +314,7 @@ GameObject:
   - component: {fileID: 5553911214738448624}
   - component: {fileID: 5553911214738448630}
   - component: {fileID: 5553911214738448631}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: SeekingSpecialParticleSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}

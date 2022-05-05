@@ -53,7 +53,7 @@ namespace Units.Types
             if (timer > _attackSpeed)
             {
                 GetTarget();
-                Extrabehavior();
+                ExtrabehaviorBeforFire();
                 if (target)
                 {
                     Fire(target);
@@ -64,7 +64,7 @@ namespace Units.Types
             }
          
         }
-        public virtual void Extrabehavior()
+        public virtual void ExtrabehaviorBeforFire()
         {
 
         }

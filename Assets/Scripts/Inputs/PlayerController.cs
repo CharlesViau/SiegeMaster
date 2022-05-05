@@ -18,15 +18,15 @@ namespace Inputs
     [RequireComponent(typeof(PlayerInput), typeof(PlayerUnit))]
     public class PlayerController : MonoBehaviour, IUpdatable
     {
+        public Transform playerRotation;
+        public CameraRatcast cameraRatcast;
         #region Properties and Variables
 
         //Camera
         private Transform _mainCamera;
-
         //ComponentsCache
         private PlayerInput _playerInput;
         private PlayerUnit _unit;
-
         //ActionCache
         private InputAction _moveAction;
         private InputAction _lookAction;
@@ -115,7 +115,8 @@ namespace Inputs
         {
             if (_lookAction.ReadValue<Vector2>() is var mouseDelta && mouseDelta != Vector2.zero)
             {
-                CommandManager.Instance.Add(new LookCommand(_unit, _mainCamera.transform.eulerAngles.y));
+                playerRotation.forward = (cameraRatcast.hitPoint - playerRotation.position).normalized;
+                CommandManager.Instance.Add(new LookCommand(_unit, playerRotation.transform.eulerAngles.y));
             }
         }
 
