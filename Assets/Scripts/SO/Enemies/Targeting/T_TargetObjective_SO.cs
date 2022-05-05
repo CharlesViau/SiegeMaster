@@ -7,13 +7,13 @@ public class T_TargetObjective_SO : Targeting_SO
 {    
     // this class needs to implement
 
-    public LayerMask objective;
+    GameObject unit;
+    float range;
 
     public override void Init(GameObject _unit, float _range)
     {
         base.Init(_unit, _range);
-        if (objective != _unit.layer)
-            Debug.LogError("The object layer should be" + objective.ToString());
+        
     }
 
     public override Transform GetTheTarget()
