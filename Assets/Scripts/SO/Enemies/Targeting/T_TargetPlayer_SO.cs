@@ -28,6 +28,8 @@ public class T_TargetPlayer_SO : Targeting_SO
 
     bool DetectPlayer()
     {
+        if(player == null)
+            return false;
         if (Vector3.Distance(gameObject.transform.position, player.position) < range)
         {
             isAttacking = true;

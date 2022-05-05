@@ -576,13 +576,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8005040781669466768, guid: 95a97cfc3ef3ed145a8fcb8fbd60e95e, type: 3}
+      propertyPath: projectileSpeed
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 8005040781669466772, guid: 95a97cfc3ef3ed145a8fcb8fbd60e95e, type: 3}
       propertyPath: m_Name
       value: ArcherTowerPrediction
       objectReference: {fileID: 0}
     - target: {fileID: 8005040781669466772, guid: 95a97cfc3ef3ed145a8fcb8fbd60e95e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8005040781669466774, guid: 95a97cfc3ef3ed145a8fcb8fbd60e95e, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 95a97cfc3ef3ed145a8fcb8fbd60e95e, type: 3}
@@ -848,8 +856,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPos: {fileID: 266649714}
-  nbArcherToSpawn: 5
-  nbSneakyToSpawn: 5
+  nbArcherToSpawn: 20
+  nbSneakyToSpawn: 20
   spawnSpeed: 3
 --- !u!1 &334677817
 GameObject:
@@ -1115,6 +1123,10 @@ PrefabInstance:
     - target: {fileID: 4661301986551827690, guid: bdffcff5e617ada4da87046b5f0ce705, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4661301986551827692, guid: bdffcff5e617ada4da87046b5f0ce705, type: 3}
+      propertyPath: attackSpeed
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4661301986551827695, guid: bdffcff5e617ada4da87046b5f0ce705, type: 3}
       propertyPath: m_RootOrder
@@ -1798,6 +1810,10 @@ PrefabInstance:
     - target: {fileID: 8040253615132353723, guid: 0e0288a7078aabf4ab4929a392289c83, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040253615132353723, guid: 0e0288a7078aabf4ab4929a392289c83, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8623797578784982487, guid: 0e0288a7078aabf4ab4929a392289c83, type: 3}
       propertyPath: m_Camera

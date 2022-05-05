@@ -1,3 +1,4 @@
+using General;
 using Managers;
 using UnityEngine;
 using Units.Types;
@@ -53,7 +54,6 @@ public class FakeEntry : MonoBehaviour
                 nbSneakyToSpawn--;
                 break;
         }
-
         timer = 0;
     }
 }

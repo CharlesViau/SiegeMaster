@@ -9,59 +9,63 @@ namespace Units.Types
 {
     public class Enemy : Unit, ICreatable<Enemy.Args>, IHittable
     {
+        #region Fields
         /*public Transform[] targets;
         int waypointCounter = 0;*/
         public bool alive;
+        protected Vector3 spawn;
+
+        #region Set Enemy Type
         public EnemyType enemyType;
-        public ProjectileType projectiletype;
         public EnemyMovement_SO movement_SO;
         public Targeting_SO targeting_SO;
+        #endregion
 
+        #region Get Components
         protected NavMeshAgent enemyAgent;
-        Animator anim;
+        protected Animator anim;
         protected Transform player;
         protected Transform objective;
+        #endregion
+
+        #region Attacking
+        public ProjectileType projectiletype;
         public float projectileDamage;
         public float attackRange;
         public float projectileSpeed;
+        #endregion
 
+        #region UI & HP
         public Canvas canvasParent;
         int fullHP;
         public int currentHP;
         Stack<HP> hpStack;
-
-        public class Args : ConstructionArgs
-        {
-            public Args(Vector3 _spawningPosition) : base(_spawningPosition)
-            {
-            }
-        }
+        Vector3 facingDirUI;
+        #endregion
+        #endregion
 
         public override void Init()
         {
             base.Init();
-            enemyAgent= GetComponent<NavMeshAgent>();
+            enemyAgent = GetComponent<NavMeshAgent>();
             anim = GetComponent<Animator>();
 
+            alive = true;
             enemyAgent.speed = speed;
             fullHP = currentHP;
-            alive = true;
-            
-            
 
             movement_SO = Instantiate(movement_SO);
             targeting_SO = Instantiate(targeting_SO);
-            
+
             player = PlayerUnitManager.Instance.GetTransform;
             objective = NexusManager.Instance.GetTransform;
-            
+
             movement_SO.Init(gameObject, objective, speed);
             targeting_SO.Init(gameObject, attackRange);
-            
+
+            facingDirUI = canvasParent.transform.forward;
             hpStack = new Stack<HP>();
             CreateHp();
-
-
             //Debug.Log("init enemy");
         }
 
@@ -73,13 +77,20 @@ namespace Units.Types
         public override void Refresh()
         {
             base.Refresh();
-            Move(targeting_SO.GetTheTarget().position);
             anim.SetFloat("Speed", speed);
-            
+            Move(targeting_SO.GetTheTarget().position);
+
+            FacingUIToPlayer();
+
             if (currentHP <= 0)
             {
                 //anim.SetTrigger("IsDead");
-                ObjectPool.Instance.Pool(enemyType, this);                
+                ObjectPool.Instance.Pool(enemyType, this);
+            }
+
+            if (!alive)
+            {
+                ObjectPool.Instance.Depool(enemyType);
             }
             //DetectPlayer();
             //Shoot();      
@@ -102,7 +113,7 @@ namespace Units.Types
             base.Depool();
             alive = true;
             gameObject.SetActive(true);
-            
+            enemyAgent.Move(spawn);
             currentHP = fullHP;
             CreateHp();
         }
@@ -111,29 +122,36 @@ namespace Units.Types
         {
             currentHP -= (int)damage;
             ObjectPool.Instance.Pool(HPType.EnemyHp, hpStack.Pop());
-            GetComponent<MeshRenderer>().material.color = Random.ColorHSV();
+            //GetComponent<MeshRenderer>().material.color = Random.ColorHSV();
         }
 
         public override void Move(Vector3 direction)
         {
-            movement_SO.MoveToPoint(direction, alive);
+            if (direction != null && alive)
+                movement_SO.MoveToPoint(direction);
         }
 
         public void Construct(Args constructionArgs)
-        {            
-             enemyAgent.Move(constructionArgs.spawningPosition);
+        {
+            spawn = constructionArgs.spawningPosition;
+            enemyAgent.Move(constructionArgs.spawningPosition);
             //transform.position = constructionArgs.spawningPosition;
         }
 
         void CreateHp()
         {
-            //fullHP = 0;
             for (int i = 0; i < fullHP; i++)
             {
                 HP h = HPManager.Instance.Create(HPType.EnemyHp, new HP.Args(Vector3.zero, canvasParent.transform));
                 hpStack.Push(h);
             }
         }
+
+        void FacingUIToPlayer()
+        {
+            facingDirUI = player.transform.position - transform.position;
+        }
+
 
 
         void CreateProjectile(Transform target)
@@ -165,5 +183,12 @@ namespace Units.Types
             //movement_SO.MoveToPoint(targets[waypointCounter].position);
             //rb.velocity = 20 * (targets[waypointCounter].position - player.position).normalized;
         }*/
+
+        public class Args : ConstructionArgs
+        {
+            public Args(Vector3 _spawningPosition) : base(_spawningPosition)
+            {
+            }
+        }
     }
 }
