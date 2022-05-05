@@ -38,6 +38,11 @@ public class Nexus : MonoBehaviour, IUpdatable, IPoolable, IHittable, ICreatable
 
     }
 
+    public void LateRefresh()
+    {
+       
+    }
+
     public void Pool()
     {
 
@@ -73,9 +78,5 @@ public class Nexus : MonoBehaviour, IUpdatable, IPoolable, IHittable, ICreatable
             HP h = HPManager.Instance.Create(HPType.NexusHp, new HP.Args(Vector3.zero, canvasParent.transform));
             hpStack.Push(h);
         }
-    }
-
-    public void LateRefresh()
-    {
     }
 }

@@ -1,24 +1,44 @@
-﻿using General;
+﻿using System;
+using Abilities.SO;
+using General;
 using UnityEngine;
 
 namespace Abilities.AbilityState
 {
-    public class AbilityChannelingState : State
+    public class AbilityChannelingState : IState
     {
-        public float ChannelTime { get; private set; }
-        public override void Refresh()
+        private readonly AbilitySo _abilitySo;
+        private readonly Action _onCast;
+        private float _channelTime;
+        public bool HasCompleted => _channelTime >= _abilitySo.stats.baseChannelTime;
+        public bool HasBeenInterrupt { get; set; }
+
+        public AbilityChannelingState(AbilitySo abilitySo, Action onCast)
         {
-            ChannelTime += Time.deltaTime;
+            _onCast = onCast;
+            _abilitySo = abilitySo;
+        }
+        public void Refresh()
+        {
+            _channelTime += Time.deltaTime;
         }
 
-        public override void OnEnter()
+        public void OnEnter()
         {
-            ChannelTime = 0;
+            _channelTime = 0;
+            HasBeenInterrupt = false;
         }
 
-        public override void OnExit()
+        public void OnExit()
         {
-           
+            if (HasCompleted)
+            {
+                _onCast.Invoke();
+            }
+            else
+            {
+                //TODO : Do something on cast fail
+            }
         }
     }
 }

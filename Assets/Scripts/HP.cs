@@ -20,6 +20,11 @@ public class HP : MonoBehaviour,IUpdatable, IPoolable, ICreatable<HP.Args>
     {
     }
 
+    public void LateRefresh()
+    {
+        
+    }
+
     public void Refresh()
     {
        
@@ -42,10 +47,7 @@ public class HP : MonoBehaviour,IUpdatable, IPoolable, ICreatable<HP.Args>
         transform.localScale = Vector3.one;
         transform.localEulerAngles = Vector3.zero;
     }
-
-    public void LateRefresh()
-    {
-    }
+    
 
     public class Args : ConstructionArgs
     {

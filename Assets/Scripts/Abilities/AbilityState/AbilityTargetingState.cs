@@ -1,20 +1,30 @@
-﻿using General;
+﻿using Abilities.SO;
+using General;
 
 namespace Abilities.AbilityState
 {
-    public class AbilityTargetingState : State
+    public class AbilityTargetingState : IState
     {
-        public override void Refresh()
+        private Targeting_SO _targetingSo;
+        private readonly AbilitySo _abilitySo;
+
+        public AbilityTargetingState(AbilitySo abilitySo)
+        {
+            _abilitySo = abilitySo;
+            _targetingSo = abilitySo.targetingSo;
+        }
+
+        public void Refresh()
         {
             throw new System.NotImplementedException();
         }
 
-        public override void OnEnter()
+        public void OnEnter()
         {
             throw new System.NotImplementedException();
         }
 
-        public override void OnExit()
+        public void OnExit()
         {
             throw new System.NotImplementedException();
         }

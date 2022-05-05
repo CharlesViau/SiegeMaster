@@ -1015,9 +1015,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPos: {fileID: 266649714}
-  nbArcherToSpawn: 500
-  nbSneakyToSpawn: 500
-  spawnSpeed: 0.5
+  nbArcherToSpawn: 50
+  nbSneakyToSpawn: 50
+  spawnSpeed: 2
 --- !u!1 &334677817
 GameObject:
   m_ObjectHideFlags: 0

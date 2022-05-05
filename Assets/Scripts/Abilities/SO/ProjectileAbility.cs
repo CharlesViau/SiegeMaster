@@ -17,8 +17,12 @@ namespace Abilities.SO
         protected override void OnCast()
         {
             ProjectileManager.Instance.Create(type,
-                new Projectile.Args(Owner.transform.position, type, Target, projectileDamage, projectileSpeed, Vector3.zero));
+                new Projectile.Args(Owner.transform.position, type, target.transform, projectileDamage, projectileSpeed, Vector3.zero));
         }
-        
+
+        protected override void OnActiveCast()
+        {
+            
+        }
     }
 }
