@@ -10,7 +10,6 @@ public class FakeEntry : MonoBehaviour
 
     EnemyType[] enemyTypes;
     EnemyType randomType;
-
     public int nbArcherToSpawn = 5;
     public int nbSneakyToSpawn = 5;
 
@@ -35,12 +34,12 @@ public class FakeEntry : MonoBehaviour
 
         randomType = (EnemyType)Random.Range(0, enemyTypes.Length);
 
-        if (randomType == EnemyType.ArcherEnemy && nbArcherToSpawn == 0)
+        if (randomType == EnemyType.ArcherEnemy && nbArcherToSpawn > 0)
         {
             randomType = EnemyType.ArcherEnemy;
         }
 
-        if (randomType == EnemyType.SneakyEnemy && nbSneakyToSpawn == 0)
+        if (randomType == EnemyType.SneakyEnemy && nbSneakyToSpawn > 0)
         {
             randomType = EnemyType.SneakyEnemy;
         }
