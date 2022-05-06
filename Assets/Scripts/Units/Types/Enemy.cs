@@ -12,8 +12,8 @@ namespace Units.Types
         #region Fields
         /*public Transform[] targets;
         int waypointCounter = 0;*/
+
         public bool alive;
-        protected Vector3 spawn;
         float delayToPool = 10;
 
         #region Set Enemy Type
@@ -77,12 +77,12 @@ namespace Units.Types
 
         public override void Refresh()
         {
-            base.Refresh();
+            //base.Refresh();
             if (alive)
             {
                 anim.SetFloat("Speed", speed);
                 Move(targeting_SO.GetTheTarget().position);
-                //FacingUIToPlayer();
+                FacingUIToPlayer();
                 //Shoot();
             }
 
@@ -91,7 +91,7 @@ namespace Units.Types
                 if (gameObject.activeInHierarchy)
                     enemyAgent.ResetPath();
                 delayToPool -= Time.deltaTime;
-                if (delayToPool <= 0)
+                if (delayToPool <= 0 && !alive)
                     ObjectPool.Instance.Pool(enemyType, this);
             }
         }
@@ -103,18 +103,17 @@ namespace Units.Types
 
         public override void Pool()
         {
-            base.Pool();
             gameObject.SetActive(false);
         }
 
         public override void Depool()
         {
-            base.Depool();
+            hpStack.Clear();
             alive = true;
             delayToPool = 10;
-            gameObject.SetActive(true);
             currentHP = fullHP;
             CreateHp();
+            gameObject.SetActive(true);
         }
 
         //public bool debugTest;
@@ -135,7 +134,7 @@ namespace Units.Types
                         throw;
                     }
                 }
-            DeadAnimation();
+            DeathAnimation();
 
             /*if (debugTest)
                 Debug.Log("");*/
@@ -149,14 +148,14 @@ namespace Units.Types
         }
 
         public void Construct(Args constructionArgs)
-        {
-            spawn = constructionArgs.spawningPosition;
+        {            
+            transform.SetParent(constructionArgs.parent);
             enemyAgent.Move(constructionArgs.spawningPosition);
             //transform.position = constructionArgs.spawningPosition;
         }
 
         void CreateHp()
-        {
+        {           
             for (int i = 0; i < fullHP; i++)
             {
                 HP h = HPManager.Instance.Create(HPType.EnemyHp, new HP.Args(Vector3.zero, canvasParent.transform));
@@ -164,7 +163,7 @@ namespace Units.Types
             }
         }
 
-        void DeadAnimation()
+        void DeathAnimation()
         {
             if (currentHP <= 0)
             {
@@ -193,6 +192,7 @@ namespace Units.Types
             }
         }
 
+
         /*void WaypointsCheck()
         {
             if (Vector3.Distance(targets[waypointCounter].position, player.position) < 0.1f)
@@ -210,8 +210,10 @@ namespace Units.Types
 
         public class Args : ConstructionArgs
         {
-            public Args(Vector3 _spawningPosition) : base(_spawningPosition)
+            public Transform parent;
+            public Args(Vector3 _spawningPosition, Transform _parent) : base(_spawningPosition)
             {
+                parent = _parent;
             }
         }
     }

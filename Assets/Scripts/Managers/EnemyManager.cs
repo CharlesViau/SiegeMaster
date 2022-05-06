@@ -38,9 +38,7 @@ namespace Managers
                     transform = enemy.transform;
                 }
             }
-
             return transform;
-
         }
     }
 }

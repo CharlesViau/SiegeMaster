@@ -6,6 +6,7 @@ using System.Linq;
 
 public class FakeEntry : MonoBehaviour
 {
+    public Transform enemiesParent;
     public Transform spawnPos;
 
     EnemyType[] enemyTypes;
@@ -44,7 +45,7 @@ public class FakeEntry : MonoBehaviour
             randomType = EnemyType.SneakyEnemy;
         }
 
-        EnemyManager.Instance.Create(randomType, new Enemy.Args(spawnPos.position));
+        EnemyManager.Instance.Create(randomType, new Enemy.Args(spawnPos.position, enemiesParent));
 
         switch (randomType)
         {
