@@ -80,7 +80,7 @@ namespace Units.Types
             anim.SetFloat("Speed", speed);
             Move(targeting_SO.GetTheTarget().position);
 
-            FacingUIToPlayer();
+            //FacingUIToPlayer();
 
             if (currentHP <= 0)
             {
@@ -118,10 +118,18 @@ namespace Units.Types
             CreateHp();
         }
 
+        public bool debugTest;
         public void GotShot(float damage)
         {
+            if (debugTest)
+                Debug.Log("");
             currentHP -= (int)damage;
-            ObjectPool.Instance.Pool(HPType.EnemyHp, hpStack.Pop());
+            
+            if (damage > 0)
+                for (int i = 0; i < damage; i++)
+                {
+                    ObjectPool.Instance.Pool(HPType.EnemyHp, hpStack.Pop());
+                }
             //GetComponent<MeshRenderer>().material.color = Random.ColorHSV();
         }
 
