@@ -113,7 +113,7 @@ namespace Units.Types
             alive = true;
             delayToPool = 10;
             gameObject.SetActive(true);
-            enemyAgent.Move(spawn);
+           //nemyAgent.Move(spawn);
             currentHP = fullHP;
             CreateHp();
         }
@@ -123,10 +123,19 @@ namespace Units.Types
         {
             currentHP -= (int)damage;
 
-            if (damage > 0)
+            if (currentHP >= 0)
                 for (int i = 0; i < damage; i++)
                 {
-                    ObjectPool.Instance.Pool(HPType.EnemyHp, hpStack.Pop());
+                    
+                    try
+                    {
+                        ObjectPool.Instance.Pool(HPType.EnemyHp, hpStack.Pop());
+                    }
+                    catch (System.Exception)
+                    {
+                        Debug.Log("sss");
+                        throw;
+                    }
                 }
             DeadAnimation();
 
