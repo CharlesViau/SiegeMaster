@@ -856,8 +856,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPos: {fileID: 266649714}
-  nbArcherToSpawn: 2
-  nbSneakyToSpawn: 2
+  nbArcherToSpawn: 4
+  nbSneakyToSpawn: 4
   spawnSpeed: 3
 --- !u!1 &334677817
 GameObject:
@@ -1122,7 +1122,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4661301986551827690, guid: bdffcff5e617ada4da87046b5f0ce705, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4661301986551827692, guid: bdffcff5e617ada4da87046b5f0ce705, type: 3}
       propertyPath: attackSpeed
@@ -1813,7 +1813,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8040253615132353723, guid: 0e0288a7078aabf4ab4929a392289c83, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8623797578784982487, guid: 0e0288a7078aabf4ab4929a392289c83, type: 3}
       propertyPath: m_Camera
@@ -1929,7 +1929,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4661301986551827690, guid: bdffcff5e617ada4da87046b5f0ce705, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4661301986551827695, guid: bdffcff5e617ada4da87046b5f0ce705, type: 3}
       propertyPath: m_RootOrder

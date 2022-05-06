@@ -14,6 +14,7 @@ namespace Units.Types
         int waypointCounter = 0;*/
         public bool alive;
         protected Vector3 spawn;
+        float delayToPool = 10;
 
         #region Set Enemy Type
         public EnemyType enemyType;
@@ -77,23 +78,22 @@ namespace Units.Types
         public override void Refresh()
         {
             base.Refresh();
-            anim.SetFloat("Speed", speed);
-            Move(targeting_SO.GetTheTarget().position);
-
-            //FacingUIToPlayer();
-
-            if (currentHP <= 0)
+            if (alive)
             {
-                //anim.SetTrigger("IsDead");
-                ObjectPool.Instance.Pool(enemyType, this);
+                anim.SetFloat("Speed", speed);
+                Move(targeting_SO.GetTheTarget().position);
+                //FacingUIToPlayer();
+                //Shoot();
             }
 
             if (!alive)
             {
-                ObjectPool.Instance.Depool(enemyType);
+                if (gameObject.activeInHierarchy)
+                    enemyAgent.ResetPath();
+                delayToPool -= Time.deltaTime;
+                if (delayToPool <= 0)
+                    ObjectPool.Instance.Pool(enemyType, this);
             }
-            //DetectPlayer();
-            //Shoot();      
         }
 
         public override void FixedRefresh()
@@ -104,7 +104,6 @@ namespace Units.Types
         public override void Pool()
         {
             base.Pool();
-            alive = false;
             gameObject.SetActive(false);
         }
 
@@ -112,24 +111,27 @@ namespace Units.Types
         {
             base.Depool();
             alive = true;
+            delayToPool = 10;
             gameObject.SetActive(true);
             enemyAgent.Move(spawn);
             currentHP = fullHP;
             CreateHp();
         }
 
-        public bool debugTest;
+        //public bool debugTest;
         public void GotShot(float damage)
         {
-            if (debugTest)
-                Debug.Log("");
             currentHP -= (int)damage;
-            
+
             if (damage > 0)
                 for (int i = 0; i < damage; i++)
                 {
                     ObjectPool.Instance.Pool(HPType.EnemyHp, hpStack.Pop());
                 }
+            DeadAnimation();
+
+            /*if (debugTest)
+                Debug.Log("");*/
             //GetComponent<MeshRenderer>().material.color = Random.ColorHSV();
         }
 
@@ -152,6 +154,15 @@ namespace Units.Types
             {
                 HP h = HPManager.Instance.Create(HPType.EnemyHp, new HP.Args(Vector3.zero, canvasParent.transform));
                 hpStack.Push(h);
+            }
+        }
+
+        void DeadAnimation()
+        {
+            if (currentHP <= 0)
+            {
+                alive = false;
+                anim.SetTrigger("IsDead");
             }
         }
 

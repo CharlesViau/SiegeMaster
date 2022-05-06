@@ -16,6 +16,7 @@ public class FakeEntry : MonoBehaviour
     int TotalToSpawn => nbArcherToSpawn + nbSneakyToSpawn;
     public float spawnSpeed = 3;
     float timer;
+    float timerToRespawn = 10;
 
     void Awake()
     {
@@ -55,5 +56,18 @@ public class FakeEntry : MonoBehaviour
                 break;
         }
         timer = 0;
+
+        timerToRespawn -= Time.deltaTime;
+        if (timerToRespawn < 0)
+        {
+            RespawnEnemies();
+            //timerToRespawn = 10;
+        }
+    }
+
+    void RespawnEnemies()
+    {
+        ObjectPool.Instance.Depool(EnemyType.SneakyEnemy);
+        ObjectPool.Instance.Depool(EnemyType.ArcherEnemy);
     }
 }
