@@ -64,7 +64,6 @@ namespace Units.Types
             movement_SO.Init(gameObject, objective, speed);
             targeting_SO.Init(gameObject, attackRange);
 
-            facingDirUI = canvasParent.transform.forward;
             hpStack = new Stack<HP>();
             CreateHp();
             //Debug.Log("init enemy");
@@ -77,12 +76,12 @@ namespace Units.Types
 
         public override void Refresh()
         {
-            //base.Refresh();
+            base.Refresh();
             if (alive)
             {
                 anim.SetFloat("Speed", speed);
                 Move(targeting_SO.GetTheTarget().position);
-                FacingUIToPlayer();
+                FacingUIToPlayer();                
                 //Shoot();
             }
 
@@ -91,8 +90,11 @@ namespace Units.Types
                 if (gameObject.activeInHierarchy)
                     enemyAgent.ResetPath();
                 delayToPool -= Time.deltaTime;
-                if (delayToPool <= 0 && !alive)
+                if (delayToPool <= 0)
+                {
                     ObjectPool.Instance.Pool(enemyType, this);
+                    delayToPool = 10;
+                }
             }
         }
 
@@ -148,10 +150,9 @@ namespace Units.Types
         }
 
         public void Construct(Args constructionArgs)
-        {            
+        {  
             transform.SetParent(constructionArgs.parent);
             enemyAgent.Move(constructionArgs.spawningPosition);
-            //transform.position = constructionArgs.spawningPosition;
         }
 
         void CreateHp()
@@ -175,6 +176,7 @@ namespace Units.Types
         void FacingUIToPlayer()
         {
             facingDirUI = player.transform.position - transform.position;
+            canvasParent.transform.forward = facingDirUI;
         }
 
         void CreateProjectile(Transform target)

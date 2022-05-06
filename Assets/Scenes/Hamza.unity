@@ -855,6 +855,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a337c2c3b076dcf43a1782b86a65dddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemiesParent: {fileID: 0}
   spawnPositions:
   - {fileID: 266649714}
   enemyType: 0000000001000000
@@ -1122,7 +1123,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4661301986551827690, guid: bdffcff5e617ada4da87046b5f0ce705, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4661301986551827692, guid: bdffcff5e617ada4da87046b5f0ce705, type: 3}
       propertyPath: attackSpeed
@@ -1813,7 +1814,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8040253615132353723, guid: 0e0288a7078aabf4ab4929a392289c83, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8623797578784982487, guid: 0e0288a7078aabf4ab4929a392289c83, type: 3}
       propertyPath: m_Camera
@@ -1929,7 +1930,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4661301986551827690, guid: bdffcff5e617ada4da87046b5f0ce705, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4661301986551827695, guid: bdffcff5e617ada4da87046b5f0ce705, type: 3}
       propertyPath: m_RootOrder
