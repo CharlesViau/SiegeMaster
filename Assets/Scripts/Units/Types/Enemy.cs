@@ -123,7 +123,7 @@ namespace Units.Types
         {
             currentHP -= (int)damage;
 
-            if (damage > 0)
+            if (currentHP >= 0)
                 for (int i = 0; i < damage; i++)
                 {
                     ObjectPool.Instance.Pool(HPType.EnemyHp, hpStack.Pop());
