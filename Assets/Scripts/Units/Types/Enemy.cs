@@ -113,7 +113,6 @@ namespace Units.Types
             alive = true;
             delayToPool = 10;
             gameObject.SetActive(true);
-           //nemyAgent.Move(spawn);
             currentHP = fullHP;
             CreateHp();
         }
@@ -126,14 +125,13 @@ namespace Units.Types
             if (currentHP >= 0)
                 for (int i = 0; i < damage; i++)
                 {
-                    
                     try
                     {
                         ObjectPool.Instance.Pool(HPType.EnemyHp, hpStack.Pop());
                     }
                     catch (System.Exception)
                     {
-                        Debug.Log("sss");
+                        Debug.Log("Out of range");
                         throw;
                     }
                 }
@@ -179,8 +177,6 @@ namespace Units.Types
         {
             facingDirUI = player.transform.position - transform.position;
         }
-
-
 
         void CreateProjectile(Transform target)
         {
