@@ -143,7 +143,7 @@ namespace Units.Types
 
         public override void Move(Vector3 direction)
         {
-            if (direction != null && alive)
+            if (direction != null)
                 movement_SO.MoveToPoint(direction);
         }
 

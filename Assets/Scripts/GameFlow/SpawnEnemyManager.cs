@@ -10,11 +10,11 @@ public class SpawnEnemyManager : MonoBehaviour
     public EnemyType[] enemyType;
 
     public float timeToSpawn;
-    float timer=0;
+    float timer = 0;
 
     private void Start()
     {
-            
+
     }
 
     private void Update()
@@ -23,13 +23,11 @@ public class SpawnEnemyManager : MonoBehaviour
         if (timer > timeToSpawn)
         {
             int random = Random.Range(0, spawnPositions.Length);
-            for (int i = 0; i < enemyType.Length; i++) 
-            { 
+            for (int i = 0; i < enemyType.Length; i++)
+            {
                 EnemyManager.Instance.Create(enemyType[i], new Enemy.Args(spawnPositions[random].position, enemiesParent));
             }
             timer = 0;
         }
-
-
     }
 }
