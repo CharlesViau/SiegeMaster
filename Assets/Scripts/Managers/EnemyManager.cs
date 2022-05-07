@@ -40,5 +40,10 @@ namespace Managers
             }
             return transform;
         }
+
+        public void LevelIsDone()
+        {
+
+        }
     }
 }

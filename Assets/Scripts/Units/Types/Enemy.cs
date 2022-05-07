@@ -116,9 +116,12 @@ namespace Units.Types
 
         }
 
-        //public bool debugTest;
+        public bool debugTest;
         public void GotShot(float damage)
         {
+            if (debugTest)
+                Debug.Log("");
+
             currentHP -= (int)damage;
 
             if (currentHP >= 0)
@@ -136,8 +139,6 @@ namespace Units.Types
                 }
             DeathAnimation();
 
-            /*if (debugTest)
-                Debug.Log("");*/
             //GetComponent<MeshRenderer>().material.color = Random.ColorHSV();
         }
 
@@ -150,10 +151,10 @@ namespace Units.Types
         public void Construct(Args constructionArgs)
         {
             transform.SetParent(constructionArgs.parent);
-            enemyAgent.Move(constructionArgs.spawningPosition);
+            currentHP = fullHP;
             alive = true;
             delayToPool = 10;
-            currentHP = fullHP;
+            enemyAgent.Move(constructionArgs.spawningPosition);
             hpStack.Clear();
             CreateHp(fullHP);
         }
