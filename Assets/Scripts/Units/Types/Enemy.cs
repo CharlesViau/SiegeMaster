@@ -66,8 +66,8 @@ namespace Units.Types
 
             facingDirUI = canvasParent.transform.forward;
             hpStack = new Stack<HP>();
-            CreateHp();
-            //Debug.Log("init enemy");
+            
+         
         }
 
         public override void PostInit()
@@ -104,18 +104,16 @@ namespace Units.Types
         public override void Pool()
         {
             base.Pool();
+            alive = false;
             gameObject.SetActive(false);
+
         }
 
         public override void Depool()
         {
             base.Depool();
-            alive = true;
-            delayToPool = 10;
             gameObject.SetActive(true);
-           //nemyAgent.Move(spawn);
-            currentHP = fullHP;
-            CreateHp();
+
         }
 
         //public bool debugTest;
@@ -154,15 +152,20 @@ namespace Units.Types
         {
             spawn = constructionArgs.spawningPosition;
             enemyAgent.Move(constructionArgs.spawningPosition);
+            alive = true;
+            delayToPool = 10;
+            //nemyAgent.Move(spawn);
+            currentHP = fullHP;
+            hpStack.Clear();
+            CreateHp(fullHP);
             //transform.position = constructionArgs.spawningPosition;
         }
 
-        void CreateHp()
+        void CreateHp(int numberOfHp)
         {
-            for (int i = 0; i < fullHP; i++)
-            {
-                HP h = HPManager.Instance.Create(HPType.EnemyHp, new HP.Args(Vector3.zero, canvasParent.transform));
-                hpStack.Push(h);
+            for (int i = 0; i < numberOfHp; i++)
+            {               
+                hpStack.Push(HPManager.Instance.Create(HPType.EnemyHp, new HP.Args(Vector3.zero,canvasParent.transform)));
             }
         }
 
