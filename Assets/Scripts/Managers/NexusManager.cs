@@ -7,17 +7,19 @@ namespace Managers
 {
     public class NexusManager : Manager<Nexus, NexusManager>
     {
-        Transform nexusTransform;
-        public Transform GetTransform { get { return nexusTransform; } }
+        Nexus nexus;
+        public Transform GetTransform { get { return nexus.transform; } }
         public override void Init()
         {
-            foreach (var nexus in Object.FindObjectsOfType<Nexus>().ToList())
-            {
-                Add(nexus);
-                nexusTransform = nexus.transform;
-            }
+            nexus = Object.FindObjectOfType<Nexus>();
+            Add(nexus);
 
             base.Init();
+        }
+
+        public void DealDamage(float damage)
+        {
+            nexus.GotShot(damage);
         }
     }
 }

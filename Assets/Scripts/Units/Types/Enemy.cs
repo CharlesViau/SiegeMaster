@@ -15,6 +15,7 @@ namespace Units.Types
 
         public bool alive;
         float delayToPool = 10;
+        const float enemyDamageToNexus = 1;
 
         #region Set Enemy Type
         public EnemyType enemyType;
@@ -65,8 +66,6 @@ namespace Units.Types
             targeting_SO.Init(gameObject, attackRange);
 
             hpStack = new Stack<HP>();
-            
-         
         }
 
         public override void PostInit()
@@ -81,7 +80,7 @@ namespace Units.Types
             {
                 anim.SetFloat("Speed", speed);
                 Move(targeting_SO.GetTheTarget().position);
-                FacingUIToPlayer();                
+                FacingUIToPlayer();
                 //Shoot();
             }
 
@@ -106,7 +105,6 @@ namespace Units.Types
         public override void Pool()
         {
             base.Pool();
-            alive = false;
             gameObject.SetActive(false);
 
         }
@@ -150,23 +148,21 @@ namespace Units.Types
         }
 
         public void Construct(Args constructionArgs)
-        {  
+        {
             transform.SetParent(constructionArgs.parent);
             enemyAgent.Move(constructionArgs.spawningPosition);
             alive = true;
             delayToPool = 10;
-            //nemyAgent.Move(spawn);
             currentHP = fullHP;
             hpStack.Clear();
             CreateHp(fullHP);
-            //transform.position = constructionArgs.spawningPosition;
         }
 
         void CreateHp(int numberOfHp)
         {
             for (int i = 0; i < numberOfHp; i++)
-            {               
-                hpStack.Push(HPManager.Instance.Create(HPType.EnemyHp, new HP.Args(Vector3.zero,canvasParent.transform)));
+            {
+                hpStack.Push(HPManager.Instance.Create(HPType.EnemyHp, new HP.Args(Vector3.zero, canvasParent.transform)));
             }
         }
 
@@ -183,6 +179,16 @@ namespace Units.Types
         {
             facingDirUI = player.transform.position - transform.position;
             canvasParent.transform.forward = facingDirUI;
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.tag == "Nexus")
+            {
+                GotShot(currentHP);
+                delayToPool = 0;
+                NexusManager.Instance.DealDamage(enemyDamageToNexus);
+            }
         }
 
         void CreateProjectile(Transform target)
