@@ -68,7 +68,7 @@ public class Nexus : MonoBehaviour, IUpdatable, IPoolable, IHittable, ICreatable
     void IHittable.GotShot(float damage)
     {
         currentHP -= (int)damage;
-        ObjectPool.Instance.Pool(HPType.NexusHp, hpStack.Pop());
+        //ObjectPool.Instance.Pool(HPType.NexusHp, hpStack.Pop());
     }
 
     void CreateHp()
