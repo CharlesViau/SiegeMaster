@@ -48,16 +48,19 @@ public class SpawnEnemyManager : MonoBehaviour
             levelIsOver = CheckAliveEnemies();
             timer = 0;
         }
+        DebugTool();
         LevelUp();
     }
     #endregion
 
+    #region Spawning enemy per wave
     public void SpawnEnemies(EnemyType enemyType)
     {
         int random = Random.Range(0, spawnPositions.Length);
         EnemyManager.Instance.Create(enemyType, new Enemy.Args(spawnPositions[random].position, enemiesParent));
         nbToSpawnPerWave--;
     }
+    #endregion
 
     #region Waves manage
     public void IncreaseWave(int maxWaves)
@@ -90,8 +93,6 @@ public class SpawnEnemyManager : MonoBehaviour
 
     void LevelUp()
     {
-        Debug.Log(levelIsOver);
-        Debug.Log(wave);
         if (levelIsOver && wave > 0)
         {
             IncreaseWave(maxAmountsOfWaves);
@@ -99,6 +100,15 @@ public class SpawnEnemyManager : MonoBehaviour
             nbToSpawnPerType = nbToSpawnPerWave / enemyType.Length;
             levelIsOver = false;
         }
+    }
+    #endregion
+
+    #region Debug Tool
+    void DebugTool()
+    {
+        //Debug.Log("Time to spawn: " + timer);
+        Debug.Log(levelIsOver);
+        Debug.Log(wave);
     }
     #endregion
     #endregion

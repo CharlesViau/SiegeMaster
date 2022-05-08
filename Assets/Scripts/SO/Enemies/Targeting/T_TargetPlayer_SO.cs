@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-[CreateAssetMenu(fileName = "Target Player", menuName = "ScriptableObjects/Targeting/T_TargetPlayer_SO")]
+[CreateAssetMenu(fileName = "Target Player", menuName = "ScriptableObjects/Targeting/Target Player")]
 public class T_TargetPlayer_SO : Targeting_SO
 {
     Transform nexus;

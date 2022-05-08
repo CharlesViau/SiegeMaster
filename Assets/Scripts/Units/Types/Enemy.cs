@@ -15,7 +15,6 @@ namespace Units.Types
 
         public bool alive;
         float delayToPool = 10;
-        const float enemyDamageToNexus = 1;
 
         #region Set Enemy Type
         public EnemyType enemyType;
@@ -35,6 +34,7 @@ namespace Units.Types
         public float projectileDamage;
         public float attackRange;
         public float projectileSpeed;
+        const float enemyDamageToNexus = 1;
         #endregion
 
         #region UI & HP
@@ -46,6 +46,8 @@ namespace Units.Types
         #endregion
         #endregion
 
+        #region Methods
+        #region Game Control & Flow
         public override void Init()
         {
             base.Init();
@@ -81,7 +83,7 @@ namespace Units.Types
                 anim.SetFloat("Speed", speed);
                 Move(targeting_SO.GetTheTarget().position);
                 FacingUIToPlayer();
-                //Shoot();
+                Shoot();
             }
 
             if (!alive)
@@ -101,7 +103,9 @@ namespace Units.Types
         {
 
         }
+        #endregion
 
+        #region Factory & Pool manage
         public override void Pool()
         {
             base.Pool();
@@ -116,6 +120,36 @@ namespace Units.Types
 
         }
 
+        public void Construct(Args constructionArgs)
+        {
+            transform.SetParent(constructionArgs.parent);
+            currentHP = fullHP;
+            alive = true;
+            delayToPool = 10;
+            enemyAgent.Move(constructionArgs.spawningPosition);
+            hpStack.Clear();
+            CreateHp(fullHP);
+        }
+
+        public class Args : ConstructionArgs
+        {
+            public Transform parent;
+            public Args(Vector3 _spawningPosition, Transform _parent) : base(_spawningPosition)
+            {
+                parent = _parent;
+            }
+        }
+        #endregion
+
+        #region Movement
+        public override void Move(Vector3 direction)
+        {
+            if (direction != null)
+                movement_SO.MoveToPoint(direction);
+        }
+        #endregion
+
+        #region Damage & Death manage
         public bool debugTest;
         public void GotShot(float damage)
         {
@@ -141,32 +175,6 @@ namespace Units.Types
 
             //GetComponent<MeshRenderer>().material.color = Random.ColorHSV();
         }
-
-        public override void Move(Vector3 direction)
-        {
-            if (direction != null)
-                movement_SO.MoveToPoint(direction);
-        }
-
-        public void Construct(Args constructionArgs)
-        {
-            transform.SetParent(constructionArgs.parent);
-            currentHP = fullHP;
-            alive = true;
-            delayToPool = 10;
-            enemyAgent.Move(constructionArgs.spawningPosition);
-            hpStack.Clear();
-            CreateHp(fullHP);
-        }
-
-        void CreateHp(int numberOfHp)
-        {
-            for (int i = 0; i < numberOfHp; i++)
-            {
-                hpStack.Push(HPManager.Instance.Create(HPType.EnemyHp, new HP.Args(Vector3.zero, canvasParent.transform)));
-            }
-        }
-
         void DeathAnimation()
         {
             if (currentHP <= 0)
@@ -175,24 +183,25 @@ namespace Units.Types
                 anim.SetTrigger("IsDead");
             }
         }
+        #endregion
 
+        #region HP & UI manage
+        void CreateHp(int numberOfHp)
+        {
+            for (int i = 0; i < numberOfHp; i++)
+            {
+                hpStack.Push(HPManager.Instance.Create(HPType.EnemyHp, new HP.Args(Vector3.zero, canvasParent.transform)));
+            }
+        }
         void FacingUIToPlayer()
         {
             facingDirUI = player.transform.position - transform.position;
             canvasParent.transform.forward = facingDirUI;
         }
+        #endregion
 
-        private void OnCollisionEnter(Collision collision)
-        {
-            if (collision.gameObject.tag == "Nexus")
-            {
-                GotShot(currentHP);
-                delayToPool = 0;
-                NexusManager.Instance.DealDamage(enemyDamageToNexus);
-            }
-        }
-
-        void CreateProjectile(Transform target)
+        #region Attacking Player & Nexus
+        void InstantiateProjectile(Transform target)
         {
             ProjectileManager.Instance.Create(projectiletype,
                 new Projectile.Args(transform.position, projectiletype,
@@ -203,10 +212,19 @@ namespace Units.Types
         {
             if (Vector3.Distance(transform.position, player.position) <= attackRange)
             {
-                CreateProjectile(player);
+                InstantiateProjectile(player);
             }
         }
-
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.tag == "Nexus")
+            {
+                GotShot(currentHP);
+                delayToPool = 0;
+                NexusManager.Instance.DealDamage(enemyDamageToNexus);
+            }
+        }
+        #endregion
 
         /*void WaypointsCheck()
         {
@@ -222,14 +240,6 @@ namespace Units.Types
             //movement_SO.MoveToPoint(targets[waypointCounter].position);
             //rb.velocity = 20 * (targets[waypointCounter].position - player.position).normalized;
         }*/
-
-        public class Args : ConstructionArgs
-        {
-            public Transform parent;
-            public Args(Vector3 _spawningPosition, Transform _parent) : base(_spawningPosition)
-            {
-                parent = _parent;
-            }
-        }
+    #endregion    
     }
 }
