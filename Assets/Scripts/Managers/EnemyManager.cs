@@ -11,7 +11,7 @@ namespace Managers
     public class EnemyManager : Manager<Enemy, EnemyType, Enemy.Args, EnemyManager>
     {
         protected override string PrefabLocation => "Prefabs/Enemies/";
-        
+
         public override void Init()
         {
             var hashSet = new HashSet<Enemy>(Object.FindObjectsOfType<Enemy>().ToList());
@@ -20,14 +20,14 @@ namespace Managers
                 Add(item);
             }
 
-            base.Init();    
+            base.Init();
         }
-        
+
 
         public Transform GetClosest(Transform currentPosition, float range)
         {
             Transform transform = null;
-            range *=range;
+            range *= range;
             foreach (var enemy in collection)
             {
                 var newDistance = Vector3.SqrMagnitude(currentPosition.position - enemy.transform.position);
@@ -39,11 +39,6 @@ namespace Managers
                 }
             }
             return transform;
-        }
-
-        public void LevelIsDone()
-        {
-
         }
     }
 }
