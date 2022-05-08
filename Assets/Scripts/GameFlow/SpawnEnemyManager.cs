@@ -6,16 +6,27 @@ using System.Linq;
 
 public class SpawnEnemyManager : MonoBehaviour
 {
+    #region Fields
+    #region Set info of enemies
     public Transform enemiesParent;
     public EnemyType[] enemyType;
     public Transform[] spawnPositions;
-    public float delayTimeToSpawn;
+    #endregion
+
+    #region Waves manage
+    public int maxAmountsOfWaves;
+    public float delayToSartWave;
     public int nbToSpawnPerWave;
     int nbToSpawnPerType;
-    int wave = 1;
+    int nbDeadEnemies;
     float timer = 0;
+    int wave = 1;
     bool levelIsOver;
+    #endregion
+    #endregion
 
+    #region Methods
+    #region Unity Methods
     private void Awake()
     {
         nbToSpawnPerType = nbToSpawnPerWave / enemyType.Length;
@@ -24,7 +35,7 @@ public class SpawnEnemyManager : MonoBehaviour
     private void Update()
     {
         timer += Time.deltaTime;
-        if (timer > delayTimeToSpawn)
+        if (timer > delayToSartWave)
         {
             if (nbToSpawnPerWave > 0)
             {
@@ -34,20 +45,12 @@ public class SpawnEnemyManager : MonoBehaviour
                     SpawnEnemies(EnemyType.SneakyEnemy);
                 }
             }
-            timer = 0;
             levelIsOver = CheckAliveEnemies();
+            timer = 0;
         }
-
-        Debug.Log(levelIsOver);
-        Debug.Log(wave);
-        if (levelIsOver && wave > 0)
-        {
-            IncreaseWave();
-            nbToSpawnPerWave = (nbToSpawnPerType * enemyType.Length) * wave;
-            nbToSpawnPerType = nbToSpawnPerWave / enemyType.Length;
-            levelIsOver = false;
-        }
+        LevelUp();
     }
+    #endregion
 
     public void SpawnEnemies(EnemyType enemyType)
     {
@@ -56,28 +59,47 @@ public class SpawnEnemyManager : MonoBehaviour
         nbToSpawnPerWave--;
     }
 
-    public void IncreaseWave()
+    #region Waves manage
+    public void IncreaseWave(int maxWaves)
     {
         wave++;
-        if (wave > 3)
+        if (wave > maxWaves)
         {
             wave = 0;
         }
     }
 
-    // Method to check if there's any active children in the enemiesparents object to levelup.
-    // needs to modifing
+    //Method to check if there's any active children in the enemiesparents object to levelup.
     bool CheckAliveEnemies()
     {
+        nbDeadEnemies = 0;
         foreach (Transform child in enemiesParent)
         {
             if (child.gameObject.activeInHierarchy) continue;
 
-            return true;
+            nbDeadEnemies++;
         }
-        return false;
+        if (nbDeadEnemies == enemiesParent.childCount)
+            return true;
+        else
+            return false;
 
         //levelIsOver = enemiesParent.Cast<Transform>().All(child => child.gameObject.activeInHierarchy);
         //return levelIsOver;
     }
+
+    void LevelUp()
+    {
+        Debug.Log(levelIsOver);
+        Debug.Log(wave);
+        if (levelIsOver && wave > 0)
+        {
+            IncreaseWave(maxAmountsOfWaves);
+            nbToSpawnPerWave = (nbToSpawnPerType * enemyType.Length) * wave;
+            nbToSpawnPerType = nbToSpawnPerWave / enemyType.Length;
+            levelIsOver = false;
+        }
+    }
+    #endregion
+    #endregion
 }
