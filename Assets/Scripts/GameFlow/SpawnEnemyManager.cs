@@ -48,7 +48,7 @@ public class SpawnEnemyManager : MonoBehaviour
             levelIsOver = CheckAliveEnemies();
             timer = 0;
         }
-        DebugTool();
+      //  DebugTool();
         LevelUp();
     }
     #endregion

@@ -2217,7 +2217,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1026650151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2519,8 +2519,8 @@ MonoBehaviour:
   - {fileID: 1866127486}
   - {fileID: 431066650}
   - {fileID: 1375946991}
-  maxAmountsOfWaves: 3
-  delayToSartWave: 15
+  maxAmountsOfWaves: 50
+  delayToSartWave: 5
   nbToSpawnPerWave: 20
 --- !u!4 &1066329211
 Transform:
