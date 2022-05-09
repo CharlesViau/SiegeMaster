@@ -13,9 +13,6 @@ namespace Units.Types
         /*public Transform[] targets;
         int waypointCounter = 0;*/
 
-        public bool alive;
-        float delayToPool = 10;
-
         #region Set Enemy Type
         public EnemyType enemyType;
         public EnemyMovement_SO movement_SO;
@@ -29,6 +26,11 @@ namespace Units.Types
         protected Transform objective;
         #endregion
 
+        #region Death
+        public bool alive;
+        float delayToPool = 10;
+        #endregion
+
         #region Attacking
         public ProjectileType projectiletype;
         public float projectileDamage;
@@ -39,8 +41,8 @@ namespace Units.Types
 
         #region UI & HP
         public Canvas canvasParent;
-        int fullHP;
         public int currentHP;
+        int fullHP;
         Stack<HP> hpStack;
         Vector3 facingDirUI;
         #endregion
@@ -87,16 +89,7 @@ namespace Units.Types
             }
 
             if (!alive)
-            {
-                if (gameObject.activeInHierarchy)
-                    enemyAgent.ResetPath();
-                delayToPool -= Time.deltaTime;
-                if (delayToPool <= 0)
-                {
-                    EnemyManager.Instance.Pool(enemyType, this);
-                    delayToPool = 10;
-                }
-            }
+                Death();
         }
 
         public override void FixedRefresh()
@@ -106,31 +99,6 @@ namespace Units.Types
         #endregion
 
         #region Factory & Pool manage
-        public override void Pool()
-        {
-            base.Pool();
-            gameObject.SetActive(false);
-
-        }
-
-        public override void Depool()
-        {
-            base.Depool();
-            gameObject.SetActive(true);
-
-        }
-
-        public void Construct(Args constructionArgs)
-        {
-            transform.SetParent(constructionArgs.parent);
-            currentHP = fullHP;
-            alive = true;   delayToPool = 10;
-            enemyAgent.Move(constructionArgs.spawningPosition);
-            hpStack.Clear();
-         
-            CreateHp(fullHP);
-        }
-
         public class Args : ConstructionArgs
         {
             public Transform parent;
@@ -138,6 +106,29 @@ namespace Units.Types
             {
                 parent = _parent;
             }
+        }
+
+        public void Construct(Args constructionArgs)
+        {
+            transform.SetParent(constructionArgs.parent);
+            currentHP = fullHP;
+            alive = true;
+            delayToPool = 10;
+            enemyAgent.Move(constructionArgs.spawningPosition);
+            hpStack.Clear();
+            CreateHp(fullHP);
+        }
+
+        public override void Pool()
+        {
+            base.Pool();
+            gameObject.SetActive(false);
+        }
+
+        public override void Depool()
+        {
+            base.Depool();
+            gameObject.SetActive(true);
         }
         #endregion
 
@@ -150,44 +141,40 @@ namespace Units.Types
         #endregion
 
         #region Damage & Death manage
-        public bool debugTest;
         public void GotShot(float damage)
         {
-            if (debugTest)
-                Debug.Log("");
-
-
             if (currentHP >= 0)
-            damage = Mathf.Clamp(damage, 0, currentHP);
-            currentHP -= (int)damage;
+            {
+                damage = Mathf.Clamp(damage, 0, currentHP);
+                currentHP -= (int)damage;
 
                 for (int i = 0; i < damage; i++)
                 {
-                    try
-                    {
                     HP h = hpStack.Pop();
                     h.transform.SetParent(null);
-                        HPManager.Instance.Pool(HPType.EnemyHp, h);
-                      
-                    }
-                    catch (System.Exception)
-                    {
-                        Debug.Log("Out of range");
-                        throw;
-                    }
+                    HPManager.Instance.Pool(HPType.EnemyHp, h);
                 }
             }
-            DeathAnimation();
-            //GetComponent<MeshRenderer>().material.color = Random.ColorHSV();
+            if (alive && currentHP <= 0)
+                DeathAnimation();
         }
-
 
         void DeathAnimation()
         {
-            if (currentHP <= 0)
+            alive = false;
+            anim.SetTrigger("IsDead");
+            //Death();
+        }
+
+        void Death()
+        {
+            if (gameObject.activeInHierarchy)
+                enemyAgent.ResetPath();
+
+            delayToPool -= Time.deltaTime;
+            if (delayToPool <= 0)
             {
-                alive = false;
-                anim.SetTrigger("IsDead");
+                EnemyManager.Instance.Pool(enemyType, this);
             }
         }
         #endregion
@@ -199,8 +186,6 @@ namespace Units.Types
             {
                 hpStack.Push(HPManager.Instance.Create(HPType.EnemyHp, new HP.Args(Vector3.zero, canvasParent.transform)));
             }
-            /*if (canvasParent.transform.childCount > 5)
-                Debug.LogError("Fuckin shit");*/
         }
         void FacingUIToPlayer()
         {
@@ -224,6 +209,7 @@ namespace Units.Types
                 InstantiateProjectile(player);
             }
         }
+
         private void OnCollisionEnter(Collision collision)
         {
             if (collision.gameObject.tag == "Nexus")

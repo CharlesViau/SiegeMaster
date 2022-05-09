@@ -32,7 +32,6 @@ public class HP : MonoBehaviour,IUpdatable, IPoolable, ICreatable<HP.Args>
 
     public void Pool()
     {
-        HPManager.Instance.Remove(this);
         gameObject.SetActive(false);
     }
     

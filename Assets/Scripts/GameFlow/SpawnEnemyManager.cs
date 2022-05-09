@@ -18,6 +18,7 @@ public class SpawnEnemyManager : MonoBehaviour
     public float delayToSartWave;
     public int nbToSpawnPerWave;
     int nbToSpawnPerType;
+    int firstSpawningAmount;
     int nbDeadEnemies;
     float timer = 0;
     int wave = 1;
@@ -30,6 +31,7 @@ public class SpawnEnemyManager : MonoBehaviour
     private void Awake()
     {
         nbToSpawnPerType = nbToSpawnPerWave / enemyType.Length;
+        firstSpawningAmount = nbToSpawnPerWave;
     }
 
     private void Update()
@@ -48,7 +50,7 @@ public class SpawnEnemyManager : MonoBehaviour
             levelIsOver = CheckAliveEnemies();
             timer = 0;
         }
-      //  DebugTool();
+        //DebugTool();
         LevelUp();
     }
     #endregion
@@ -86,9 +88,6 @@ public class SpawnEnemyManager : MonoBehaviour
             return true;
         else
             return false;
-
-        //levelIsOver = enemiesParent.Cast<Transform>().All(child => child.gameObject.activeInHierarchy);
-        //return levelIsOver;
     }
 
     void LevelUp()
@@ -96,7 +95,7 @@ public class SpawnEnemyManager : MonoBehaviour
         if (levelIsOver && wave > 0)
         {
             IncreaseWave(maxAmountsOfWaves);
-            nbToSpawnPerWave = (nbToSpawnPerType * enemyType.Length) * wave;
+            nbToSpawnPerWave = firstSpawningAmount * wave;
             nbToSpawnPerType = nbToSpawnPerWave / enemyType.Length;
             levelIsOver = false;
         }

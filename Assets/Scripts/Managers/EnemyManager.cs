@@ -23,7 +23,6 @@ namespace Managers
             base.Init();
         }
 
-
         public Transform GetClosest(Transform currentPosition, float range)
         {
             Transform transform = null;
