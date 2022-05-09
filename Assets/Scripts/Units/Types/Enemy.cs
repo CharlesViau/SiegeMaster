@@ -83,7 +83,7 @@ namespace Units.Types
                 anim.SetFloat("Speed", speed);
                 Move(targeting_SO.GetTheTarget().position);
                 FacingUIToPlayer();
-                Shoot();
+                //Shoot();
             }
 
             if (!alive)
@@ -93,6 +93,7 @@ namespace Units.Types
                 delayToPool -= Time.deltaTime;
                 if (delayToPool <= 0)
                 {
+                    EnemyManager.Instance.Remove(this);
                     ObjectPool.Instance.Pool(enemyType, this);
                     delayToPool = 10;
                 }
@@ -156,25 +157,21 @@ namespace Units.Types
             if (debugTest)
                 Debug.Log("");
 
-            currentHP -= (int)damage;
 
             if (currentHP >= 0)
+            {
+                damage = Mathf.Clamp(damage, 0, currentHP);
+                currentHP -= (int)damage;
                 for (int i = 0; i < damage; i++)
                 {
-                    try
-                    {
-                        ObjectPool.Instance.Pool(HPType.EnemyHp, hpStack.Pop());
-                    }
-                    catch (System.Exception)
-                    {
-                        Debug.Log("Out of range");
-                        throw;
-                    }
+                    ObjectPool.Instance.Pool(HPType.EnemyHp, hpStack.Pop());
                 }
+            }
             DeathAnimation();
-
             //GetComponent<MeshRenderer>().material.color = Random.ColorHSV();
         }
+
+
         void DeathAnimation()
         {
             if (currentHP <= 0)
@@ -192,6 +189,8 @@ namespace Units.Types
             {
                 hpStack.Push(HPManager.Instance.Create(HPType.EnemyHp, new HP.Args(Vector3.zero, canvasParent.transform)));
             }
+            /*if (canvasParent.transform.childCount > 5)
+                Debug.LogError("Fuckin shit");*/
         }
         void FacingUIToPlayer()
         {
@@ -240,6 +239,6 @@ namespace Units.Types
             //movement_SO.MoveToPoint(targets[waypointCounter].position);
             //rb.velocity = 20 * (targets[waypointCounter].position - player.position).normalized;
         }*/
-    #endregion    
+        #endregion
     }
 }
