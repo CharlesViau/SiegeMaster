@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-[CreateAssetMenu(fileName = "Target Objective", menuName = "ScriptableObjects/Targeting/T_TargetObject_SO")]
+[CreateAssetMenu(fileName = "Target Objective", menuName = "ScriptableObjects/Targeting/Target Nexus")]
 public class T_TargetObjective_SO : Targeting_SO
 {    
     Transform nexus;
