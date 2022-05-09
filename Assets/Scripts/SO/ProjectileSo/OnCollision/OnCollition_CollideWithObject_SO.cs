@@ -11,7 +11,7 @@ public class OnCollition_CollideWithObject_SO : OnCollisionSO
     public override void OnEnterCollision(Vector3 position,ValueType type,IPoolable type2, Collision collisionObject) 
     {
 
-            ObjectPool.Instance.Pool(type, type2);
+            
             ParticleSystemManager.Instance.Create(onCollisionParticleType, new ParticleSystemScript.Args(position));
 
             //deal damage to object that had Ihittable interface and deal damage

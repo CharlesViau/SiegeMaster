@@ -93,8 +93,7 @@ namespace Units.Types
                 delayToPool -= Time.deltaTime;
                 if (delayToPool <= 0)
                 {
-                    EnemyManager.Instance.Remove(this);
-                    ObjectPool.Instance.Pool(enemyType, this);
+                    EnemyManager.Instance.Pool(enemyType, this);
                     delayToPool = 10;
                 }
             }
@@ -125,10 +124,10 @@ namespace Units.Types
         {
             transform.SetParent(constructionArgs.parent);
             currentHP = fullHP;
-            alive = true;
-            delayToPool = 10;
+            alive = true;   delayToPool = 10;
             enemyAgent.Move(constructionArgs.spawningPosition);
             hpStack.Clear();
+         
             CreateHp(fullHP);
         }
 
@@ -159,12 +158,23 @@ namespace Units.Types
 
 
             if (currentHP >= 0)
-            {
-                damage = Mathf.Clamp(damage, 0, currentHP);
-                currentHP -= (int)damage;
+            damage = Mathf.Clamp(damage, 0, currentHP);
+            currentHP -= (int)damage;
+
                 for (int i = 0; i < damage; i++)
                 {
-                    ObjectPool.Instance.Pool(HPType.EnemyHp, hpStack.Pop());
+                    try
+                    {
+                    HP h = hpStack.Pop();
+                    h.transform.SetParent(null);
+                        HPManager.Instance.Pool(HPType.EnemyHp, h);
+                      
+                    }
+                    catch (System.Exception)
+                    {
+                        Debug.Log("Out of range");
+                        throw;
+                    }
                 }
             }
             DeathAnimation();

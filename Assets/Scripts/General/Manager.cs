@@ -14,6 +14,7 @@ namespace General
         public abstract void Clean();
     }
 
+
     /// <summary>
     /// Classes that inherit that class are Singleton Manager.
     /// </summary>
@@ -396,6 +397,13 @@ namespace General
             Add(toReturn);
             return toReturn;
         }
+
+        public void Pool(ValueType type,T toPool)
+        {
+            ObjectPool.Instance.Pool(type, toPool);
+            Remove( toPool);
+        }
+
 
         #endregion
     }

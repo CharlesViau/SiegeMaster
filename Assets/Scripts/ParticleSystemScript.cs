@@ -28,7 +28,7 @@ public class ParticleSystemScript : MonoBehaviour,IUpdatable,ICreatable<Particle
         timer += Time.deltaTime;
         if (timer> timeToPool)
         {
-            ObjectPool.Instance.Pool(type, this);
+            ParticleSystemManager.Instance.Pool(type, this);
         }
     }
 
