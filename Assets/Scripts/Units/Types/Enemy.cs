@@ -5,6 +5,7 @@ using UnityEngine.AI;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using SO.TowerSo.Targeting;
+using System.Collections;
 
 namespace Units.Types
 {
@@ -29,16 +30,14 @@ namespace Units.Types
         #endregion
 
         #region Get Components
-
         private NavMeshAgent _enemyAgent;
-
         private Transform _player;
         private Transform _objective;
         #endregion
 
         #region Death
         public bool alive;
-        private float _delayToPool = 10;
+        float _delayToPool = 10;
         #endregion
 
         #region Attacking
@@ -46,19 +45,22 @@ namespace Units.Types
         public float projectileDamage;
         public float attackRange;
         public float projectileSpeed;
-        private const float EnemyDamageToNexus = 1;
+        const float EnemyDamageToNexus = 1;
+        #endregion
+
+        #region Animation
+        private static readonly int Speed = Animator.StringToHash("Speed");
+        private static readonly int IsDead = Animator.StringToHash("IsDead");
         #endregion
 
         #region UI & HP
         public Canvas canvasParent;
         public int currentHp;
-        private int _fullHp;
-        private Stack<Hp> _hpStack;
-        private Vector3 _facingDirUI;
+        int _fullHp;
+        Stack<Hp> _hpStack;
+        Vector3 _facingDirUI;
         #endregion
         #endregion
-        private static readonly int Speed = Animator.StringToHash("Speed");
-        private static readonly int IsDead = Animator.StringToHash("IsDead");
 
         #region Methods
         #region Game Control & Flow
@@ -68,7 +70,7 @@ namespace Units.Types
             _enemyAgent = GetComponent<NavMeshAgent>();
             alive = true;
             _enemyAgent.speed = speed;
-            
+
             _fullHp = currentHp;
 
             movement_SO = Instantiate(movement_SO);
@@ -147,7 +149,8 @@ namespace Units.Types
         #region Movement
         public override void Move(Vector3 direction)
         {
-            if (direction != Vector3.zero) movement_SO.MoveToPoint(direction);
+            if (direction != Vector3.zero)
+                movement_SO.MoveToPoint(direction);
         }
         #endregion
 
@@ -167,12 +170,14 @@ namespace Units.Types
                 }
             }
             if (alive && currentHp <= 0)
-                DeathAnimation();
+                Death();
+            //DeathAnimation();
+            //if(!alive)
         }
 
         private void DeathAnimation()
         {
-            alive = false;
+            //alive = false;
             Animator.SetTrigger(IsDead);
             //Death();
         }
@@ -187,6 +192,9 @@ namespace Units.Types
             {
                 EnemyManager.Instance.Pool(enemyType, this);
             }
+
+            alive = false;
+            DeathAnimation();
         }
         #endregion
 
@@ -213,7 +221,7 @@ namespace Units.Types
         {
             //Vector3 offset = new Vector3(0, 0, 5);
             ProjectileManager.Instance.Create(projectileType,
-                new Projectile.Args((transform.position) , projectileType,
+                new Projectile.Args((transform.position), projectileType,
                 target, projectileSpeed, projectileDamage, Vector3.zero));
         }
 

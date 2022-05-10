@@ -10,6 +10,7 @@ namespace Managers
 
     public class EnemyManager : Manager<Enemy, EnemyType, Enemy.Args, EnemyManager>
     {
+        public int Count => collection.Count;
         protected override string PrefabLocation => "Prefabs/Enemies/";
 
         public override void Init()
