@@ -8,7 +8,7 @@ namespace Managers
 {
     public enum HPType { EnemyHp, NexusHp  }
 
-    public class HPManager : Manager<HP, HPType, HP.Args, HPManager>
+    public class HPManager : Manager<Hp, HPType, Hp.Args, HPManager>
     {
         protected override string PrefabLocation => "Prefabs/UI/";    
     }

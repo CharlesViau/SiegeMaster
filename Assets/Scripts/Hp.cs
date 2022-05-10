@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class HP : MonoBehaviour,IUpdatable, IPoolable, ICreatable<HP.Args>
+public class Hp : MonoBehaviour,IUpdatable, IPoolable, ICreatable<Hp.Args>
 {
     public HPType type;
 

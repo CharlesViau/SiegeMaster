@@ -6,12 +6,12 @@ using System.Collections.Generic;
 
 public class Nexus : MonoBehaviour, IUpdatable, IPoolable, IHittable, ICreatable<Nexus.Args>
 {
-    int fullHP;
-    public int currentHP;
+    private int _fullHp;
+    public int currentHp;
 
     public void Init()
     {
-        fullHP = currentHP;
+        _fullHp = currentHp;
     }
 
     public void PostInit()
@@ -22,7 +22,7 @@ public class Nexus : MonoBehaviour, IUpdatable, IPoolable, IHittable, ICreatable
     public void Refresh()
     {
 
-        if (currentHP < 1) ;
+        //if (currentHP < 1) ;
           //  Debug.Log("Game is over, nexus is destroyed");
     }
 
@@ -59,6 +59,6 @@ public class Nexus : MonoBehaviour, IUpdatable, IPoolable, IHittable, ICreatable
     }
     public void GotShot(float damage)
     {
-        currentHP -= (int)damage;
+        currentHp -= (int)damage;
     }
 }
