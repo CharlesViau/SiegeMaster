@@ -1,43 +1,31 @@
-using General;
 using Managers;
+using SO.TowerSo.Targeting;
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
-[CreateAssetMenu(fileName = "Target Player", menuName = "ScriptableObjects/Targeting/Target Player")]
-public class T_TargetPlayer_SO : Targeting_SO
+namespace SO.Enemies.Targeting
 {
-    Transform nexus;
-    Transform player;
-    bool isAttacking;
-
-    public override void Init(GameObject _unit, float _range)
+    [CreateAssetMenu(fileName = "Target Player", menuName = "ScriptableObjects/Targeting/Target Player")]
+    public class TargetPlayerSo : TargetingSo
     {
-        base.Init(_unit, _range);
-        nexus = NexusManager.Instance.GetTransform;
-        player = PlayerUnitManager.Instance.GetTransform;
-    }
+        private Transform _nexus;
+        private Transform _player;
 
-    public override Transform GetTheTarget()
-    {
-        if (DetectPlayer())
-            return player;
-        else
-            return nexus;
-    }
-
-    bool DetectPlayer()
-    {
-        if(player == null)
-            return false;
-        if (Vector3.Distance(gameObject.transform.position, player.position) < range)
+        public override void Init(GameObject unit, float range)
         {
-            isAttacking = true;
+            base.Init(unit, range);
+            _nexus = NexusManager.Instance.GetTransform;
+            _player = PlayerUnitManager.Instance.GetTransform;
         }
-        else
+
+        public override Transform GetTheTarget()
         {
-            isAttacking = false;
+            return DetectPlayer() ? _player : _nexus;
         }
-        return isAttacking;
+
+        private bool DetectPlayer()
+        {
+            if (_player == null) return false;
+            return Vector3.Distance(Owner.transform.position, _player.position) < MaxRange;
+        }
     }
 }

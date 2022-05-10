@@ -66,7 +66,7 @@ namespace Units.Types.Towers
         {
 
         }
-        public  virtual void Fire(Transform target)
+        public  virtual void Fire(Transform targetTransform)
         {
 
                 Animator.SetTrigger(Fire1);

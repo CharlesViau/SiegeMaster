@@ -13,13 +13,14 @@ namespace Units.Types
         // If you want want to use this predict bool you have to give the prediction projectile 
         // have to set a projectile that has PredictionMovement_SO, 
         public bool predict;
-        private Vector3 ProjectileVlocity = Vector3.zero;
+
+        private Vector3 _projectileVelocity = Vector3.zero;
 
         public override void Init()
         {
             base.Init();
-        #if UNITY_EDITOR
-            if (projectiletype != ProjectileType.Proj_PredictionArrow)
+#if UNITY_EDITOR
+            if (projectileType != ProjectileType.Proj_PredictionArrow)
             {
                 Debug.Log("If you want to predict , you should use the prediction Arrow");
             }
@@ -27,30 +28,30 @@ namespace Units.Types
          #endif
 
         }
-        public override void Fire(Transform target)
+        public override void Fire(Transform targetTransform)
         {
             if (predict)
             {
 
-                    //this is the math for predict the intercept with between two object wqith different speed 
-                    projectiletype = ProjectileType.Proj_PredictionArrow;
-                    Vector3 targetMovementDirection = target.GetComponent<NavMeshAgent>().velocity;
-                    float targetMovementVlovity = target.GetComponent<NavMeshAgent>().speed;
-                    float AncleTargetToPlayer = Vector3.Angle(targetMovementDirection.normalized, (head.position - target.position).normalized);
-                    float TowerAngleFinalRotation = Mathf.Asin((Mathf.Sin(AncleTargetToPlayer * Mathf.Deg2Rad) * targetMovementVlovity) / projectileSpeed) * Mathf.Rad2Deg;
+                    //this is the math to predict the interception between two object with different speed 
+                    projectileType = ProjectileType.Proj_PredictionArrow;
+                    var targetMovementDirection = targetTransform.GetComponent<NavMeshAgent>().velocity;
+                    var targetMovementVelocity = targetTransform.GetComponent<NavMeshAgent>().speed;
+                    var angleTargetToPlayer = Vector3.Angle(targetMovementDirection.normalized, (head.position - targetTransform.position).normalized);
+                    var towerAngleFinalRotation = Mathf.Asin((Mathf.Sin(angleTargetToPlayer * Mathf.Deg2Rad) * targetMovementVelocity) / projectileSpeed) * Mathf.Rad2Deg;
 
-                    Vector3 dir = (target.position - head.position).normalized;
-                    Vector3 left = Vector3.Cross(dir, targetMovementDirection.normalized);
-                    head.LookAt(target.position, left);
-                    if (!float.IsNaN(TowerAngleFinalRotation))
+                    var dir = (targetTransform.position - head.position).normalized;
+                    var left = Vector3.Cross(dir, targetMovementDirection.normalized);
+                    head.LookAt(targetTransform.position, left);
+                    if (!float.IsNaN(towerAngleFinalRotation))
                     {
-                        head.RotateAround(head.transform.position, head.transform.up, TowerAngleFinalRotation);
+                        head.RotateAround(head.transform.position, head.transform.up, towerAngleFinalRotation);
                     }
-                    ProjectileVlocity = head.forward * projectileSpeed;
+                    _projectileVelocity = head.forward * projectileSpeed;
                 //calculate the prediction
             }
-            ProjectileManager.Instance.Create(projectileType, new Projectile.Args(head.position, projectileType, target, projectileSpeed, projectileDamage, ProjectileVlocity));
-            base.Fire(target);
+            ProjectileManager.Instance.Create(projectileType, new Projectile.Args(head.position, projectileType, targetTransform, projectileSpeed, projectileDamage, _projectileVelocity));
+            base.Fire(targetTransform);
         }
 
   
