@@ -1268,7 +1268,7 @@ GameObject:
   - component: {fileID: 2172892541016848730}
   m_Layer: 7
   m_Name: SneakyEnemy
-  m_TagString: Untagged
+  m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1341,17 +1341,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turningSpeed: 0
   speed: 10
-  alive: 0
   enemyType: 1
   movement_SO: {fileID: 11400000, guid: 12c3ff3e48a540748aca02716d57c38d, type: 2}
   targeting_SO: {fileID: 11400000, guid: d9393c587e8531d4eb130a27c7f8eeb7, type: 2}
+  alive: 0
   projectiletype: 0
-  projectileDamage: 10
-  attackRange: 120
-  projectileSpeed: 10
+  projectileDamage: 0
+  attackRange: 0
+  projectileSpeed: 0
   canvasParent: {fileID: 6589549669133941664}
   currentHP: 5
-  debugTest: 0
 --- !u!195 &7896966820533481567
 NavMeshAgent:
   m_ObjectHideFlags: 0

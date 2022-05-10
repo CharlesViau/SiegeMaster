@@ -605,7 +605,7 @@ GameObject:
   - component: {fileID: 4619171436650278084}
   m_Layer: 7
   m_Name: ArcherEnemy
-  m_TagString: Untagged
+  m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -678,17 +678,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turningSpeed: 0
   speed: 15
-  alive: 0
   enemyType: 0
   movement_SO: {fileID: 11400000, guid: 12c3ff3e48a540748aca02716d57c38d, type: 2}
   targeting_SO: {fileID: 11400000, guid: cac941549c978834b8b983c5e7b75cbc, type: 2}
+  alive: 0
   projectiletype: 0
   projectileDamage: 10
   attackRange: 120
   projectileSpeed: 10
   canvasParent: {fileID: 5758103511493653035}
   currentHP: 5
-  debugTest: 0
 --- !u!195 &413098803780014678
 NavMeshAgent:
   m_ObjectHideFlags: 0

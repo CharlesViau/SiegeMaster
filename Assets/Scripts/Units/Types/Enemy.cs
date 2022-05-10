@@ -197,8 +197,9 @@ namespace Units.Types
         #region Attacking Player & Nexus
         void InstantiateProjectile(Transform target)
         {
+            //Vector3 offset = new Vector3(0, 0, 5);
             ProjectileManager.Instance.Create(projectiletype,
-                new Projectile.Args(transform.position, projectiletype,
+                new Projectile.Args((transform.position) , projectiletype,
                 target, projectileSpeed, projectileDamage, Vector3.zero));
         }
 

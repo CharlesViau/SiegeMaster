@@ -2429,7 +2429,7 @@ GameObject:
   - component: {fileID: 1026650161}
   m_Layer: 15
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3352,7 +3352,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1312805553}
-  m_LocalRotation: {x: -0.13791603, y: 0.000000017041954, z: 0.0000000023730353, w: 0.99044394}
+  m_LocalRotation: {x: -0.13791601, y: -0.000000017041963, z: -0.000000002373036, w: 0.99044394}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

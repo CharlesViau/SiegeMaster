@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Nexus
+  - Target
+  - Enemy
+  - Tower
   layers:
   - Default
   - TransparentFX
