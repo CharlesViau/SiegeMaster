@@ -9,7 +9,7 @@ using SO.TowerSo.Targeting;
 
 [CreateAssetMenu(fileName = "Targeting", menuName = "ScriptableObjects/Targeting/T_GetClosetOfManagerType_SO")]
 
-public class T_GetClosetOfManagerType_SO : TargetingSo
+public class T_GetClosetOfManagerType_SO : SO.TowerSo.Targeting.TargetingSo
 {
     public enum ManagerType {Enemy,Tower,Projectile }
     public ManagerType managerType;

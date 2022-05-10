@@ -1,5 +1,5 @@
 ﻿using System;
-using Abilities.SO;
+using Abilities.AbilitySO;
 using General;
 using UnityEngine;
 
@@ -8,14 +8,12 @@ namespace Abilities.AbilityState
     public class AbilityChannelingState : IState
     {
         private readonly AbilitySo _abilitySo;
-        private readonly Action _onCast;
         private float _channelTime;
         public bool HasCompleted => _channelTime >= _abilitySo.stats.baseChannelTime;
         public bool HasBeenInterrupt { get; set; }
 
-        public AbilityChannelingState(AbilitySo abilitySo, Action onCast)
+        public AbilityChannelingState(AbilitySo abilitySo)
         {
-            _onCast = onCast;
             _abilitySo = abilitySo;
         }
         public void Refresh()
@@ -31,14 +29,7 @@ namespace Abilities.AbilityState
 
         public void OnExit()
         {
-            if (HasCompleted)
-            {
-                _onCast.Invoke();
-            }
-            else
-            {
-                //TODO : Do something on cast fail
-            }
+            //TODO : Do something on cast fail
         }
     }
 }

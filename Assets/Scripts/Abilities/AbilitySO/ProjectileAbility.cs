@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Abilities.SO
+namespace Abilities.AbilitySO
 {
     [CreateAssetMenu(fileName = "Ability", menuName = "ScriptableObjects/Abilities/ProjectileAbility")]
     public class ProjectileAbility : AbilitySo
@@ -16,13 +16,18 @@ namespace Abilities.SO
 
         protected override void OnCast()
         {
-            ProjectileManager.Instance.Create(type,
-                new Projectile.Args(Owner.transform.position, type, target.transform, projectileDamage, projectileSpeed, Vector3.zero));
+            /*ProjectileManager.Instance.Create(type,
+                new Projectile.Args(Owner.transform.position, type, target.transform, projectileDamage, projectileSpeed, Vector3.zero));*/
         }
 
         protected override void OnActiveCast()
         {
             
+        }
+
+        protected override void ActiveStateRefresh()
+        {
+           
         }
     }
 }

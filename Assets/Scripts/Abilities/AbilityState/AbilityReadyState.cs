@@ -1,4 +1,4 @@
-﻿using Abilities.SO;
+﻿using Abilities.AbilitySO;
 using General;
 
 namespace Abilities.AbilityState

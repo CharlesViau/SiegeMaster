@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Units.Types
 {
     [RequireComponent(typeof(Animator), typeof(AbilityHandler))]
-    public abstract class Unit : MonoBehaviour, IUpdatable, IPoolable, IMovable
+    public abstract class Unit : MonoBehaviour, IUpdatable, IPoolable, IMovable, ITargetAcquirer
     {
         #region Properties and Variables
 
@@ -19,6 +19,16 @@ namespace Units.Types
         [SerializeField] public float turningSpeed;
         private float _turnSmoothVelocity;
         [SerializeField] public float speed;
+
+        //Targeting
+        [SerializeField] private Transform shootingPosition;
+        public Transform ShootingPosition => shootingPosition;
+        public Vector3 AimingDirection => TargetPosition - shootingPosition.position;
+
+        protected abstract Vector3 targetPosition { get; }
+
+        public Vector3 TargetPosition => targetPosition;
+        public Transform Target { get; set; }
 
         #endregion
 

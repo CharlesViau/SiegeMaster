@@ -1,5 +1,5 @@
 using System;
-using Abilities.SO;
+using Abilities.AbilitySO;
 using General;
 using Units.Types;
 using UnityEngine;

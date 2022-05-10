@@ -1,40 +1,37 @@
 using General;
-using Managers;
-using SO.TowerSo.Targeting;
 using UnityEngine;
 
-namespace Units.Types
+namespace Units.Types.Towers
 {
     public class Tower : Unit,ICreatable<Tower.Args>
     {
 
         [HideInInspector]public Transform target;
-        public ProjectileType projectiletype;
+        public ProjectileType projectileType;
         public ParticleType towerParticleType;
-        public TargetingSo targeting_SO;
+        public SO.TowerSo.Targeting.TargetingSo targetingSo;
         public float projectileDamage;
         public float towerAttackRange;
         public float attackSpeed;
         public Transform head;
         public Transform barrel;
-        public Transform ParticlePosition;
+        public Transform particlePosition;
 
+        protected override Vector3 targetPosition => target.position;
 
-        // for the animation you have to have fire animation and one trigger prameter , the name of trigger must be  "Fire"
-        private Animator animator; 
+        // Must have fire animation and one trigger parameter , the name of trigger must be  "Fire"
+        private static readonly int Fire1 = Animator.StringToHash("Fire");
 
-
-        float timer = 0;
+        private float _timer = 0;
 
         public override void Init()
         {
-            targeting_SO = Instantiate(targeting_SO);
-            animator = GetComponent<Animator>();
+            targetingSo = Instantiate(targetingSo);
             base.Init();
         }
         public override void PostInit()
         {
-            targeting_SO.Init(this.gameObject, towerAttackRange);
+            targetingSo.Init(this.gameObject, towerAttackRange);
         }
         public override void Refresh()
         {
@@ -45,44 +42,44 @@ namespace Units.Types
 
         protected virtual void GetTarget()
         {
-            target = targeting_SO.GetTheTarget();
+            target = targetingSo.GetTheTarget();
         }
         public void CoolDown(float _attackSpeed)
         {
             
-            timer += Time.deltaTime;
-            if (timer > _attackSpeed)
+            _timer += Time.deltaTime;
+            if (_timer > _attackSpeed)
             {
                 GetTarget();
-                ExtrabehaviorBeforFire();
+                ExtraBehaviorBeforeFire();
                 if (target)
                 {
                     Fire(target);
                 }
                 
-                timer = 0;
+                _timer = 0;
 
             }
          
         }
-        public virtual void ExtrabehaviorBeforFire()
+        public virtual void ExtraBehaviorBeforeFire()
         {
 
         }
         public  virtual void Fire(Transform target)
         {
 
-                animator.SetTrigger("Fire");
+                Animator.SetTrigger(Fire1);
          
             
-            ParticleSystemManager.Instance.Create(towerParticleType, new ParticleSystemScript.Args(ParticlePosition.position));
+            ParticleSystemManager.Instance.Create(towerParticleType, new ParticleSystemScript.Args(particlePosition.position));
 
         }
 
         public void Construct(Args constructionArgs)
         {
             transform.position = constructionArgs.spawningPosition;
-            targeting_SO.Init(this.gameObject, towerAttackRange);
+            targetingSo.Init(this.gameObject, towerAttackRange);
         }
 
         public class Args : ConstructionArgs

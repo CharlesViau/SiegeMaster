@@ -20,14 +20,15 @@ namespace Inputs
     {
 
         #region Properties and Variables
-        public Transform playerRotationLook;
+        [SerializeField] private Transform playerRotationLook;
       
         public Vector3 HitPoint { get; private set; }
 
         //Camera
-        private CameraRaycast cameraRayCast;
-        public float MaxDistanceAiming;
+        private CameraRaycast _cameraRayCast;
+        public float maxDistanceAiming;
         private Transform _mainCamera;
+        
         //ComponentsCache
         private PlayerInput _playerInput;
         private PlayerUnit _unit;
@@ -56,7 +57,7 @@ namespace Inputs
         #region IUpdatable (Init, Refresh...)
         public void Init()
         {
-            cameraRayCast = FindObjectOfType<CameraRaycast>();
+            _cameraRayCast = FindObjectOfType<CameraRaycast>();
             //Get Camera Reference
             if (Camera.main != null) _mainCamera = Camera.main.transform;
             else Debug.Log("No Main Camera Found");
@@ -89,7 +90,6 @@ namespace Inputs
 
         public void Refresh()
         {
-            HitPoint = cameraRayCast.RayCast(MaxDistanceAiming);
             PollFireInput();
             PollAbilityInput();
         }
@@ -119,11 +119,10 @@ namespace Inputs
 
         private void PollLookInput()
         {
-            if (_lookAction.ReadValue<Vector2>() is var mouseDelta && mouseDelta != Vector2.zero)
-            {
-                playerRotationLook.forward = (HitPoint - playerRotationLook.position).normalized;
-                CommandManager.Instance.Add(new LookCommand(_unit, playerRotationLook.transform.eulerAngles.y));
-            }
+            if (!(_lookAction.ReadValue<Vector2>() is var mouseDelta) || mouseDelta == Vector2.zero) return;
+            HitPoint = _cameraRayCast.RayCast(maxDistanceAiming);
+            playerRotationLook.forward = (HitPoint - playerRotationLook.position).normalized;
+            CommandManager.Instance.Add(new LookCommand(_unit, playerRotationLook.transform.eulerAngles.y));
         }
 
         private void PollFireInput()

@@ -4,7 +4,7 @@ using SO.TowerSo.Targeting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Target Objective", menuName = "ScriptableObjects/Targeting/T_TargetObject_SO")]
-public class T_TargetObjective_SO : TargetingSo
+public class T_TargetObjective_SO : SO.TowerSo.Targeting.TargetingSo
 {    
     // this class needs to implement
 

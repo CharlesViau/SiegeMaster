@@ -1,12 +1,13 @@
 using System;
 using Abilities.AbilityState;
+using Abilities.TargetingSO;
 using General;
-using SO.TowerSo.Targeting;
+using Units.Interfaces;
 using Units.Types;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Abilities.SO
+namespace Abilities.AbilitySO
 {
     public enum CastMethod
     {
@@ -16,7 +17,7 @@ namespace Abilities.SO
         QuickCast,
     }
 
-    public abstract class AbilitySo : ScriptableObject
+    public abstract class AbilitySo : ScriptableObject, ITargetAcquirer
     {
         #region Properties and Variables
 
@@ -41,7 +42,6 @@ namespace Abilities.SO
         [Header("State Machine Parameter")]
         [SerializeField]
         [Tooltip("If ability is a toggle or has a recast mechanic, put this true")]
-        private bool hasActiveState;
 
         //State Machine
         private AbilityStateMachine _stateMachine;
@@ -61,6 +61,9 @@ namespace Abilities.SO
         //[Header("Targeting State")]
         [Header("Channeling State")] public UnityEvent onChannelingEnter;
         //[Header("Active State")]
+        
+        public float activeTime;
+        public int recastCharges;
 
         //Public events related to "Input" Handling
         public bool IsPress { get; protected set; }
@@ -72,18 +75,28 @@ namespace Abilities.SO
 
         protected Unit Owner;
 
+        #region Targeting Stuff
+
+        //Targeting
         public TargetingSo targetingSo;
-        public GameObject target;
+        public Transform ShootingPosition => Owner.ShootingPosition;
+        public Vector3 AimingDirection => Owner.AimingDirection;
+        public Vector3 TargetPosition => Owner.TargetPosition;
+        public Transform Target { get; set; }
+
+        #endregion
 
         #endregion
 
         #region Public Methods
+
         public virtual void Init(Unit owner)
         {
             Owner = owner;
 
-            _stateMachine = new AbilityStateMachine(this, OnCast, OnActiveCast);
+            _stateMachine = new AbilityStateMachine(this, OnCast, OnActiveCast, ActiveStateRefresh);
 
+            //TODO : Invoke the Press Event of the current state!
             OnPress = () => { IsPress = true; };
 
             OnRelease = () => { IsPress = false; };
@@ -95,12 +108,13 @@ namespace Abilities.SO
         }
 
         #endregion
-        
+
         #region Abstract Methods
 
         protected abstract void ReadyStateRefresh();
         protected abstract void OnCast();
         protected abstract void OnActiveCast();
+        protected abstract void ActiveStateRefresh();
 
         #endregion
 
@@ -124,15 +138,15 @@ namespace Abilities.SO
 
             #endregion
 
-            public AbilityStateMachine(AbilitySo abilitySo, Action onCast, Action onActiveCast)
+            public AbilityStateMachine(AbilitySo abilitySo, Action onCast, Action onActiveCast, Action activeStateRefresh)
             {
                 #region State Creation (Bunch of "state = new state()")
 
                 _readyState = new AbilityReadyState(abilitySo);
                 _targetingState = new AbilityTargetingState(abilitySo);
-                _channelingState = new AbilityChannelingState(abilitySo, onCast);
+                _channelingState = new AbilityChannelingState(abilitySo);
                 _cooldownState = new AbilityCooldownState(abilitySo);
-                _activeState = new AbilityActiveState(abilitySo, onActiveCast);
+                _activeState = new AbilityActiveState(abilitySo, onCast, onActiveCast, activeStateRefresh);
 
                 #endregion
 
@@ -144,10 +158,10 @@ namespace Abilities.SO
                 AddTransition(_targetingState, _channelingState, HasTarget());
                 //TODO: AddTransition(_targetingState, _readyState, () => ); // If spell cancel or switch spell before casting
                 //Channeling
-                AddTransition(_channelingState, _activeState, ChannelCompleteAndHasActiveState());
-                AddTransition(_channelingState, _cooldownState, WasInterruptedOrChannelCompletedAndHasNoActiveState());
+                AddTransition(_channelingState, _activeState, ChannelComplete());
+                AddTransition(_channelingState, _cooldownState, ChannelWasInterrupted());
                 //Active
-                //AddTransition(_activeState, _cooldownState, () => );
+                AddTransition(_activeState, _cooldownState, ActiveStateIsOver());
                 //Cooldown
                 AddTransition(_cooldownState, _readyState, CooldownIsOver());
 
@@ -157,16 +171,15 @@ namespace Abilities.SO
 
                 Func<bool> WasTrigger() => () => abilitySo.IsPress;
 
-                Func<bool> HasTarget() => () => abilitySo.target != null;
+                Func<bool> HasTarget() => () => abilitySo.Target != null;
 
-                Func<bool> ChannelCompleteAndHasActiveState() =>
-                    () => _channelingState.HasCompleted && abilitySo.hasActiveState;
+                Func<bool> ChannelComplete() => () => _channelingState.HasCompleted;
 
-                Func<bool> WasInterruptedOrChannelCompletedAndHasNoActiveState() => () =>
-                    _channelingState.HasBeenInterrupt ||
-                    _channelingState.HasCompleted && !abilitySo.hasActiveState;
+                Func<bool> ChannelWasInterrupted() => () => _channelingState.HasBeenInterrupt;
 
                 Func<bool> CooldownIsOver() => () => _cooldownState.CooldownIsOver;
+
+                Func<bool> ActiveStateIsOver() => () => _activeState.HasNoRecastChargesLeft || _activeState.HasActiveTimer && _activeState.ActiveTimeRemainingIsOver;
 
                 #endregion
 

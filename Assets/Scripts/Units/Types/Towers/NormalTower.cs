@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using General;
 using Managers;
+using Units.Types.Towers;
 using UnityEngine.AI;
 namespace Units.Types
 {
@@ -35,12 +36,12 @@ namespace Units.Types
                 ProjectileVlocity = head.forward * projectileSpeed;
                 //calculate the prediction
             }
-            ProjectileManager.Instance.Create(projectiletype, new Projectile.Args(head.position, projectiletype, target, projectileSpeed, projectileDamage, ProjectileVlocity));
+            ProjectileManager.Instance.Create(projectileType, new Projectile.Args(head.position, projectileType, target, projectileSpeed, projectileDamage, ProjectileVlocity));
             base.Fire(target);
         }
 
   
-        public override void ExtrabehaviorBeforFire()
+        public override void ExtraBehaviorBeforeFire()
         {
             if (target)
             {

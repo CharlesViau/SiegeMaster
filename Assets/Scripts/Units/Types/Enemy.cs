@@ -16,9 +16,17 @@ namespace Units.Types
         public ProjectileType projectiletype;
         public EnemyMovement_SO movement_SO;
         //public Targeting_SO targeting_SO;
+        protected override Vector3 targetPosition
+        {
+            get
+            {
+                //TODO : return position of the current objective?
+                return Vector3.zero;
+            }
+        }
 
         protected NavMeshAgent enemyAgent;
-        Animator anim;
+        
         protected Transform player;
         protected Transform objective;
         public float projectileDamage;
@@ -29,6 +37,7 @@ namespace Units.Types
         int fullHP;
         public int currentHP;
         Stack<HP> hpStack;
+        private static readonly int Speed = Animator.StringToHash("Speed");
 
         public class Args : ConstructionArgs
         {
@@ -41,7 +50,7 @@ namespace Units.Types
         {
             base.Init();
             enemyAgent= GetComponent<NavMeshAgent>();
-            anim = GetComponent<Animator>();
+            
             
             fullHP = currentHP;
             alive = true;
@@ -73,7 +82,7 @@ namespace Units.Types
             base.Refresh();
             //Move(player.position);
             Move(objective.position);
-            anim.SetFloat("Speed", enemyAgent.speed);
+            Animator.SetFloat(Speed, enemyAgent.speed);
             if (currentHP <= 0)
             {
                 //anim.SetTrigger("IsDead");

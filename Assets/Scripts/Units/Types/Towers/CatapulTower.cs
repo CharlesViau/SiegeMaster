@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using General;
 using Managers;
+using Units.Types.Towers;
+
 namespace Units.Types
 {
     public class CatapulTower : Tower
@@ -21,7 +23,7 @@ namespace Units.Types
             float distanceTotarget = Vector3.Distance(catapultPosition, target.position);
             Vector3 finalvelocity = distanceTotarget * Mathf.Sqrt(-Physics.gravity.y / (barrel.position.y - target.transform.position.y + distanceTotarget)) * barrel.transform.forward;
 
-            ProjectileManager.Instance.Create(projectiletype, new Projectile.Args(barrel.position, projectiletype, target, 0, 0, finalvelocity));
+            ProjectileManager.Instance.Create(projectileType, new Projectile.Args(barrel.position, projectileType, target, 0, 0, finalvelocity));
 
             base.Fire(target);
 
