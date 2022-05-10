@@ -37,9 +37,8 @@ public class EnemyMovement_SO : ScriptableObject
     }
 
     // Set active checking as navmesh doesn't deal with object which are not active, as the enemies is died   
-    public void MoveToPoint(Vector3 target, bool alive)
+    public void MoveToPoint(Vector3 target)
     {
-        if (target != null && alive)
-            agent.SetDestination(target);
+        agent.SetDestination(target);
     }
 }

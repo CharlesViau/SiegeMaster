@@ -33,7 +33,7 @@ using General;
         timer += Time.deltaTime;
         if (timer> timeToPoolIfDidntHitAnything )
         {
-            ObjectPool.Instance.Pool(type, this);
+            ProjectileManager.Instance.Pool(type, this);
         }
         behavior_SO.Refresh();
         movement_SO.Refresh();

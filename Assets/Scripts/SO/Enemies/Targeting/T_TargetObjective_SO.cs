@@ -1,24 +1,38 @@
+using General;
+using Managers;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using SO.TowerSo.Targeting;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Target Objective", menuName = "ScriptableObjects/Targeting/T_TargetObject_SO")]
+
+[CreateAssetMenu(fileName = "Target Objective", menuName = "ScriptableObjects/Targeting/Target Nexus")]
 public class T_TargetObjective_SO : SO.TowerSo.Targeting.TargetingSo
 {    
-    // this class needs to implement
+    Transform nexus;
 
-    GameObject unit;
-    float range;
-
-    public override void Init(GameObject owner, float maxRange)
+    public override void Init(GameObject _unit, float _range)
     {
-        base.Init(owner, maxRange);
-        
+        base.Init(_unit, _range);
+        nexus = NexusManager.Instance.GetTransform;        
     }
 
     public override Transform GetTheTarget()
     {
-        return Owner.transform;
+        return nexus;
     }
+
+
+    /*void DetectPlayer()
+    {
+        if (Vector3.Distance(transform.position, player.position) < 0.1f)
+        {
+            Move(player.position);
+        }
+        else
+        {
+            Move(objective.transform.position);
+        }
+    }*/
 }

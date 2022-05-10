@@ -4,18 +4,20 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using SO.TowerSo.Targeting;
 
 namespace Units.Types
 {
     public class Enemy : Unit, ICreatable<Enemy.Args>, IHittable
     {
+        #region Fields
         /*public Transform[] targets;
         int waypointCounter = 0;*/
-        public bool alive;
+
+        #region Set Enemy Type
         public EnemyType enemyType;
-        public ProjectileType projectiletype;
         public EnemyMovement_SO movement_SO;
-        //public Targeting_SO targeting_SO;
+        public TargetingSo targeting_SO;
         protected override Vector3 targetPosition
         {
             get
@@ -24,52 +26,59 @@ namespace Units.Types
                 return Vector3.zero;
             }
         }
+        #endregion
 
+        #region Get Components
         protected NavMeshAgent enemyAgent;
         
         protected Transform player;
         protected Transform objective;
+        #endregion
+
+        #region Death
+        public bool alive;
+        float delayToPool = 10;
+        #endregion
+
+        #region Attacking
+        public ProjectileType projectiletype;
         public float projectileDamage;
         public float attackRange;
         public float projectileSpeed;
+        const float enemyDamageToNexus = 1;
+        #endregion
 
+        #region UI & HP
         public Canvas canvasParent;
-        int fullHP;
         public int currentHP;
+        int fullHP;
         Stack<HP> hpStack;
+        Vector3 facingDirUI;
+        #endregion
+        #endregion
         private static readonly int Speed = Animator.StringToHash("Speed");
 
-        public class Args : ConstructionArgs
-        {
-            public Args(Vector3 _spawningPosition) : base(_spawningPosition)
-            {
-            }
-        }
-
+        #region Methods
+        #region Game Control & Flow
         public override void Init()
         {
             base.Init();
-            enemyAgent= GetComponent<NavMeshAgent>();
-            
+            enemyAgent = GetComponent<NavMeshAgent>();
+            alive = true;
+            enemyAgent.speed = speed;
             
             fullHP = currentHP;
-            alive = true;
-            
 
             movement_SO = Instantiate(movement_SO);
-            
+            targeting_SO = Instantiate(targeting_SO);
+
             player = PlayerUnitManager.Instance.GetTransform;
             objective = NexusManager.Instance.GetTransform;
-            
-            movement_SO.Init(gameObject, objective.transform, speed);
-            
+
+            movement_SO.Init(gameObject, objective, speed);
+            targeting_SO.Init(gameObject, attackRange);
+
             hpStack = new Stack<HP>();
-            CreateHp();
-
-
-            //targeting_SO = Instantiate(targeting_SO);
-            //targeting_SO.Init(objective, attackRange);
-            //Debug.Log("init enemy");
         }
 
         public override void PostInit()
@@ -80,21 +89,43 @@ namespace Units.Types
         public override void Refresh()
         {
             base.Refresh();
-            //Move(player.position);
-            Move(objective.position);
-            Animator.SetFloat(Speed, enemyAgent.speed);
-            if (currentHP <= 0)
+            if (alive)
             {
-                //anim.SetTrigger("IsDead");
-                ObjectPool.Instance.Pool(enemyType, this);                
+                Animator.SetFloat(Speed, speed);
+                Move(targeting_SO.GetTheTarget().position);
+                FacingUIToPlayer();
+                //Shoot();
             }
-            //DetectPlayer();
-            //Shoot();      
+
+            if (!alive)
+                Death();
         }
 
         public override void FixedRefresh()
         {
 
+        }
+        #endregion
+
+        #region Factory & Pool manage
+        public class Args : ConstructionArgs
+        {
+            public Transform parent;
+            public Args(Vector3 _spawningPosition, Transform _parent) : base(_spawningPosition)
+            {
+                parent = _parent;
+            }
+        }
+
+        public void Construct(Args constructionArgs)
+        {
+            transform.SetParent(constructionArgs.parent);
+            currentHP = fullHP;
+            alive = true;
+            delayToPool = 10;
+            enemyAgent.Move(constructionArgs.spawningPosition);
+            hpStack.Clear();
+            CreateHp(fullHP);
         }
 
         public override void Pool()
@@ -107,57 +138,78 @@ namespace Units.Types
         public override void Depool()
         {
             base.Depool();
-            alive = true;
             gameObject.SetActive(true);
-            
-            currentHP = fullHP;
-            CreateHp();
         }
+        #endregion
 
-        public void GotShot(float damage)
-        {
-            currentHP -= (int)damage;
-            ObjectPool.Instance.Pool(HPType.EnemyHp, hpStack.Pop());
-            GetComponent<MeshRenderer>().material.color = Random.ColorHSV();
-        }
-
+        #region Movement
         public override void Move(Vector3 direction)
         {
-            movement_SO.MoveToPoint(direction, alive);
+            if (direction != null)
+                movement_SO.MoveToPoint(direction);
         }
+        #endregion
 
-        public void Construct(Args constructionArgs)
-        {            
-             enemyAgent.Move(constructionArgs.spawningPosition);
-            //transform.position = constructionArgs.spawningPosition;
-        }
-
-        void CreateHp()
+        #region Damage & Death manage
+        public void GotShot(float damage)
         {
-            //fullHP = 0;
-            for (int i = 0; i < fullHP; i++)
+            if (currentHP >= 0)
             {
-                HP h = HPManager.Instance.Create(HPType.EnemyHp, new HP.Args(Vector3.zero, canvasParent.transform));
-                hpStack.Push(h);
+                damage = Mathf.Clamp(damage, 0, currentHP);
+                currentHP -= (int)damage;
+
+                for (int i = 0; i < damage; i++)
+                {
+                    HP h = hpStack.Pop();
+                    h.transform.SetParent(null);
+                    HPManager.Instance.Pool(HPType.EnemyHp, h);
+                }
+            }
+            if (alive && currentHP <= 0)
+                DeathAnimation();
+        }
+
+        void DeathAnimation()
+        {
+            alive = false;
+            Animator.SetTrigger("IsDead");
+            //Death();
+        }
+
+        void Death()
+        {
+            if (gameObject.activeInHierarchy)
+                enemyAgent.ResetPath();
+
+            delayToPool -= Time.deltaTime;
+            if (delayToPool <= 0)
+            {
+                EnemyManager.Instance.Pool(enemyType, this);
             }
         }
+        #endregion
 
-        void DetectPlayer()
+        #region HP & UI manage
+        void CreateHp(int numberOfHp)
         {
-            if (Vector3.Distance(transform.position, player.position) < 0.1f)
+            for (int i = 0; i < numberOfHp; i++)
             {
-                Move(player.position);
-            }
-            else
-            {
-                Move(objective.transform.position);
+                hpStack.Push(HPManager.Instance.Create(HPType.EnemyHp, new HP.Args(Vector3.zero, canvasParent.transform)));
             }
         }
-
-        void CreateProjectile(Transform target)
+        void FacingUIToPlayer()
         {
+            facingDirUI = player.transform.position - transform.position;
+            canvasParent.transform.forward = facingDirUI;
+        }
+        #endregion
+
+        #region Attacking Player & Nexus
+        void InstantiateProjectile(Transform target)
+        {
+            //Vector3 offset = new Vector3(0, 0, 5);
             ProjectileManager.Instance.Create(projectiletype,
-                new Projectile.Args(transform.position, projectiletype,
+                new Projectile.Args((transform.position) , projectiletype,
                 target, projectileSpeed, projectileDamage, Vector3.zero));
         }
 
@@ -165,9 +217,20 @@ namespace Units.Types
         {
             if (Vector3.Distance(transform.position, player.position) <= attackRange)
             {
-                CreateProjectile(player);
+                InstantiateProjectile(player);
             }
         }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.tag == "Nexus")
+            {
+                GotShot(currentHP);
+                delayToPool = 0;
+                NexusManager.Instance.DealDamage(enemyDamageToNexus);
+            }
+        }
+        #endregion
 
         /*void WaypointsCheck()
         {
@@ -183,5 +246,6 @@ namespace Units.Types
             //movement_SO.MoveToPoint(targets[waypointCounter].position);
             //rb.velocity = 20 * (targets[waypointCounter].position - player.position).normalized;
         }*/
+        #endregion
     }
 }

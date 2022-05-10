@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Nexus
+  - Target
+  - Enemy
+  - Tower
   layers:
   - Default
   - TransparentFX
@@ -13,14 +17,14 @@ TagManager:
   - UI
   - Objective
   - Target
-  - 
+  - Nexus
   - 
   - Projectile
   - 
   - Tower
   - FireBall
   - terrain
-  - 
+  - Player
   - 
   - 
   - 
