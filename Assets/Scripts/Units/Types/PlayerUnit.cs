@@ -7,45 +7,49 @@ namespace Units.Types
 
     public class PlayerUnit : Unit, ICameraController
     {
-        private CharacterController characterController;
+        private CharacterController _characterController;
+        private PlayerController _playerController;
 
-        private const float gravity = -20f;
-        public float hightJump;
+        private const float Gravity = -20f;
+        public float jumpHeight;
         
-        Vector3 moveVlocity;
-        Vector3 vlo;
+        private Vector3 _moveVelocity;
+        private Vector3 _velocity;
 
         public float groundDistance = 0.4f;
         public LayerMask groundLayer;
         public Transform groundCheck;
-        bool isGrounded;
+        private bool _isGrounded;
+
+        protected override Vector3 targetPosition => _playerController.HitPoint;
 
         public override void Init()
         {
             base.Init();
-            characterController = GetComponent<CharacterController>();
+            _characterController = GetComponent<CharacterController>();
+            _playerController = GetComponent<PlayerController>();
 
         }
         public override void Refresh()
         {
             base.Refresh();
-            isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundLayer);
-            if (isGrounded && vlo.y<0)
+            _isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundLayer);
+            if (_isGrounded && _velocity.y<0)
             {
-                vlo.y = -2f;
+                _velocity.y = -2f;
             }
             
         }
         public override void FixedRefresh()
         {
-            vlo.y += gravity * Time.deltaTime;
-            characterController.Move(vlo * Time.fixedDeltaTime);
+            _velocity.y += Gravity * Time.deltaTime;
+            _characterController.Move(_velocity * Time.fixedDeltaTime);
         }
         public override void Move(Vector3 direction)
         {
-            moveVlocity = (direction) * Time.fixedDeltaTime * speed;
-            characterController.Move(moveVlocity);
-            moveVlocity.y = 0;
+            _moveVelocity = (direction) * Time.fixedDeltaTime * speed;
+            _characterController.Move(_moveVelocity);
+            _moveVelocity.y = 0;
         }
         public void Rotate(Vector3 target)
         {
@@ -56,9 +60,9 @@ namespace Units.Types
 
         public override void Jump()
         {
-            if (isGrounded)
+            if (_isGrounded)
             {
-               vlo.y = Mathf.Sqrt(hightJump*-2f * gravity);
+               _velocity.y = Mathf.Sqrt(jumpHeight*-2f * Gravity);
             }
            
         }

@@ -95,13 +95,14 @@ namespace Inputs
         {
             PollFireInput();
             PollAbilityInput();
+            PollJumpInput();
         }
 
         public void FixedRefresh()
         {
             PollLookInput();
             PollMovementInput();
-            PollJumpInput();
+           
         }
 
         public void LateRefresh()

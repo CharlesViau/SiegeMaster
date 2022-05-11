@@ -8,7 +8,7 @@ namespace Commands
     {
         private readonly IMovable _obj;
 
-        public CommandUpdateType UpdateType => CommandUpdateType.FixedRefresh;
+        public CommandUpdateType UpdateType => CommandUpdateType.Refresh;
 
         public JumpCommend(IMovable obj)
         {
