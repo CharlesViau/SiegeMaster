@@ -7,27 +7,32 @@ namespace Units.Types
 
     public class PlayerUnit : Unit, ICameraController
     {
-        private CharacterController _characterController;
-        private PlayerController _playerController;
-
-        private const float Gravity = -20f;
-        public float jumpHeight;
+        private CameraRaycast _cameraRayCast;
         
-        private Vector3 _moveVelocity;
-        private Vector3 _velocity;
-
+        public Transform playerRotationLook;
+        public float maxDistanceAiming;
+        public float rayCastStartPointDistance;
+        public float jumpHeight;
+        private CharacterController _characterController;
+        
         public float groundDistance = 0.4f;
         public LayerMask groundLayer;
         public Transform groundCheck;
-        private bool _isGrounded;
 
-        protected override Vector3 targetPosition => _playerController.HitPoint;
+
+        private Vector3 _moveVelocity;
+        private Vector3 _velocity;
+
+        private bool _isGrounded;
+        private Vector3 HitPoint { get; set; }
+        private const float Gravity = -20f;
+        protected override Vector3 targetPosition => HitPoint;
 
         public override void Init()
         {
             base.Init();
+            _cameraRayCast = FindObjectOfType<CameraRaycast>();
             _characterController = GetComponent<CharacterController>();
-            _playerController = GetComponent<PlayerController>();
 
         }
         public override void Refresh()
@@ -66,9 +71,12 @@ namespace Units.Types
             }
            
         }
-        public void Look(float cameraYAxis)
+        public void Look()
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, cameraYAxis, 0), turningSpeed * Time.fixedDeltaTime);
+            HitPoint = _cameraRayCast.RayCast(maxDistanceAiming, rayCastStartPointDistance);
+            playerRotationLook.forward = (HitPoint - playerRotationLook.position).normalized;
+            
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, playerRotationLook.transform.eulerAngles.y, 0), turningSpeed*Time.fixedDeltaTime);
 
         }
     }

@@ -4,6 +4,6 @@ namespace Units.Interfaces
 {
     public interface ICameraController
     {
-        public void Look(float cameraYAxis);
+        public void Look();
     }
 }

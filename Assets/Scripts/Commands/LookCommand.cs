@@ -8,16 +8,14 @@ namespace Commands
         public CommandUpdateType UpdateType { get; } = CommandUpdateType.FixedRefresh;
         
         private readonly ICameraController _player;
-        private readonly float _cameraYAxis; 
 
-        public LookCommand(ICameraController player, float cameraYAxis)
+        public LookCommand(ICameraController player)
         {
             _player = player;
-            _cameraYAxis = cameraYAxis;
         }
         public void Execute()
         {
-            _player.Look(_cameraYAxis);
+            _player.Look();
         }
 
         public void Undo()
