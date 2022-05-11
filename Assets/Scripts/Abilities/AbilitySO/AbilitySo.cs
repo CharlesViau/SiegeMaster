@@ -11,10 +11,9 @@ namespace Abilities.AbilitySO
 {
     public enum CastMethod
     {
-        CantBeCast,
+        InstantCast,
         Indicator,
-        QuickCastWithIndicator,
-        QuickCast,
+        PressAndRelease,
     }
 
     public abstract class AbilitySo : ScriptableObject, ITargetAcquirer
@@ -33,7 +32,7 @@ namespace Abilities.AbilitySO
         [SerializeField]
         protected bool castMethodIsLock;
 
-        public bool IsPressAndRelease => castMethod == CastMethod.QuickCastWithIndicator;
+        public bool IsPressAndRelease => castMethod == CastMethod.PressAndRelease;
 
         #endregion
 
@@ -66,12 +65,10 @@ namespace Abilities.AbilitySO
         public int recastCharges;
 
         //Public events related to "Input" Handling
-        public bool IsPress { get; protected set; }
-        public bool IsWaitingForAttackPressEvent { get; private set; }
+        public bool IsPress { get; private set; }
 
         public Action OnPress;
         public Action OnRelease;
-        public Action OnAttackPress;
 
         protected Unit Owner;
 
