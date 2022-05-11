@@ -1,18 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
+using System.Linq;
+using General;
+using Units.Types;
 using UnityEngine;
 
-public class WaypointsManager : MonoBehaviour
+namespace Managers
 {
-    // Start is called before the first frame update
-    void Start()
+    public class WaypointsManager : Manager<Waypoints, WaypointsManager>
     {
-        
-    }
+        Waypoints waypoint;
+        public Transform GetTransform { get { return waypoint.transform; } }
+        public override void Init()
+        {
+            foreach (var waypoint in Object.FindObjectsOfType<Waypoints>().ToList())
+            {
+                Add(waypoint);
+            }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+            base.Init();
+        }
     }
 }

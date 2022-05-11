@@ -49,8 +49,9 @@ namespace Units.Types
         #endregion
 
         #region Animation
-        private static readonly int Speed = Animator.StringToHash("Speed");
-        private static readonly int IsDead = Animator.StringToHash("IsDead");
+        static readonly int Speed = Animator.StringToHash("Speed");
+        static readonly int IsDead = Animator.StringToHash("IsDead");
+        static readonly int IsAttacking = Animator.StringToHash("IsAttacking");
         #endregion
 
         #region UI & HP
@@ -97,7 +98,7 @@ namespace Units.Types
             {
                 Animator.SetFloat(Speed, speed);
                 Move(targeting_SO.GetTheTarget().position);
-                FacingUIToPlayer();
+                //FacingUIToPlayer();
                 //Shoot();
             }
 
@@ -177,7 +178,6 @@ namespace Units.Types
 
         private void DeathAnimation()
         {
-            //alive = false;
             Animator.SetTrigger(IsDead);
             //Death();
         }
@@ -223,6 +223,11 @@ namespace Units.Types
             ProjectileManager.Instance.Create(projectileType,
                 new Projectile.Args((transform.position), projectileType,
                 target, projectileSpeed, projectileDamage, Vector3.zero));
+        }
+
+        private void ShootAnimation()
+        {
+            Animator.SetTrigger(IsAttacking);
         }
 
         private void Shoot()
