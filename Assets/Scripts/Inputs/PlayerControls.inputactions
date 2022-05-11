@@ -158,6 +158,17 @@
                 },
                 {
                     "name": "",
+                    "id": "c761f5a5-4a8a-47fb-be9e-6e92e3a7e07b",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BasicAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "6d436419-e1f8-464d-9a55-c4920beddf4a",
                     "path": "<Keyboard>/q",
                     "interactions": "",

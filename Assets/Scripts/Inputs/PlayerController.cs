@@ -20,14 +20,12 @@ namespace Inputs
     {
 
         #region Properties and Variables
-        [SerializeField] private Transform playerRotationLook;
       
-        public Vector3 HitPoint { get; private set; }
+        
 
         //Camera
         private CameraRaycast _cameraRayCast;
-        public float maxDistanceAiming;
-        public float rayCastStartPointDistance;
+
         private Transform _mainCamera;
         
         //ComponentsCache
@@ -93,6 +91,8 @@ namespace Inputs
         }
 
         public void Refresh()
+
+
         {
             PollFireInput();
             PollAbilityInput();
@@ -126,9 +126,8 @@ namespace Inputs
         private void PollLookInput()
         {
             if (!(_lookAction.ReadValue<Vector2>() is var mouseDelta) || mouseDelta == Vector2.zero) return;
-            HitPoint = _cameraRayCast.RayCast(maxDistanceAiming, rayCastStartPointDistance);
-            playerRotationLook.forward = (HitPoint - playerRotationLook.position).normalized;
-            CommandManager.Instance.Add(new LookCommand(_unit, playerRotationLook.transform.eulerAngles.y));
+
+            CommandManager.Instance.Add(new LookCommand(_unit));
         }
 
         private void PollFireInput()
