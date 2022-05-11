@@ -26,7 +26,7 @@ namespace Units.Types.Towers
 
         public override void Init()
         {
-            targetingSo = Instantiate(targetingSo);
+            //targetingSo = Instantiate(targetingSo);
             base.Init();
         }
         public override void PostInit()

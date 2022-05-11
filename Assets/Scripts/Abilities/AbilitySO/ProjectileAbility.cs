@@ -8,7 +8,7 @@ namespace Abilities.AbilitySO
         public ProjectileType type;
         public float projectileSpeed;
         public float projectileDamage;
-
+        
         protected override void ReadyStateRefresh()
         {
             

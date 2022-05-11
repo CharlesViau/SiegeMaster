@@ -65,22 +65,15 @@ namespace Abilities
         #region Private Methods
         private void OnAttackPressEvent()
         {
-            if  (_currentAbility == basicAttack && IsReadyToCast)
-            {
-                _currentAbility.OnAttackPress?.Invoke();
-            }
-            else if (_currentAbility.IsWaitingForAttackPressEvent)
-            {
-                _currentAbility.OnAttackPress?.Invoke();
-            }
+            _currentAbility.OnPress?.Invoke();
         }
         
         private void OnAbilityReleaseEvent(int i)
-        {
+        {/*
             if (_currentAbility == abilities[i] && IsPress && abilities[i].IsPressAndRelease)
             {
                 _currentAbility.OnRelease?.Invoke();
-            }
+            }*/
         }
 
         private void OnAbilityPressEvent(int i)
