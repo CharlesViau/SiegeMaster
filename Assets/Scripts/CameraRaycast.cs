@@ -6,10 +6,15 @@ public class CameraRaycast : MonoBehaviour
 {
     public Vector3 RayCast(float maxDistanceForRay)
     {
-        Vector3 hitPoint;
 
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out var hit, maxDistanceForRay))
-        {
+        RaycastHit hit;
+        Vector3 hitPoint;
+        Vector3 fwd = transform.TransformDirection(Vector3.forward);
+
+        if (Physics.Raycast(transform.position, fwd, out hit, maxDistanceForRay)) 
+        
+        { 
+
             hitPoint = hit.point;
             // Debug.Log(hitPoint);
         }
