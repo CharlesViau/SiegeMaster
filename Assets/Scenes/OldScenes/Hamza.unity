@@ -855,11 +855,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a337c2c3b076dcf43a1782b86a65dddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemiesParent: {fileID: 0}
+  enemiesParent: {fileID: 1584486119}
+  enemyType: 000000000100000002000000
   spawnPositions:
   - {fileID: 266649714}
-  enemyType: 0000000001000000
-  timeToSpawn: 3
+  maxAmountsOfWaves: 5
+  delayToSartWave: 5
+  nbToSpawnPerWave: 12
 --- !u!1 &334677817
 GameObject:
   m_ObjectHideFlags: 0
@@ -3012,6 +3014,36 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1535610443}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1584486118
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1584486119}
+  m_Layer: 0
+  m_Name: Enemies
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1584486119
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1584486118}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -10.9842, y: -6.202774, z: -25.244125}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1614052724
 GameObject:
   m_ObjectHideFlags: 0
