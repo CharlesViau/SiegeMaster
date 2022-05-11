@@ -19,11 +19,11 @@ namespace Units.Types
         public override void Init()
         {
             base.Init();
-#if UNITY_EDITOR
+        #if UNITY_EDITOR
             if (projectileType != ProjectileType.Proj_PredictionArrow)
             {
                 Debug.LogError("If you want to predict , you should use the prediction Arrow");
-                    projectiletype = ProjectileType.Proj_PredictionArrow;
+                projectileType = ProjectileType.Proj_PredictionArrow;
             }
 
          #endif
@@ -38,7 +38,7 @@ namespace Units.Types
                     Vector3 targetMovementDirection = target.GetComponent<NavMeshAgent>().velocity;
                     float targetMovementVlovity = target.GetComponent<NavMeshAgent>().speed;
                     float AncleTargetToPlayer = Vector3.Angle(targetMovementDirection.normalized, (head.position - target.position).normalized);
-                    float TowerAngleFinalRotation = Mathf.Asin((Mathf.Sin(AncleTargetToPlayer * Mathf.Deg2Rad) * targetMovementVlovity) / projectileSpeed) * Mathf.Rad2Deg;
+                    float towerAngleFinalRotation = Mathf.Asin((Mathf.Sin(AncleTargetToPlayer * Mathf.Deg2Rad) * targetMovementVlovity) / projectileSpeed) * Mathf.Rad2Deg;
 
                     var dir = (targetTransform.position - head.position).normalized;
                     var left = Vector3.Cross(dir, targetMovementDirection.normalized);
