@@ -44,6 +44,8 @@ namespace Units.Types
         public ProjectileType projectileType;
         public float projectileDamage;
         public float attackRange;
+        public float ShootRange;
+        public float FightRange;
         public float projectileSpeed;
         const float EnemyDamageToNexus = 1;
         #endregion
@@ -92,7 +94,6 @@ namespace Units.Types
             base.PostInit();
         }
 
-        float t = 10;
         public override void Refresh()
         {
             base.Refresh();
@@ -100,16 +101,8 @@ namespace Units.Types
             {
                 Animator.SetFloat(Speed, speed);
                 Move(targeting_SO.GetTheTarget().position);
-                //FacingUIToPlayer();
+                FacingUIToPlayer();
                 //Shoot();
-
-                t -= Time.deltaTime;
-                if (t < 5)
-                {
-                    ShootAnimation();
-                    if (t < 4)
-                        Animator.ResetTrigger(IsFight);
-                }
             }
 
             if (!alive)

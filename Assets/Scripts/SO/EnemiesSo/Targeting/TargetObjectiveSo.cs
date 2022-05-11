@@ -18,18 +18,5 @@ namespace SO.Enemies.Targeting
         {
             return _nexus;
         }
-
-
-        /*void DetectPlayer()
-    {
-        if (Vector3.Distance(transform.position, player.position) < 0.1f)
-        {
-            Move(player.position);
-        }
-        else
-        {
-            Move(objective.transform.position);
-        }
-    }*/
     }
 }

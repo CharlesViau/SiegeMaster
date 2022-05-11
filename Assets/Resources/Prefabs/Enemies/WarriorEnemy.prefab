@@ -686,7 +686,7 @@ MonoBehaviour:
   alive: 0
   projectileType: 0
   projectileDamage: 10
-  attackRange: 120
+  attackRange: 200
   projectileSpeed: 10
   canvasParent: {fileID: 5758103511493653035}
   currentHp: 5
