@@ -5,15 +5,14 @@ using UnityEngine;
 namespace Units.Types
 {
 
-    public class PlayerUnitVR : Unit
+    public class PlayerUnitVR : PlayerUnit
     {
         protected override Vector3 targetPosition => throw new System.NotImplementedException();
-
-        public void Look()
+        public override void Look()
         {
-
+           
         }
 
-       
+
     }
 }
