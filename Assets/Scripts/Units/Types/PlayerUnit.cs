@@ -79,5 +79,6 @@ namespace Units.Types
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, playerRotationLook.transform.eulerAngles.y, 0), turningSpeed*Time.fixedDeltaTime);
 
         }
+
     }
 }

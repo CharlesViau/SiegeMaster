@@ -15,7 +15,7 @@ namespace Inputs
     /// the PlayerInput component of Unity. Depending on which action was done, this class will create the proper
     /// command. With this approach you can rebind key easily in the PlayerInput component without changing the code.
     /// </summary>
-    [RequireComponent(typeof(PlayerInput), typeof(PlayerUnit))]
+    [RequireComponent(typeof(PlayerInput))]
     public class PlayerController : MonoBehaviour, IUpdatable
     {
 
@@ -24,7 +24,6 @@ namespace Inputs
         
 
         //Camera
-        private CameraRaycast _cameraRayCast;
 
         private Transform _mainCamera;
         
@@ -58,7 +57,6 @@ namespace Inputs
         #region IUpdatable (Init, Refresh...)
         public void Init()
         {
-            _cameraRayCast = FindObjectOfType<CameraRaycast>();
             //Get Camera Reference
             if (Camera.main != null) _mainCamera = Camera.main.transform;
             else Debug.Log("No Main Camera Found");
@@ -131,7 +129,7 @@ namespace Inputs
         }
 
         private void PollFireInput()
-        {
+        { 
             if (_basicAttackAction.WasPressedThisFrame())
             {
                 CommandManager.Instance.Add(new AttackPressCommand(_unit));
