@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class CameraRaycast : MonoBehaviour
 {
-    public Vector3 RayCast(float maxDistanceForRay)
+    //rayCastStartPointDistance : Raycast start point has to have distance from camera 
+    public Vector3 RayCast(float maxDistanceForRay,float rayCastStartPointDistance)
     {
 
         RaycastHit hit;
         Vector3 hitPoint;
         Vector3 fwd = transform.TransformDirection(Vector3.forward);
+        
 
-        if (Physics.Raycast(transform.position, fwd, out hit, maxDistanceForRay)) 
+        if (Physics.Raycast(transform.position + fwd* rayCastStartPointDistance, fwd , out hit, maxDistanceForRay)) 
         
         { 
 
