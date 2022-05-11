@@ -2,7 +2,6 @@ using General;
 using Managers;
 using UnityEngine;
 using Units.Types;
-using System.Linq;
 
 public class SpawnEnemyManager : MonoBehaviour
 {
@@ -53,6 +52,8 @@ public class SpawnEnemyManager : MonoBehaviour
         //DebugTool();
         LevelUp();
     }
+
+
     #endregion
 
     #region Spawning enemy per wave

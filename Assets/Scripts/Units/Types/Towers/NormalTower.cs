@@ -1,12 +1,10 @@
 using UnityEngine;
 using UnityEngine.AI;
-
-namespace Units.Types.Towers
+namespace Units.Types
 {
-    public class NormalTower : Tower
+    public class NormalTower : Tower    
     {
         public float projectileSpeed;
-
         // If you want want to use this predict bool you have to give the prediction projectile 
         // have to set a projectile that has PredictionMovement_SO, 
         public bool predict;
@@ -22,22 +20,19 @@ namespace Units.Types.Towers
                 Debug.Log("If you want to predict , you should use the prediction Arrow");
             }
 
-#endif
-        }
+         #endif
 
+        }
         public override void Fire(Transform targetTransform)
         {
             if (predict)
             {
-                //this is the math to predict the interception between two object with different speed 
-                projectileType = ProjectileType.Proj_PredictionArrow;
-                var targetMovementDirection = targetTransform.GetComponent<NavMeshAgent>().velocity;
-                var targetMovementVelocity = targetTransform.GetComponent<NavMeshAgent>().speed;
-                var angleTargetToPlayer = Vector3.Angle(targetMovementDirection.normalized,
-                    (head.position - targetTransform.position).normalized);
-                var towerAngleFinalRotation =
-                    Mathf.Asin((Mathf.Sin(angleTargetToPlayer * Mathf.Deg2Rad) * targetMovementVelocity) /
-                               projectileSpeed) * Mathf.Rad2Deg;
+
+                    //this is the math for predict the intercept with between two object wqith different speed 
+                    Vector3 targetMovementDirection = target.GetComponent<NavMeshAgent>().velocity;
+                    float targetMovementVlovity = target.GetComponent<NavMeshAgent>().speed;
+                    float AncleTargetToPlayer = Vector3.Angle(targetMovementDirection.normalized, (head.position - target.position).normalized);
+                    float towerAngleFinalRotation = Mathf.Asin((Mathf.Sin(AncleTargetToPlayer * Mathf.Deg2Rad) * targetMovementVlovity) / projectileSpeed) * Mathf.Rad2Deg;
 
                 var dir = (targetTransform.position - head.position).normalized;
                 var left = Vector3.Cross(dir, targetMovementDirection.normalized);
@@ -57,13 +52,15 @@ namespace Units.Types.Towers
             base.Fire(targetTransform);
         }
 
-
+  
         public override void ExtraBehaviorBeforeFire()
         {
             if (target)
             {
                 head.forward = (target.position - head.position).normalized;
             }
+           
         }
     }
+    
 }
