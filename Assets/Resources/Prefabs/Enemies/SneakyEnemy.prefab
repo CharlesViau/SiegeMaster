@@ -1331,7 +1331,7 @@ Animator:
   m_GameObject: {fileID: 5787225661110997496}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 128458c98cc8ec644893c66af0d844fb, type: 2}
+  m_Controller: {fileID: 9100000, guid: 9872ef3d47cb4fe47852e00bb067e14d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1382,7 +1382,7 @@ MonoBehaviour:
   attackRange: 0
   projectileSpeed: 0
   canvasParent: {fileID: 6589549669133941664}
-  currentHp: 0
+  currentHp: 5
 --- !u!195 &7896966820533481567
 NavMeshAgent:
   m_ObjectHideFlags: 0

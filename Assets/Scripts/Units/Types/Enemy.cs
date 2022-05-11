@@ -51,7 +51,8 @@ namespace Units.Types
         #region Animation
         static readonly int Speed = Animator.StringToHash("Speed");
         static readonly int IsDead = Animator.StringToHash("IsDead");
-        static readonly int IsAttacking = Animator.StringToHash("IsAttacking");
+        static readonly int IsAttack = Animator.StringToHash("IsAttack");
+        static readonly int IsFight = Animator.StringToHash("IsFight");
         #endregion
 
         #region UI & HP
@@ -91,6 +92,7 @@ namespace Units.Types
             base.PostInit();
         }
 
+        float t = 10;
         public override void Refresh()
         {
             base.Refresh();
@@ -100,6 +102,14 @@ namespace Units.Types
                 Move(targeting_SO.GetTheTarget().position);
                 //FacingUIToPlayer();
                 //Shoot();
+
+                t -= Time.deltaTime;
+                if (t < 5)
+                {
+                    ShootAnimation();
+                    if (t < 4)
+                        Animator.ResetTrigger(IsFight);
+                }
             }
 
             if (!alive)
@@ -227,7 +237,7 @@ namespace Units.Types
 
         private void ShootAnimation()
         {
-            Animator.SetTrigger(IsAttacking);
+            Animator.SetTrigger(IsFight);
         }
 
         private void Shoot()

@@ -44,6 +44,7 @@ public class SpawnEnemyManager : MonoBehaviour
                 {
                     SpawnEnemies(EnemyType.ArcherEnemy);
                     SpawnEnemies(EnemyType.SneakyEnemy);
+                    SpawnEnemies(EnemyType.WarriorEnemy);
                 }
             }
             levelIsOver = CheckAliveEnemies();
