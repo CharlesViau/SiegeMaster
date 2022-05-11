@@ -27,6 +27,7 @@ namespace Inputs
         //Camera
         private CameraRaycast _cameraRayCast;
         public float maxDistanceAiming;
+        public float rayCastStartPointDistance;
         private Transform _mainCamera;
         
         //ComponentsCache
@@ -125,7 +126,7 @@ namespace Inputs
         private void PollLookInput()
         {
             if (!(_lookAction.ReadValue<Vector2>() is var mouseDelta) || mouseDelta == Vector2.zero) return;
-            HitPoint = _cameraRayCast.RayCast(maxDistanceAiming);
+            HitPoint = _cameraRayCast.RayCast(maxDistanceAiming, rayCastStartPointDistance);
             playerRotationLook.forward = (HitPoint - playerRotationLook.position).normalized;
             CommandManager.Instance.Add(new LookCommand(_unit, playerRotationLook.transform.eulerAngles.y));
         }
@@ -141,7 +142,7 @@ namespace Inputs
         {
             if (_jumpAction.WasPressedThisFrame())
             {
-                CommandManager.Instance.Add(new JumpCommend(_unit));
+                CommandManager.Instance.Add(new JumpCommand(_unit));
             }
         }
 

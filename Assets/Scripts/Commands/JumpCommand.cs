@@ -4,13 +4,13 @@ using UnityEngine.EventSystems;
 
 namespace Commands
 {
-    public class JumpCommend : ICommand
+    public class JumpCommand : ICommand
     {
         private readonly IMovable _obj;
 
         public CommandUpdateType UpdateType => CommandUpdateType.Refresh;
 
-        public JumpCommend(IMovable obj)
+        public JumpCommand(IMovable obj)
         {
             _obj = obj;
        
