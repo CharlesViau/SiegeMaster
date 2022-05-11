@@ -168,16 +168,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turningSpeed: 0
   speed: 0
+  shootingPosition: {fileID: 5553911213991681000}
   target: {fileID: 0}
-  projectiletype: 1
+  projectileType: 1
   towerParticleType: 3
-  targeting_SO: {fileID: 11400000, guid: 39976aa8fee26ac4690be1badbe5fe68, type: 2}
+  targetingSo: {fileID: 11400000, guid: 39976aa8fee26ac4690be1badbe5fe68, type: 2}
   projectileDamage: 1
-  towerAttackRange: 500
+  towerAttackRange: 100
   attackSpeed: 1
   head: {fileID: 5553911214106163661}
   barrel: {fileID: 5553911213991681000}
-  ParticlePosition: {fileID: 5553911213244386247}
+  particlePosition: {fileID: 5553911213244386247}
   projectileSpeed: 60
   predict: 0
 --- !u!65 &5553911213201598253
