@@ -20,8 +20,6 @@ namespace Units.Types
         public Transform groundCheck;
         bool isGrounded;
 
-        protected override Vector3 targetPosition => throw new System.NotImplementedException();
-
         public override void Init()
         {
             base.Init();
