@@ -20,7 +20,8 @@ namespace Units.Types
         #if UNITY_EDITOR
             if (projectiletype != ProjectileType.Proj_PredictionArrow)
             {
-                Debug.Log("If you want to predict , you should use the prediction Arrow");
+                Debug.LogError("If you want to predict , you should use the prediction Arrow");
+                    projectiletype = ProjectileType.Proj_PredictionArrow;
             }
 
          #endif
@@ -32,7 +33,6 @@ namespace Units.Types
             {
 
                     //this is the math for predict the intercept with between two object wqith different speed 
-                    projectiletype = ProjectileType.Proj_PredictionArrow;
                     Vector3 targetMovementDirection = target.GetComponent<NavMeshAgent>().velocity;
                     float targetMovementVlovity = target.GetComponent<NavMeshAgent>().speed;
                     float AncleTargetToPlayer = Vector3.Angle(targetMovementDirection.normalized, (head.position - target.position).normalized);
