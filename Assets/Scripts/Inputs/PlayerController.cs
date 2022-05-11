@@ -24,7 +24,6 @@ namespace Inputs
         
 
         //Camera
-        private CameraRaycast _cameraRayCast;
 
         private Transform _mainCamera;
         
@@ -58,7 +57,6 @@ namespace Inputs
         #region IUpdatable (Init, Refresh...)
         public void Init()
         {
-            _cameraRayCast = FindObjectOfType<CameraRaycast>();
             //Get Camera Reference
             if (Camera.main != null) _mainCamera = Camera.main.transform;
             else Debug.Log("No Main Camera Found");
@@ -131,7 +129,7 @@ namespace Inputs
         }
 
         private void PollFireInput()
-        {
+        { 
             if (_basicAttackAction.WasPressedThisFrame())
             {
                 CommandManager.Instance.Add(new AttackPressCommand(_unit));
