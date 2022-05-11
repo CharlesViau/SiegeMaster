@@ -34,6 +34,7 @@ namespace Inputs
         private PlayerUnit _unit;
         //ActionCache
         private InputAction _moveAction;
+        private InputAction _jumpAction;
         private InputAction _lookAction;
         private InputAction _basicAttackAction;
         private InputAction _ability1Action;
@@ -46,6 +47,7 @@ namespace Inputs
         //Action Name in PlayerInput Component
         private const string Look = "Look";
         private const string Movement = "Movement";
+        private const string Jump = "Jump";
         private const string BasicAttack = "BasicAttack";
         private const string Ability1 = "Ability1";
         private const string Ability2 = "Ability2";
@@ -76,6 +78,7 @@ namespace Inputs
         {
             //Cache InputActions
             _moveAction = _playerInput.actions[Movement];
+            _jumpAction = _playerInput.actions[Jump];
             _lookAction = _playerInput.actions[Look];
             _basicAttackAction = _playerInput.actions[BasicAttack];
             _ability1Action = _playerInput.actions[Ability1];
@@ -98,6 +101,7 @@ namespace Inputs
         {
             PollLookInput();
             PollMovementInput();
+            PollJumpInput();
         }
 
         public void LateRefresh()
@@ -130,6 +134,13 @@ namespace Inputs
             if (_basicAttackAction.WasPressedThisFrame())
             {
                 CommandManager.Instance.Add(new AttackPressCommand(_unit));
+            }
+        }
+        private void PollJumpInput()
+        {
+            if (_jumpAction.WasPressedThisFrame())
+            {
+                CommandManager.Instance.Add(new JumpCommend(_unit));
             }
         }
 

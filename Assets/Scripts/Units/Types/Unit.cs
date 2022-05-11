@@ -77,5 +77,9 @@ namespace Units.Types
 
             Rigidbody.MovePosition(transform.position + direction * speed * Time.deltaTime);
         }
+
+        public virtual void Jump()
+        {
+        }
     }
 }
