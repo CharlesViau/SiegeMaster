@@ -15,7 +15,7 @@ namespace Inputs
     /// the PlayerInput component of Unity. Depending on which action was done, this class will create the proper
     /// command. With this approach you can rebind key easily in the PlayerInput component without changing the code.
     /// </summary>
-    [RequireComponent(typeof(PlayerInput), typeof(PlayerUnit))]
+    [RequireComponent(typeof(PlayerInput))]
     public class PlayerController : MonoBehaviour, IUpdatable
     {
 
