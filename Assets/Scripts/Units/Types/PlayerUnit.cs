@@ -31,6 +31,11 @@ namespace Units.Types
         public override void Refresh()
         {
             base.Refresh();
+            //Collider[] sd = Physics.OverlapSphere(groundCheck.position, groundDistance, groundLayer);
+            //for (int i = 0; i < sd.Length; i++)
+            //{
+            //    Debug.Log(sd[i].name);
+            //}
             isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundLayer);
             if (isGrounded && vlo.y<0)
             {

@@ -11,7 +11,7 @@ public class AimTowerOnTHeGround : MonoBehaviour
     GameObject b;
     private void Start()
     {
-         b = Instantiate(tower);
+       
     }
     void Update()
     {
