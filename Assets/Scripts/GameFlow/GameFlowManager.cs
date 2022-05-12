@@ -8,7 +8,6 @@ public class GameFlowManager : MonoBehaviour
     #region Fields
     #region Set info of enemies
     public Transform enemiesParent;
-    public EnemyType[] enemyType;
     public Transform[] spawnPositions;
     #endregion
 
@@ -42,9 +41,9 @@ public class GameFlowManager : MonoBehaviour
     {
         if (!isSpawningDone)
         {
-            SpawnEnemies(EnemyType.ArcherEnemy, waves_SO[wave].nbOfArcherEnemies);
-            SpawnEnemies(EnemyType.SneakyEnemy, waves_SO[wave].nbOfSneakyEnemies);
-            SpawnEnemies(EnemyType.WarriorEnemy, waves_SO[wave].nbOfWarriorEnemies);
+            SpawnEnemies(EnemyType.ArcherEnemy, waves_SO[wave].NbOfArcherEnemies);
+            SpawnEnemies(EnemyType.SneakyEnemy, waves_SO[wave].NbOfSneakyEnemies);
+            SpawnEnemies(EnemyType.WarriorEnemy, waves_SO[wave].NbOfWarriorEnemies);
             isSpawningDone = true;
         }
     }
@@ -92,9 +91,9 @@ public class GameFlowManager : MonoBehaviour
     {
         //Debug.Log("Time to spawn: " + timer);
         Debug.Log("wave " + wave);
-        Debug.Log("Sneaky " + waves_SO[wave].nbOfSneakyEnemies);
-        Debug.Log("Archer " + waves_SO[wave].nbOfArcherEnemies);
-        Debug.Log("Warrior " + waves_SO[wave].nbOfWarriorEnemies);
+        Debug.Log("Sneaky " + waves_SO[wave].NbOfSneakyEnemies);
+        Debug.Log("Archer " + waves_SO[wave].NbOfArcherEnemies);
+        Debug.Log("Warrior " + waves_SO[wave].NbOfWarriorEnemies);
     }
     #endregion
     #endregion
