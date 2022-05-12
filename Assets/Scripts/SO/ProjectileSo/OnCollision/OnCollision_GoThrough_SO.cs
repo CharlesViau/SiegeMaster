@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class OnCollision_GoThrough_SO : OnCollisionSO
 {
-    public override void OnEnterCollision(Vector3 position, ValueType type, IPoolable type2,Collision collision)
+    public override void OnEnterCollision(Vector3 position, ValueType type, IPoolable type2,Collision collision,bool isPlayer)
     {
         
     }

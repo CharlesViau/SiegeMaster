@@ -5,9 +5,9 @@ using General;
 [RequireComponent(typeof(Rigidbody))]
  public class Projectile : MonoBehaviour,IUpdatable,IPoolable,ICreatable<Projectile.Args>
 {
-    
+
+    [HideInInspector]public bool isPlayer;
     public ProjectileType type;
-    public RefreshBehaviorSO behavior_SO;
     public Movement_SO movement_SO;
     public OnCollisionSO onCollision_SO;
     public float timeToPoolIfDidntHitAnything;
@@ -17,7 +17,6 @@ using General;
     {
         timer = 0;
            //only called on the 
-        behavior_SO = Instantiate(behavior_SO);
         movement_SO = Instantiate(movement_SO);
         onCollision_SO = Instantiate(onCollision_SO);
     }
@@ -35,7 +34,6 @@ using General;
         {
             ProjectileManager.Instance.Pool(type, this);
         }
-        behavior_SO.Refresh();
         movement_SO.Refresh();
     }
 
@@ -52,7 +50,7 @@ using General;
     private void OnCollisionEnter(Collision collision)
     {
 
-        onCollision_SO.OnEnterCollision(collision.contacts[0].point, type, this, collision);
+        onCollision_SO.OnEnterCollision(collision.contacts[0].point, type, this, collision,isPlayer);
      //   ObjectPool.Instance.Pool(type,this);
     }
 
@@ -74,9 +72,8 @@ using General;
     {
         timer = 0;
         transform.position = constructionArgs.spawningPosition;
-        behavior_SO.Init(gameObject, constructionArgs.bulletDamage);
         movement_SO.Init(gameObject, constructionArgs.target, constructionArgs.bulletSpeed, constructionArgs.velocityDirection);
-        onCollision_SO.Init(gameObject, constructionArgs.bulletDamage);
+        onCollision_SO.Init(gameObject, constructionArgs.bulletDamage, constructionArgs.isPlayer);
     }
 
     public class Args :ConstructionArgs
@@ -86,14 +83,16 @@ using General;
         public float bulletDamage;
         public Vector3 velocityDirection;
         public ProjectileType type;
+        public bool isPlayer;
 
-        public Args(Vector3 _spawningPosition,ProjectileType _type,Transform _target, float _bulletSpeed, float _bulletDamage,Vector3 _velocityDirection) : base(_spawningPosition)
+        public Args(Vector3 _spawningPosition,ProjectileType _type,Transform _target, float _bulletSpeed, float _bulletDamage,Vector3 _velocityDirection,bool _isPlayer) : base(_spawningPosition)
         {
             bulletSpeed = _bulletSpeed;
             type = _type;
             target = _target;
             bulletDamage = _bulletDamage;
             velocityDirection = _velocityDirection; 
+            isPlayer = _isPlayer;
         }
 
     }
