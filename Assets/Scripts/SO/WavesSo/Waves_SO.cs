@@ -13,4 +13,5 @@ public class Waves_SO : ScriptableObject
     public int NbOfSneakyEnemies { get { return nbOfSneakyEnemies; } }
     public int NbOfWarriorEnemies { get { return nbOfWarriorEnemies; } }
     public int NbToSpawnPerWave { get { return nbOfWarriorEnemies + nbOfSneakyEnemies + nbOfArcherEnemies; ; } }
+
 }
