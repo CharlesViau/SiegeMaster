@@ -44,13 +44,17 @@ namespace Units.Types
         public ProjectileType projectileType;
         public float projectileDamage;
         public float attackRange;
+        public float ShootRange;
+        public float FightRange;
         public float projectileSpeed;
         const float EnemyDamageToNexus = 1;
         #endregion
 
         #region Animation
-        private static readonly int Speed = Animator.StringToHash("Speed");
-        private static readonly int IsDead = Animator.StringToHash("IsDead");
+        static readonly int Speed = Animator.StringToHash("Speed");
+        static readonly int IsDead = Animator.StringToHash("IsDead");
+        static readonly int IsAttack = Animator.StringToHash("IsAttack");
+        static readonly int IsFight = Animator.StringToHash("IsFight");
         #endregion
 
         #region UI & HP
@@ -177,7 +181,6 @@ namespace Units.Types
 
         private void DeathAnimation()
         {
-            //alive = false;
             Animator.SetTrigger(IsDead);
             //Death();
         }
@@ -223,6 +226,11 @@ namespace Units.Types
             ProjectileManager.Instance.Create(projectileType,
                 new Projectile.Args((transform.position), projectileType,
                 target, projectileSpeed, projectileDamage, Vector3.zero));
+        }
+
+        private void ShootAnimation()
+        {
+            Animator.SetTrigger(IsFight);
         }
 
         private void Shoot()

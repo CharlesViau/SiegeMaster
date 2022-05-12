@@ -4,7 +4,8 @@ using UnityEngine;
 using General;
 using System;
 using System.Reflection;
-public class Helper 
+using Managers;
+public class Helper
 {
     // GetClosetInRange : variable 
     // type : the object that you want to get 
@@ -17,21 +18,19 @@ public class Helper
         Transform newtransform = null;
         //using reflextion to find the manager and get the method 
         var manager = type.GetProperty("Instance", BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy)?.GetValue(null);
-        
+
         MethodInfo info = type.GetMethod("GetClosest");
-        if (info==null)
+        if (info == null)
         {
             Debug.Log("we couldnt found the Method in manager ");
             return null;
         }
         newtransform = (Transform)info.Invoke(manager, new object[] { correntTransfrom, range });
-        if (newtransform ==null)
+        if (newtransform == null)
         {
             return null;
         }
         return newtransform;
 
     }
-
-
 }
