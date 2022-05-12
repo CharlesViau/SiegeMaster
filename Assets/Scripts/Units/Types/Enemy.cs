@@ -101,7 +101,7 @@ namespace Units.Types
             {
                 Animator.SetFloat(Speed, speed);
                 Move(targeting_SO.GetTheTarget().position);
-                FacingUIToPlayer();
+                //FacingUIToPlayer();
                 //Shoot();
             }
 

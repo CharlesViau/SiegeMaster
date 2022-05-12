@@ -2008,7 +2008,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1026650151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2033,18 +2033,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2dbb9ccde2abf34a8d1c88079f3afac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turningSpeed: 10
-  speed: 20
-  shootingPosition: {fileID: 478074628}
-  playerRotationLook: {fileID: 1673750082}
-  maxDistanceAiming: 100
-  rayCastStartPointDistance: 5
-  jumpHeight: 6
-  groundDistance: 0.4
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 1
-  groundCheck: {fileID: 1007561284}
 --- !u!95 &1026650153
 Animator:
   serializedVersion: 3
@@ -2319,7 +2307,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemiesParent: {fileID: 789329665}
-  enemyType: 000000000100000002000000
   spawnPositions:
   - {fileID: 199232321}
   - {fileID: 1866127486}
@@ -2337,7 +2324,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7e619c18e55473f4186e9a208572875c, type: 2}
   - {fileID: 11400000, guid: 4ab1c09ebb56adc4da236b64e8d2ad18, type: 2}
   - {fileID: 11400000, guid: f90829b5b898d6a4da35fc0ce7c7e24b, type: 2}
-  maxAmountsOfWaves: 11
   delayToSartWave: 5
 --- !u!4 &1075000392 stripped
 Transform:
