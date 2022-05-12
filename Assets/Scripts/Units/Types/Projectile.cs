@@ -71,6 +71,7 @@ using General;
     public void Construct(Args constructionArgs)
     {
         timer = 0;
+        isPlayer = constructionArgs.isPlayer;
         transform.position = constructionArgs.spawningPosition;
         movement_SO.Init(gameObject, constructionArgs.target, constructionArgs.bulletSpeed, constructionArgs.velocityDirection);
         onCollision_SO.Init(gameObject, constructionArgs.bulletDamage, constructionArgs.isPlayer);
