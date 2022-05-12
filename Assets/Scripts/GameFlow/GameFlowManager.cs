@@ -6,7 +6,7 @@ using Units.Types;
 public class GameFlowManager : MonoBehaviour
 {
     #region Fields
-    #region Set info of enemies
+    #region Set Hierarchy info of enemies
     public Transform enemiesParent;
     public Transform[] spawnPositions;
     #endregion
@@ -14,20 +14,26 @@ public class GameFlowManager : MonoBehaviour
     #region Waves manage
     public Waves_SO[] waves_SO;
     public float delayToSartWave;
+    int maxAmountsOfWaves;
+    int currentWave;
     float timer;
-    int wave;
-    bool isSpawningDone;
-    private int maxAmountsOfWaves;
+    bool isSpawningTime;
+    bool isManagerCollectionUpdated;
     #endregion
     #endregion
 
     #region Methods
     #region Unity Methods
-
     private void Awake()
     {
         maxAmountsOfWaves = waves_SO.Length;
+        isSpawningTime = true;
+        foreach (var wave_SO in waves_SO)
+        {
+            wave_SO.Init(enemiesParent, spawnPositions); 
+        }
     }
+
     private void Update()
     {
         timer += Time.deltaTime;
@@ -44,77 +50,63 @@ public class GameFlowManager : MonoBehaviour
     #region Spawn enemies
     void SpawnEnemiesPerWave()
     {
-        if (!isSpawningDone)
+        if (isSpawningTime)
         {
-            isSpawningDone = true;
-            SpawnEnemies(EnemyType.ArcherEnemy, waves_SO[wave].NbOfArcherEnemies);
-            SpawnEnemies(EnemyType.SneakyEnemy, waves_SO[wave].NbOfSneakyEnemies);
-            SpawnEnemies(EnemyType.WarriorEnemy, waves_SO[wave].NbOfWarriorEnemies);
-        }
-    }
-
-    void SpawnEnemies(EnemyType enemyType, int nbToSpawn)
-    {
-        for (int i = 0; i < nbToSpawn; i++)
-        {
-            int random = Random.Range(0, spawnPositions.Length);
-            EnemyManager.Instance.Create(enemyType, new Enemy.Args(spawnPositions[random].position, enemiesParent));
+            waves_SO[currentWave].CreateEnemies();
+            isSpawningTime = false;
         }
     }
     #endregion
 
-    bool x;
     #region Waves manage
     void CheckAliveEnemies()
     {
-        if (EnemyManager.Instance.Count == waves_SO[wave].NbToSpawnPerWave)
-            x = true;
+        if (EnemyManager.Instance.Count == waves_SO[currentWave].NbToSpawnPerWave)
+            isManagerCollectionUpdated = true;
 
-        if (x && EnemyManager.Instance.Count == 0 && wave > -1)
+        if (isManagerCollectionUpdated && EnemyManager.Instance.Count == 0)
         {
             LevelUp();
-            x = false;
+            isManagerCollectionUpdated = false;
         }
-
         else
             return;
     }
-    int nbDeadEnemies;
-    //void CheckAliveEnemies()
-    //{
-    //    nbDeadEnemies = 0;
-    //    foreach (Transform child in enemiesParent)
-    //    {
-    //        if (child.gameObject.activeInHierarchy) continue;
-
-    //        nbDeadEnemies++;
-    //    }
-    //    if (nbDeadEnemies == enemiesParent.childCount)
-    //        LevelUp() ;
-    //    else
-    //        return ;
-    //}
 
     void LevelUp()
     {
-        wave++;
-        if (wave > maxAmountsOfWaves)
+        if (currentWave <= maxAmountsOfWaves)
         {
-            wave = -1;
+            currentWave++;
+            isSpawningTime = true;
         }
-        isSpawningDone = false;
     }
-
     #endregion
 
     #region Debug Tool
     void DebugTool()
     {
         //Debug.Log("Time to spawn: " + timer);
-        Debug.Log("wave " + wave);
-        Debug.Log("Sneaky " + waves_SO[wave].NbOfSneakyEnemies);
-        Debug.Log("Archer " + waves_SO[wave].NbOfArcherEnemies);
-        Debug.Log("Warrior " + waves_SO[wave].NbOfWarriorEnemies);
+        Debug.Log("wave " + currentWave);
+        Debug.Log("Sneaky " + waves_SO[currentWave].NbOfSneakyEnemies);
+        Debug.Log("Archer " + waves_SO[currentWave].NbOfArcherEnemies);
+        Debug.Log("Warrior " + waves_SO[currentWave].NbOfWarriorEnemies);
+    }
+
+    int nbDeadEnemies;
+    void AliveEnemiesCheck()
+    {
+        nbDeadEnemies = 0;
+        foreach (Transform child in enemiesParent)
+        {
+            if (child.gameObject.activeInHierarchy) continue;
+
+            nbDeadEnemies++;
+        }
+        if (nbDeadEnemies == enemiesParent.childCount)
+            LevelUp();
+        else
+            return;
     }
     #endregion
     #endregion
