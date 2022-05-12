@@ -225,7 +225,7 @@ namespace Units.Types
             //Vector3 offset = new Vector3(0, 0, 5);
             ProjectileManager.Instance.Create(projectileType,
                 new Projectile.Args((transform.position), projectileType,
-                target, projectileSpeed, projectileDamage, Vector3.zero));
+                target, projectileSpeed, projectileDamage, Vector3.zero,false));
         }
 
         private void ShootAnimation()

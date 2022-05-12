@@ -23,7 +23,7 @@ namespace Units.Types
             float distanceTotarget = Vector3.Distance(catapultPosition, targetTransform.position);
             Vector3 finalvelocity = distanceTotarget * Mathf.Sqrt(-Physics.gravity.y / (barrel.position.y - targetTransform.transform.position.y + distanceTotarget)) * barrel.transform.forward;
 
-            ProjectileManager.Instance.Create(projectileType, new Projectile.Args(barrel.position, projectileType, targetTransform, 0, 0, finalvelocity));
+            ProjectileManager.Instance.Create(projectileType, new Projectile.Args(barrel.position, projectileType, targetTransform, 0, 0, finalvelocity,true));
 
             base.Fire(targetTransform);
 
