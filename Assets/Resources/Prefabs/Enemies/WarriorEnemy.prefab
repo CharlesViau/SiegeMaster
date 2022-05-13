@@ -348,7 +348,7 @@ MonoBehaviour:
   shootingPosition: {fileID: 6172476711186618907}
   enemyType: 2
   movement_SO: {fileID: 11400000, guid: 12c3ff3e48a540748aca02716d57c38d, type: 2}
-  targeting_SO: {fileID: 11400000, guid: d9393c587e8531d4eb130a27c7f8eeb7, type: 2}
+  targeting_SO: {fileID: 11400000, guid: cac941549c978834b8b983c5e7b75cbc, type: 2}
   alive: 0
   projectileType: 0
   projectileDamage: 0
