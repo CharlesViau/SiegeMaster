@@ -1316,6 +1316,7 @@ Transform:
   m_Children:
   - {fileID: 8443117685677224925}
   - {fileID: 7637866983018328560}
+  - {fileID: 7788549631299973465}
   - {fileID: 7531969464133932418}
   - {fileID: 1678674376300817366}
   m_Father: {fileID: 0}
@@ -1380,8 +1381,11 @@ MonoBehaviour:
   projectileType: 0
   projectileDamage: 0
   attackRange: 0
+  ShootRange: 0
+  FightRange: 0
   projectileSpeed: 0
   canvasParent: {fileID: 6589549669133941664}
+  hpInPoolParent: {fileID: 7788549631299973465}
   currentHp: 5
 --- !u!195 &7896966820533481567
 NavMeshAgent:
@@ -1390,7 +1394,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5787225661110997496}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
@@ -1419,6 +1423,36 @@ CapsuleCollider:
   m_Height: 1.8326854
   m_Direction: 1
   m_Center: {x: 0.03049767, y: 0.88514155, z: 0.108720064}
+--- !u!1 &5798194697656433494
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7788549631299973465}
+  m_Layer: 0
+  m_Name: HP in Pool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7788549631299973465
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5798194697656433494}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6564994535338511170}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5980600242603476444
 GameObject:
   m_ObjectHideFlags: 0
@@ -1480,7 +1514,7 @@ Transform:
   - {fileID: 3300655488275209449}
   - {fileID: 1378981802294614085}
   m_Father: {fileID: 6564994535338511170}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6426090630208636041
 GameObject:
@@ -1542,7 +1576,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6564994535338511170}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &7518193365401509936
 SkinnedMeshRenderer:

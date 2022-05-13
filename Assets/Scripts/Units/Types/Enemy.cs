@@ -11,10 +11,7 @@ namespace Units.Types
 {
     public class Enemy : Unit, ICreatable<Enemy.Args>, IHittable
     {
-        #region Fields
-        /*public Transform[] targets;
-        int waypointCounter = 0;*/
-
+        #region Fields        
         #region Set Enemy Type
         public EnemyType enemyType;
         public EnemyMovement_SO movement_SO;
@@ -59,6 +56,7 @@ namespace Units.Types
 
         #region UI & HP
         public Canvas canvasParent;
+        public Transform hpInPoolParent;
         public int currentHp;
         int _fullHp;
         Stack<Hp> _hpStack;
@@ -118,20 +116,21 @@ namespace Units.Types
         #region Factory & Pool manage
         public class Args : ConstructionArgs
         {
-            public readonly Transform Parent;
+            public Transform parent;
             public Args(Vector3 _spawningPosition, Transform parent) : base(_spawningPosition)
             {
-                Parent = parent;
+                this.parent = parent;
             }
         }
 
         public void Construct(Args constructionArgs)
         {
-            transform.SetParent(constructionArgs.Parent);
+            transform.position = constructionArgs.spawningPosition;            
+            _enemyAgent.enabled = true;
+            transform.SetParent(constructionArgs.parent);            
             currentHp = _fullHp;
             alive = true;
             _delayToPool = 10;
-            _enemyAgent.Move(constructionArgs.spawningPosition);
             _hpStack.Clear();
             CreateHp(_fullHp);
         }
@@ -169,7 +168,7 @@ namespace Units.Types
                 for (var i = 0; i < damage; i++)
                 {
                     var h = _hpStack.Pop();
-                    h.transform.SetParent(null);
+                    h.transform.SetParent(hpInPoolParent);
                     HPManager.Instance.Pool(HPType.EnemyHp, h);
                 }
             }
@@ -194,6 +193,7 @@ namespace Units.Types
             if (_delayToPool <= 0)
             {
                 EnemyManager.Instance.Pool(enemyType, this);
+                _enemyAgent.enabled = false;
             }
 
             alive = false;
@@ -250,7 +250,10 @@ namespace Units.Types
         }
         #endregion
 
-        /*void WaypointsCheck()
+        #region Old targeting system
+        /*public Transform[] targets;
+        int waypointCounter = 0;
+        void WaypointsCheck()
         {
             if (Vector3.Distance(targets[waypointCounter].position, player.position) < 0.1f)
             {
@@ -264,6 +267,7 @@ namespace Units.Types
             //movement_SO.MoveToPoint(targets[waypointCounter].position);
             //rb.velocity = 20 * (targets[waypointCounter].position - player.position).normalized;
         }*/
+        #endregion
         #endregion
     }
 }

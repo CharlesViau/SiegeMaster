@@ -368,7 +368,7 @@ Transform:
   - {fileID: 7332985542155854877}
   - {fileID: 2240956449850591417}
   m_Father: {fileID: 7109381498797108227}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2508360511448583600
 GameObject:
@@ -1155,7 +1155,7 @@ Transform:
   - {fileID: 6482757698726461005}
   - {fileID: 2834542741710229865}
   m_Father: {fileID: 7109381498797108227}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4128190419765555410
 GameObject:
@@ -2399,6 +2399,7 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 8227095072623461512}
+  - {fileID: 5541061898818692875}
   - {fileID: 736294828341155702}
   - {fileID: 7120605953701014282}
   m_Father: {fileID: 0}
@@ -2481,6 +2482,7 @@ MonoBehaviour:
   FightRange: 0
   projectileSpeed: 10
   canvasParent: {fileID: 4657122710452571864}
+  hpInPoolParent: {fileID: 5541061898818692875}
   currentHp: 5
 --- !u!195 &3438519109432755960
 NavMeshAgent:
@@ -2489,7 +2491,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7629740307721582265}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
@@ -2626,6 +2628,36 @@ Transform:
   - {fileID: 577361966956800821}
   m_Father: {fileID: 256646246122366341}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8107853396024044804
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5541061898818692875}
+  m_Layer: 0
+  m_Name: HP in Pool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5541061898818692875
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8107853396024044804}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7109381498797108227}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8355384546234725800
 GameObject:

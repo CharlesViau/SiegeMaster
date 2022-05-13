@@ -24,25 +24,27 @@ public class GameFlowManager : MonoBehaviour
 
     #region Methods
     #region Unity Methods
-    private void Awake()
+    void Awake()
     {
-        maxAmountsOfWaves = waves_SO.Length;
         isSpawningTime = true;
-        foreach (var wave_SO in waves_SO)
+        maxAmountsOfWaves = waves_SO.Length;
+        
+        foreach (Waves_SO wave_SO in waves_SO)
         {
             wave_SO.Init(enemiesParent, spawnPositions); 
         }
     }
 
-    private void Update()
+    void Update()
     {
         timer += Time.deltaTime;
         if (timer > delayToSartWave)
         {
             SpawnEnemiesPerWave();
-            CheckAliveEnemies();
-            timer = 0;
+            //CheckAliveEnemies();
+            AliveEnemiesCheck();
             //DebugTool();
+            timer = 0;
         }
     }
     #endregion
@@ -88,9 +90,9 @@ public class GameFlowManager : MonoBehaviour
     {
         //Debug.Log("Time to spawn: " + timer);
         Debug.Log("wave " + currentWave);
-        Debug.Log("Sneaky " + waves_SO[currentWave].NbOfSneakyEnemies);
-        Debug.Log("Archer " + waves_SO[currentWave].NbOfArcherEnemies);
-        Debug.Log("Warrior " + waves_SO[currentWave].NbOfWarriorEnemies);
+        //Debug.Log("Sneaky " + waves_SO[currentWave].NbOfSneakyEnemies);
+        //Debug.Log("Archer " + waves_SO[currentWave].NbOfArcherEnemies);
+        //Debug.Log("Warrior " + waves_SO[currentWave].NbOfWarriorEnemies);
     }
 
     int nbDeadEnemies;
