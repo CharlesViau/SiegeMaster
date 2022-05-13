@@ -15,3 +15,4 @@ MonoBehaviour:
   nbOfArcherEnemies: 0
   nbOfSneakyEnemies: 10
   nbOfWarriorEnemies: 0
+  nbOfBossEnemies: 0

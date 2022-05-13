@@ -17,13 +17,15 @@ public class Waves_SO : ScriptableObject
     [SerializeField] int nbOfArcherEnemies;
     [SerializeField] int nbOfSneakyEnemies;
     [SerializeField] int nbOfWarriorEnemies;
+    [SerializeField] int nbOfBossEnemies;
     #endregion
 
     #region public
     public int NbOfArcherEnemies { get { return nbOfArcherEnemies; } }
     public int NbOfSneakyEnemies { get { return nbOfSneakyEnemies; } }
     public int NbOfWarriorEnemies { get { return nbOfWarriorEnemies; } }
-    public int NbToSpawnPerWave { get { return nbOfWarriorEnemies + nbOfSneakyEnemies + nbOfArcherEnemies; ; } }
+    public int NbOfBossEnemies { get { return nbOfBossEnemies; } }
+    public int NbToSpawnPerWave { get { return nbOfWarriorEnemies + nbOfSneakyEnemies + nbOfArcherEnemies + nbOfBossEnemies; } }
     #endregion
     #endregion
 
@@ -39,6 +41,7 @@ public class Waves_SO : ScriptableObject
         SpawnEnemies(EnemyType.ArcherEnemy, NbOfArcherEnemies);
         SpawnEnemies(EnemyType.SneakyEnemy, NbOfSneakyEnemies);
         SpawnEnemies(EnemyType.WarriorEnemy, NbOfWarriorEnemies);
+        SpawnEnemies(EnemyType.BossEnemy, NbOfBossEnemies);
     }
     #endregion
 
