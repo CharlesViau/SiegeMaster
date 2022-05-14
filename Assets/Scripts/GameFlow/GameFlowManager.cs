@@ -3,6 +3,7 @@ using Managers;
 using UnityEngine;
 using Units.Types;
 
+public enum GameState { WaitToSpawn, Spawn, CheckAliveEnemies, LevelUp }
 public class GameFlowManager : MonoBehaviour
 {
     #region Fields
@@ -12,67 +13,72 @@ public class GameFlowManager : MonoBehaviour
     #endregion
 
     #region Waves manage
+    GameState gameState;
     public Waves_SO[] waves_SO;
     public float delayToSartWave;
     int maxAmountsOfWaves;
     int currentWave;
     float timer;
-    bool isSpawningTime;
-    bool isManagerCollectionUpdated;
     #endregion
     #endregion
-
+    
     #region Methods
     #region Unity Methods
     void Awake()
     {
-        isSpawningTime = true;
         maxAmountsOfWaves = waves_SO.Length;
-        
+        gameState = GameState.WaitToSpawn;
+
         foreach (Waves_SO wave_SO in waves_SO)
         {
-            wave_SO.Init(enemiesParent, spawnPositions); 
+            wave_SO.Init(enemiesParent, spawnPositions);
         }
     }
 
     void Update()
     {
+        switch (gameState)
+        {
+            case GameState.Spawn:
+                SpawnEnemies();
+                break;
+            case GameState.CheckAliveEnemies:
+                CheckAliveEnemies();
+                break;
+            case GameState.WaitToSpawn:
+                Breakdown();
+                break;
+            case GameState.LevelUp:
+                LevelUp();
+                break;
+            default:
+                break;
+        }
+        DebugTool();
+    }
+    #endregion
+
+    #region Waves Manage
+    void Breakdown()
+    {
         timer += Time.deltaTime;
         if (timer > delayToSartWave)
         {
-            SpawnEnemiesPerWave();
-            //CheckAliveEnemies();
-            AliveEnemiesCheck();
-            //DebugTool();
             timer = 0;
+            gameState = GameState.Spawn;
         }
     }
-    #endregion
 
-    #region Spawn enemies
-    void SpawnEnemiesPerWave()
+    void SpawnEnemies()
     {
-        if (isSpawningTime)
-        {
-            waves_SO[currentWave].CreateEnemies();
-            isSpawningTime = false;
-        }
+        waves_SO[currentWave].CreateEnemies();
+        gameState = GameState.CheckAliveEnemies;
     }
-    #endregion
 
-    #region Waves manage
     void CheckAliveEnemies()
     {
-        if (EnemyManager.Instance.Count == waves_SO[currentWave].NbToSpawnPerWave)
-            isManagerCollectionUpdated = true;
-
-        if (isManagerCollectionUpdated && EnemyManager.Instance.Count == 0)
-        {
-            LevelUp();
-            isManagerCollectionUpdated = false;
-        }
-        else
-            return;
+        if (EnemyManager.Instance.Count == 0)
+            gameState = GameState.LevelUp;
     }
 
     void LevelUp()
@@ -80,7 +86,7 @@ public class GameFlowManager : MonoBehaviour
         if (currentWave <= maxAmountsOfWaves)
         {
             currentWave++;
-            isSpawningTime = true;
+            gameState = GameState.WaitToSpawn;
         }
     }
     #endregion
@@ -88,11 +94,8 @@ public class GameFlowManager : MonoBehaviour
     #region Debug Tool
     void DebugTool()
     {
-        //Debug.Log("Time to spawn: " + timer);
-        Debug.Log("wave " + currentWave);
-        //Debug.Log("Sneaky " + waves_SO[currentWave].NbOfSneakyEnemies);
-        //Debug.Log("Archer " + waves_SO[currentWave].NbOfArcherEnemies);
-        //Debug.Log("Warrior " + waves_SO[currentWave].NbOfWarriorEnemies);
+        //Debug.Log("time to spawn: " + timer);
+        Debug.Log("wave " + currentWave);        
     }
 
     int nbDeadEnemies;

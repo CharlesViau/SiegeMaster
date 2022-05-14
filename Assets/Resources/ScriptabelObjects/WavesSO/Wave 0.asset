@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c781338a88cf14f4a90560390605b821, type: 3}
   m_Name: Wave 0
   m_EditorClassIdentifier: 
-  nbOfArcherEnemies: 0
-  nbOfSneakyEnemies: 10
-  nbOfWarriorEnemies: 0
-  nbOfBossEnemies: 0
+  enemiesList:
+  - enemyType: 1
+    count: 10
