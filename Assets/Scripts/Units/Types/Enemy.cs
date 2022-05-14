@@ -9,9 +9,15 @@ using System.Collections;
 
 namespace Units.Types
 {
+    public enum EnemyStates { Alive, DeathAnimation, Death, Fight, Shoot }
+
     public class Enemy : Unit, ICreatable<Enemy.Args>, IHittable
     {
-        #region Fields        
+        #region Fields
+        #region Enemy states
+        EnemyStates enemyState;
+        #endregion
+
         #region Set Enemy Type
         public EnemyType enemyType;
         public EnemyMovement_SO movement_SO;
@@ -20,7 +26,7 @@ namespace Units.Types
         {
             get
             {
-                //TODO : return position of the current objective?
+                //useless for enemies right now
                 return Vector3.zero;
             }
         }
@@ -70,10 +76,10 @@ namespace Units.Types
         {
             base.Init();
             _enemyAgent = GetComponent<NavMeshAgent>();
+            
+            enemyState = EnemyStates.Alive;
             alive = true;
             _enemyAgent.speed = speed;
-
-            _fullHp = currentHp;
 
             movement_SO = Instantiate(movement_SO);
             targeting_SO = Instantiate(targeting_SO);
@@ -84,6 +90,7 @@ namespace Units.Types
             movement_SO.Init(gameObject, _objective, speed);
             targeting_SO.Init(gameObject, attackRange);
 
+            _fullHp = currentHp;
             _hpStack = new Stack<Hp>();
         }
 
@@ -95,16 +102,28 @@ namespace Units.Types
         public override void Refresh()
         {
             base.Refresh();
-            if (alive)
-            {
-                Animator.SetFloat(Speed, speed);
-                Move(targeting_SO.GetTheTarget().position);
-                //FacingUIToPlayer();
-                //Shoot();
-            }
 
-            if (!alive)
-                Death();
+            switch (enemyState)
+            {
+                case EnemyStates.Alive:
+                    Animator.SetFloat(Speed, speed);
+                    Move(targeting_SO.GetTheTarget().position);
+                    //FacingUIToPlayer();
+                    break;
+                case EnemyStates.DeathAnimation:
+                    DeathAnimation();
+                    break;
+                case EnemyStates.Death:
+                    Death();
+                    break;
+                case EnemyStates.Shoot:
+                    //Shoot();
+                    break;
+                case EnemyStates.Fight:
+                    break;
+                default:
+                    break;
+            }
         }
 
         public override void FixedRefresh()
@@ -125,9 +144,10 @@ namespace Units.Types
 
         public void Construct(Args constructionArgs)
         {
-            transform.position = constructionArgs.spawningPosition;            
+            transform.position = constructionArgs.spawningPosition;
             _enemyAgent.enabled = true;
-            transform.SetParent(constructionArgs.parent);            
+            transform.SetParent(constructionArgs.parent);
+            enemyState = EnemyStates.Alive;
             currentHp = _fullHp;
             alive = true;
             _delayToPool = 10;
@@ -173,31 +193,28 @@ namespace Units.Types
                 }
             }
             if (alive && currentHp <= 0)
-                Death();
-            //DeathAnimation();
-            //if(!alive)
+                enemyState = EnemyStates.DeathAnimation;
         }
 
         private void DeathAnimation()
         {
+            if (gameObject.activeInHierarchy)
+                _enemyAgent.ResetPath();
+
             Animator.SetTrigger(IsDead);
-            //Death();
+            alive = false;
+            enemyState = EnemyStates.Death;
         }
 
         void Death()
         {
-            if (gameObject.activeInHierarchy)
-                _enemyAgent.ResetPath();
+            StartCoroutine(PoolDealy());
+        }
 
-            _delayToPool -= Time.deltaTime;
-            if (_delayToPool <= 0)
-            {
-                EnemyManager.Instance.Pool(enemyType, this);
-                _enemyAgent.enabled = false;
-            }
-
-            alive = false;
-            DeathAnimation();
+        IEnumerator PoolDealy()
+        {
+            yield return new WaitForSeconds(_delayToPool);
+            EnemyManager.Instance.Pool(enemyType, this);
         }
         #endregion
 
@@ -222,10 +239,9 @@ namespace Units.Types
 
         private void InstantiateProjectile(Transform target)
         {
-            //Vector3 offset = new Vector3(0, 0, 5);
             ProjectileManager.Instance.Create(projectileType,
                 new Projectile.Args((transform.position), projectileType,
-                target, projectileSpeed, projectileDamage, Vector3.zero,false));
+                target, projectileSpeed, projectileDamage, Vector3.zero, false));
         }
 
         private void ShootAnimation()

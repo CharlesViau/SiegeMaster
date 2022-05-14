@@ -54,7 +54,7 @@ public class GameFlowManager : MonoBehaviour
             default:
                 break;
         }
-        DebugTool();
+        //DebugTool();
     }
     #endregion
 
