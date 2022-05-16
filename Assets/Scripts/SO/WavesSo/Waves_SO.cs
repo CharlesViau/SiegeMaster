@@ -2,6 +2,7 @@ using General;
 using Managers;
 using UnityEngine;
 using Units.Types;
+using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "Wave", menuName = "ScriptableObjects/Wave")]
 public class Waves_SO : ScriptableObject
@@ -14,18 +15,7 @@ public class Waves_SO : ScriptableObject
     #endregion
 
     #region Inspector
-    [SerializeField] int nbOfArcherEnemies;
-    [SerializeField] int nbOfSneakyEnemies;
-    [SerializeField] int nbOfWarriorEnemies;
-    [SerializeField] int nbOfBossEnemies;
-    #endregion
-
-    #region public
-    public int NbOfArcherEnemies { get { return nbOfArcherEnemies; } }
-    public int NbOfSneakyEnemies { get { return nbOfSneakyEnemies; } }
-    public int NbOfWarriorEnemies { get { return nbOfWarriorEnemies; } }
-    public int NbOfBossEnemies { get { return nbOfBossEnemies; } }
-    public int NbToSpawnPerWave { get { return nbOfWarriorEnemies + nbOfSneakyEnemies + nbOfArcherEnemies + nbOfBossEnemies; } }
+    [SerializeField] List<CountPerEnemy> enemiesList;
     #endregion
     #endregion
 
@@ -36,12 +26,11 @@ public class Waves_SO : ScriptableObject
         parentObject = _parent;
         spawnPositions = _spawnPositions;
     }
+
     public void CreateEnemies()
     {
-        SpawnEnemies(EnemyType.ArcherEnemy, NbOfArcherEnemies);
-        SpawnEnemies(EnemyType.SneakyEnemy, NbOfSneakyEnemies);
-        SpawnEnemies(EnemyType.WarriorEnemy, NbOfWarriorEnemies);
-        SpawnEnemies(EnemyType.BossEnemy, NbOfBossEnemies);
+        foreach (CountPerEnemy enemy in enemiesList)
+            SpawnEnemies(enemy.enemyType, enemy.count);
     }
     #endregion
 
@@ -56,5 +45,25 @@ public class Waves_SO : ScriptableObject
         }
     }
     #endregion
+    #endregion
+
+    #region Manage Spawning Tool
+    [System.Serializable]
+    public class CountPerEnemy
+    {
+        public EnemyType enemyType;
+        public int count;
+    }
+    #endregion
+
+    #region old version
+    /*[SerializeField] int nbOfArcherEnemies;
+    [SerializeField] int nbOfSneakyEnemies;
+    [SerializeField] int nbOfWarriorEnemies;
+    [SerializeField] int nbOfBossEnemies;
+    public int NbOfArcherEnemies { get { return nbOfArcherEnemies; } }
+    public int NbOfSneakyEnemies { get { return nbOfSneakyEnemies; } }
+    public int NbOfWarriorEnemies { get { return nbOfWarriorEnemies; } }
+    public int NbOfBossEnemies { get { return nbOfBossEnemies; } }*/
     #endregion
 }

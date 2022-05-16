@@ -249,9 +249,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 6172476711186618907}
   - {fileID: 9219393648754560335}
   - {fileID: 8020514184768218357}
-  - {fileID: 6172476711186618907}
   - {fileID: 8194963895521572408}
   - {fileID: 7581074797744853286}
   - {fileID: 6308270381266878275}
@@ -348,7 +348,7 @@ MonoBehaviour:
   shootingPosition: {fileID: 6172476711186618907}
   enemyType: 2
   movement_SO: {fileID: 11400000, guid: 12c3ff3e48a540748aca02716d57c38d, type: 2}
-  targeting_SO: {fileID: 11400000, guid: d9393c587e8531d4eb130a27c7f8eeb7, type: 2}
+  targeting_SO: {fileID: 11400000, guid: cac941549c978834b8b983c5e7b75cbc, type: 2}
   alive: 0
   projectileType: 0
   projectileDamage: 0
@@ -1594,7 +1594,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2007242801968439255}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6046659881823379390
 GameObject:
@@ -1660,7 +1660,7 @@ RectTransform:
   m_LocalScale: {x: 0.03, y: 0.01, z: 1}
   m_Children: []
   m_Father: {fileID: 2007242801968439255}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2344,7 +2344,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2007242801968439255}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8099446688489691062
 GameObject:

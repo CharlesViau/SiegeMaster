@@ -12,7 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c781338a88cf14f4a90560390605b821, type: 3}
   m_Name: Wave 9
   m_EditorClassIdentifier: 
-  nbOfArcherEnemies: 20
-  nbOfSneakyEnemies: 20
-  nbOfWarriorEnemies: 10
-  nbOfBossEnemies: 2
+  enemiesList:
+  - enemyType: 1
+    count: 20
+  - enemyType: 2
+    count: 20
+  - enemyType: 0
+    count: 20
+  - enemyType: 3
+    count: 2
