@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 using Commands;
 using General;
 using Managers;
@@ -22,7 +20,7 @@ namespace Inputs
         #region Properties and Variables
         [SerializeField] private Transform playerRotationLook;
       
-        public Vector3 HitPoint { get; private set; }
+        public Vector3 HitPoint => _cameraRayCast.RayCast(maxDistanceAiming, rayCastStartPointDistance);
 
         //Camera
         private CameraRaycast _cameraRayCast;
@@ -126,7 +124,6 @@ namespace Inputs
         private void PollLookInput()
         {
             if (!(_lookAction.ReadValue<Vector2>() is var mouseDelta) || mouseDelta == Vector2.zero) return;
-            HitPoint = _cameraRayCast.RayCast(maxDistanceAiming, rayCastStartPointDistance);
             playerRotationLook.forward = (HitPoint - playerRotationLook.position).normalized;
             CommandManager.Instance.Add(new LookCommand(_unit, playerRotationLook.transform.eulerAngles.y));
         }

@@ -7,11 +7,11 @@ namespace Abilities.TargetingSO
     {
         protected ITargetAcquirer Owner;
         protected float MaxRange;
-        public Transform TargetTransform { get; set; }
 
+        public RectTransform TargetTransform { get; protected set; } = new RectTransform();
         public virtual void Init(ITargetAcquirer owner, float maxRange)
         {
-            this.Owner = owner;
+            Owner = owner;
             MaxRange = maxRange;
         }
 

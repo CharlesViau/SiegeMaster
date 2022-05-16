@@ -17,7 +17,7 @@ namespace Commands
 
         public void Execute()
         {
-            _unit.AbilityHandler.OnAbilityPress?.Invoke(_abilityNumber);
+            _unit.AbilityHandler.OnAbilityPress.Invoke(_abilityNumber);
         }
 
         public void Undo()

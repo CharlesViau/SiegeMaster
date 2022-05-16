@@ -2,7 +2,8 @@
 
 namespace Abilities.TargetingSO
 {
-    public class PlayerGroundLocationTargeting : TargetingSo
+    [CreateAssetMenu(fileName = "PlayerGroundTargeting", menuName = "ScriptableObjects/TargetingSo/PlayerGroundTargeting")]
+    public class PlayerGroundTargeting : TargetingSo
     {
         public override void Refresh()
         {

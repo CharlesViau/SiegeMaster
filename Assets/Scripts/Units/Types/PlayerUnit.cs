@@ -21,7 +21,7 @@ namespace Units.Types
         public Transform groundCheck;
         private bool _isGrounded;
 
-        protected override Vector3 targetPosition => _playerController.HitPoint;
+        protected override Vector3 AimedPosition => _playerController.HitPoint;
 
         public override void Init()
         {

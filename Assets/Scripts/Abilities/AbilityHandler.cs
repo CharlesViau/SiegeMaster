@@ -34,13 +34,20 @@ namespace Abilities
             //Init Events
             OnAbilityPress = OnAbilityPressEvent;
             OnAbilityRelease = OnAbilityReleaseEvent;
-            OnAttackPress = OnAttackPressEvent;
+            OnAttackPress = OnFirePressEvent;
+            
+            foreach (var ability in abilities)
+            {
+                if (!ability) continue;
+                Instantiate(ability);
+                ability.Init(_owner);
+            }
 
         }
         
         public void PostInit()
         {
-            
+            _currentAbility = basicAttack;
         }
 
         public void Refresh()
@@ -63,25 +70,21 @@ namespace Abilities
         }
         
         #region Private Methods
-        private void OnAttackPressEvent()
+        private void OnFirePressEvent()
         {
-            _currentAbility.OnPress?.Invoke();
+            _currentAbility.OnFirePress?.Invoke();
         }
         
         private void OnAbilityReleaseEvent(int i)
-        {/*
-            if (_currentAbility == abilities[i] && IsPress && abilities[i].IsPressAndRelease)
-            {
-                _currentAbility.OnRelease?.Invoke();
-            }*/
+        {
+            
         }
 
         private void OnAbilityPressEvent(int i)
         {
             if (IsChanneling || !abilities[i].IsReadyToCast) return;
-            //TODO notify current spell we are changing to reset that spell state.
             _currentAbility = abilities[i];
-            abilities[i].OnPress?.Invoke();
+            abilities[i].OnFirePress?.Invoke();
         }
         
         #endregion

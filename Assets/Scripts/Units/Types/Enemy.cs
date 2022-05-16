@@ -19,7 +19,7 @@ namespace Units.Types
         public EnemyType enemyType;
         public EnemyMovement_SO movement_SO;
         public TargetingSo targeting_SO;
-        protected override Vector3 targetPosition
+        protected override Vector3 AimedPosition
         {
             get
             {

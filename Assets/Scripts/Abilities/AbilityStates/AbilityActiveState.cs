@@ -1,13 +1,11 @@
 ﻿using System;
 using Abilities.AbilitySO;
-using General;
 using UnityEngine;
 
-namespace Abilities.AbilityState
+namespace Abilities.AbilityStates
 {
-    public class AbilityActiveState : IState
+    public class AbilityActiveState : AbilityStates.AbilityState
     {
-        private readonly AbilitySo _abilitySo;
         
         private readonly Action _onActiveCast;
         private readonly Action _onCast;
@@ -18,11 +16,10 @@ namespace Abilities.AbilityState
 
         public bool HasNoRecastChargesLeft => _recastChargesRemaining == 0;
         public bool ActiveTimeRemainingIsOver => _activeTimeRemaining <= 0;
-        public bool HasActiveTimer => _abilitySo.activeTime > 0;
+        public bool HasActiveTimer => AbilitySo.activeTime > 0;
 
-        public AbilityActiveState(AbilitySo abilitySo,Action onCast, Action onActiveCast, Action activeStateRefresh)
+        public AbilityActiveState(AbilitySo abilitySo,Action onCast, Action onActiveCast, Action activeStateRefresh) : base(abilitySo)
         {
-            _abilitySo = abilitySo;
             _onCast = onCast;
             _onActiveCast = onActiveCast;
             _activeStateRefresh = activeStateRefresh;
@@ -30,7 +27,7 @@ namespace Abilities.AbilityState
             _recastChargesRemaining = abilitySo.recastCharges;
             
         }
-        public void Refresh()
+        public override void Refresh()
         {
             if (_activeTimeRemaining > 0)
             {
@@ -40,16 +37,26 @@ namespace Abilities.AbilityState
             _activeStateRefresh.Invoke();
         }
 
-        public void OnEnter()
+        public override void OnEnter()
         {
-            _recastChargesRemaining = _abilitySo.recastCharges;
-            _activeTimeRemaining = _abilitySo.activeTime;
+            _recastChargesRemaining = AbilitySo.recastCharges;
+            _activeTimeRemaining = AbilitySo.activeTime;
             _onCast.Invoke();
         }
 
-        public void OnExit()
+        public override void OnExit()
         {
            
+        }
+
+        protected override void OnFirePressAction()
+        {
+           
+        }
+
+        protected override void OnFireReleaseAction()
+        {
+            
         }
     }
 }

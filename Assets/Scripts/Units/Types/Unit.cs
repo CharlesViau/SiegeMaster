@@ -25,10 +25,10 @@ namespace Units.Types
         public Transform ShootingPosition => shootingPosition;
         public Vector3 AimingDirection => TargetPosition - shootingPosition.position;
 
-        protected abstract Vector3 targetPosition { get; }
+        protected abstract Vector3 AimedPosition { get; }
 
-        public Vector3 TargetPosition => targetPosition;
-        public Transform Target { get; set; }
+        public Vector3 TargetPosition => AimedPosition;
+        public Transform TargetTransform { get; set; }
 
         #endregion
 
@@ -39,14 +39,18 @@ namespace Units.Types
             TryGetComponent<Rigidbody>(out Rigidbody);
             Animator = GetComponent<Animator>();
             AbilityHandler = GetComponent<AbilityHandler>();
+            
         }
 
         public virtual void PostInit()
         {
+            AbilityHandler.Init();
+            AbilityHandler.PostInit();
         }
 
         public virtual void Refresh()
         {
+            AbilityHandler.Refresh();
         }
 
         public virtual void FixedRefresh()
