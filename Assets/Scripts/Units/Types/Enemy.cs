@@ -22,6 +22,7 @@ namespace Units.Types
         public EnemyType enemyType;
         public EnemyMovement_SO movement_SO;
         public TargetingSo targeting_SO;
+        public Attack_SO attack_SO;
         protected override Vector3 targetPosition
         {
             get
@@ -76,19 +77,21 @@ namespace Units.Types
         {
             base.Init();
             _enemyAgent = GetComponent<NavMeshAgent>();
-            
+
             enemyState = EnemyStates.Alive;
             alive = true;
             _enemyAgent.speed = speed;
 
             movement_SO = Instantiate(movement_SO);
             targeting_SO = Instantiate(targeting_SO);
+            attack_SO = Instantiate(attack_SO);
 
             _player = PlayerUnitManager.Instance.GetTransform;
             _objective = NexusManager.Instance.GetTransform;
 
             movement_SO.Init(gameObject, _objective, speed);
             targeting_SO.Init(gameObject, attackRange);
+            //attack_SO.Init(Animator, );
 
             _fullHp = currentHp;
             _hpStack = new Stack<Hp>();
@@ -120,6 +123,7 @@ namespace Units.Types
                     //Shoot();
                     break;
                 case EnemyStates.Fight:
+                    FightAnimation();
                     break;
                 default:
                     break;
@@ -208,10 +212,10 @@ namespace Units.Types
 
         void Death()
         {
-            StartCoroutine(PoolDealy());
+            StartCoroutine(DealyToPool());
         }
 
-        IEnumerator PoolDealy()
+        IEnumerator DealyToPool()
         {
             yield return new WaitForSeconds(_delayToPool);
             EnemyManager.Instance.Pool(enemyType, this);
@@ -236,33 +240,58 @@ namespace Units.Types
         #endregion
 
         #region Attacking Player & Nexus
+        // needs to modify
+        void GetReadyToAttack()
+        {
+            if (Vector3.Distance(transform.position, _player.transform.position) <= ShootRange)
+            {
+                if (Vector3.Distance(transform.position, _player.transform.position) > FightRange)
+                    enemyState = EnemyStates.Shoot;
+                if (Vector3.Distance(transform.position, _player.transform.position) <= FightRange)
+                    enemyState = EnemyStates.Fight;
+            }
+        }
 
-        private void InstantiateProjectile(Transform target)
+        void InstantiateProjectile(Transform target)
         {
             ProjectileManager.Instance.Create(projectileType,
                 new Projectile.Args((transform.position), projectileType,
                 target, projectileSpeed, projectileDamage, Vector3.zero, false));
         }
 
-        private void ShootAnimation()
+        void Shoot()
         {
-            Animator.SetTrigger(IsFight);
-        }
-
-        private void Shoot()
-        {
-            if (Vector3.Distance(transform.position, _player.position) <= attackRange)
+            if (Vector3.Distance(transform.position, _player.position) <= ShootRange)
             {
                 InstantiateProjectile(_player);
             }
         }
 
-        private void OnCollisionEnter(Collision collision)
+        void FightAnimation()
         {
-            if (!collision.gameObject.CompareTag("Nexus")) return;
-            GotShot(currentHp);
-            _delayToPool = 0;
-            NexusManager.Instance.DealDamage(EnemyDamageToNexus);
+            Animator.SetTrigger(IsFight);
+        }
+
+        void ShootAnimation()
+        {
+            Animator.SetTrigger(IsAttack);
+        }
+
+        void OnCollisionEnter(Collision collision)
+        {
+            #region Deal damage to Nexus
+            if (collision.gameObject.CompareTag("Nexus"))
+            {
+                GotShot(currentHp);
+                _delayToPool = 0;
+                NexusManager.Instance.DealDamage(EnemyDamageToNexus);
+            }
+            #endregion
+
+            #region Deal damage to player
+            if (collision.gameObject.CompareTag("Player")) // needs to drag & drop sword object
+                ;// needs to call function from collision SO
+            #endregion
         }
         #endregion
 
