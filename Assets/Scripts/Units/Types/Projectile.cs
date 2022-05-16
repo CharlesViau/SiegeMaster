@@ -6,7 +6,7 @@ using General;
  public class Projectile : MonoBehaviour,IUpdatable,IPoolable,ICreatable<Projectile.Args>
 {
 
-    [HideInInspector]public bool isPlayer;
+    [HideInInspector]public bool ownerIsPlayer;
     public ProjectileType type;
     public Movement_SO movement_SO;
     public OnCollisionSO onCollision_SO;
@@ -50,7 +50,7 @@ using General;
     private void OnCollisionEnter(Collision collision)
     {
 
-        onCollision_SO.OnEnterCollision(collision.contacts[0].point, type, this, collision,isPlayer);
+        onCollision_SO.OnEnterCollision(collision.contacts[0].point, type, this, collision,ownerIsPlayer);
      //   ObjectPool.Instance.Pool(type,this);
     }
 
@@ -71,7 +71,7 @@ using General;
     public void Construct(Args constructionArgs)
     {
         timer = 0;
-        isPlayer = constructionArgs.isPlayer;
+        ownerIsPlayer = constructionArgs.isPlayer;
         transform.position = constructionArgs.spawningPosition;
         movement_SO.Init(gameObject, constructionArgs.target, constructionArgs.bulletSpeed, constructionArgs.velocityDirection);
         onCollision_SO.Init(gameObject, constructionArgs.bulletDamage, constructionArgs.isPlayer);

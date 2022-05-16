@@ -7,14 +7,14 @@ public class OnCollisionSO : ScriptableObject
 {
     protected GameObject gameObject;
     protected float damage;
-    protected bool isPlayer;
+    protected bool ownerIsPlayer;
     
     public ParticleType onCollisionParticleType;
     public virtual void Init(GameObject gameobject, float _damage, bool _isPlayer)
     {
         gameObject = gameobject;
         damage = _damage;
-        isPlayer = _isPlayer;
+        ownerIsPlayer = _isPlayer;
     }
 
     public virtual void OnEnterCollision(Vector3 position, ValueType type, IPoolable type2,Collision collisionObject,bool isPlayer)

@@ -21,7 +21,7 @@ namespace Units.Types
 
 
         private Vector3 _moveVelocity;
-        private Vector3 _velocity;
+        private Vector3 _gravityvelocity;
 
         private bool _isGrounded;
         private Vector3 HitPoint { get; set; }
@@ -39,16 +39,16 @@ namespace Units.Types
         {
             base.Refresh();
             _isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundLayer);
-            if (_isGrounded && _velocity.y<0)
+            if (_isGrounded && _gravityvelocity.y<0)
             {
-                _velocity.y = -2f;
+                _gravityvelocity.y = -2f;
             }
             
         }
         public override void FixedRefresh()
         {
-            _velocity.y += Gravity * Time.deltaTime;
-            _characterController.Move(_velocity * Time.fixedDeltaTime);
+            _gravityvelocity.y += Gravity;
+            _characterController.Move((_gravityvelocity) * Time.fixedDeltaTime);
         }
         public override void Move(Vector3 direction)
         {
@@ -67,7 +67,7 @@ namespace Units.Types
         {
             if (_isGrounded)
             {
-               _velocity.y = Mathf.Sqrt(jumpHeight*-2f * Gravity);
+               _gravityvelocity.y = Mathf.Sqrt(jumpHeight*-2f * Gravity);
             }
            
         }
