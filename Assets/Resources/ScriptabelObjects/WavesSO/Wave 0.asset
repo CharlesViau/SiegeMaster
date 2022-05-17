@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Wave 0
   m_EditorClassIdentifier: 
   enemiesList:
-  - enemyType: 1
-    count: 10
+  - enemyType: 2
+    count: 3
+  - enemyType: 0
+    count: 3

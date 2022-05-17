@@ -9,7 +9,7 @@ using System.Collections;
 
 namespace Units.Types
 {
-    public enum EnemyStates { Alive, DeathAnimation, Death, Fight, Shoot }
+    public enum EnemyStates { Wander, DeathAnimation, Death, Attacking}
 
     public class Enemy : Unit, ICreatable<Enemy.Args>, IHittable
     {
@@ -45,11 +45,8 @@ namespace Units.Types
         #endregion
 
         #region Attacking
-        public ProjectileType projectileType;
-        public float projectileDamage;
+        public float detectRange;
         public float attackRange;
-        public float ShootRange;
-        public float FightRange;
         public float projectileSpeed;
         const float EnemyDamageToNexus = 1;
         #endregion
@@ -57,8 +54,6 @@ namespace Units.Types
         #region Animation
         static readonly int Speed = Animator.StringToHash("Speed");
         static readonly int IsDead = Animator.StringToHash("IsDead");
-        static readonly int IsAttack = Animator.StringToHash("IsAttack");
-        static readonly int IsFight = Animator.StringToHash("IsFight");
         #endregion
 
         #region UI & HP
@@ -78,7 +73,7 @@ namespace Units.Types
             base.Init();
             _enemyAgent = GetComponent<NavMeshAgent>();
 
-            enemyState = EnemyStates.Alive;
+            enemyState = EnemyStates.Wander;
             alive = true;
             _enemyAgent.speed = speed;
 
@@ -90,8 +85,8 @@ namespace Units.Types
             _objective = NexusManager.Instance.GetTransform;
 
             movement_SO.Init(gameObject, _objective, speed);
-            targeting_SO.Init(gameObject, attackRange);
-            //attack_SO.Init(Animator, );
+            targeting_SO.Init(gameObject, detectRange);
+            attack_SO.Init(ShootingPosition.position, _objective,attackRange);
 
             _fullHp = currentHp;
             _hpStack = new Stack<Hp>();
@@ -108,10 +103,11 @@ namespace Units.Types
 
             switch (enemyState)
             {
-                case EnemyStates.Alive:
+                case EnemyStates.Wander:
                     Animator.SetFloat(Speed, speed);
                     Move(targeting_SO.GetTheTarget().position);
                     //FacingUIToPlayer();
+                    GetReadyToAttack();
                     break;
                 case EnemyStates.DeathAnimation:
                     DeathAnimation();
@@ -119,11 +115,8 @@ namespace Units.Types
                 case EnemyStates.Death:
                     Death();
                     break;
-                case EnemyStates.Shoot:
-                    //Shoot();
-                    break;
-                case EnemyStates.Fight:
-                    FightAnimation();
+                case EnemyStates.Attacking:
+                    AttackState();
                     break;
                 default:
                     break;
@@ -151,7 +144,7 @@ namespace Units.Types
             transform.position = constructionArgs.spawningPosition;
             _enemyAgent.enabled = true;
             transform.SetParent(constructionArgs.parent);
-            enemyState = EnemyStates.Alive;
+            enemyState = EnemyStates.Wander;
             currentHp = _fullHp;
             alive = true;
             _delayToPool = 10;
@@ -240,41 +233,15 @@ namespace Units.Types
         #endregion
 
         #region Attacking Player & Nexus
-        // needs to modify
+        void AttackState()
+        {
+            attack_SO.Attack(Animator);
+        }
+
         void GetReadyToAttack()
         {
-            if (Vector3.Distance(transform.position, _player.transform.position) <= ShootRange)
-            {
-                if (Vector3.Distance(transform.position, _player.transform.position) > FightRange)
-                    enemyState = EnemyStates.Shoot;
-                if (Vector3.Distance(transform.position, _player.transform.position) <= FightRange)
-                    enemyState = EnemyStates.Fight;
-            }
-        }
-
-        void InstantiateProjectile(Transform target)
-        {
-            ProjectileManager.Instance.Create(projectileType,
-                new Projectile.Args((transform.position), projectileType,
-                target, projectileSpeed, projectileDamage, Vector3.zero, false));
-        }
-
-        void Shoot()
-        {
-            if (Vector3.Distance(transform.position, _player.position) <= ShootRange)
-            {
-                InstantiateProjectile(_player);
-            }
-        }
-
-        void FightAnimation()
-        {
-            Animator.SetTrigger(IsFight);
-        }
-
-        void ShootAnimation()
-        {
-            Animator.SetTrigger(IsAttack);
+            if (Vector3.Distance(transform.position, _objective.transform.position) <= attackRange)
+                enemyState = EnemyStates.Attacking; // needs to go back again to wander or to deathAnimation
         }
 
         void OnCollisionEnter(Collision collision)

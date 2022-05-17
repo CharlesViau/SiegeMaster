@@ -29,6 +29,12 @@ public class GameFlowManager : MonoBehaviour
         maxAmountsOfWaves = waves_SO.Length;
         gameState = GameState.WaitToSpawn;
 
+        
+        foreach (Waves_SO wave_SO in waves_SO)
+        {
+            Waves_SO clone = Instantiate(wave_SO);
+        }
+
         foreach (Waves_SO wave_SO in waves_SO)
         {
             wave_SO.Init(enemiesParent, spawnPositions);
@@ -88,6 +94,8 @@ public class GameFlowManager : MonoBehaviour
             currentWave++;
             gameState = GameState.WaitToSpawn;
         }
+        else
+            Debug.Log("Geme is over");
     }
     #endregion
 

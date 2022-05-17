@@ -3,23 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[CreateAssetMenu(fileName = "Attacking", menuName = "ScriptableObjects/Atack")]
+[CreateAssetMenu(fileName = "Sword", menuName = "ScriptableObjects/Attack/Without projectile")]
 public class Attack_SO : ScriptableObject
 {
-    [SerializeField] Animator anim;
-    float attackRange;
-    float damage;
+    [SerializeField] protected string animState;
+    [SerializeField] protected float attackRange;
+    protected Vector3 ownerPos;
+    protected Transform target;
+    protected float damage;
+    bool isAnimSetted;
     // oncollision so or particle system
 
-    public void Init(Animator _anim, float _attackRange, float _damage)
+    public virtual void Init(Vector3 _ownerPos, Transform _target, float _damage)
     {
-        anim = _anim;
-        attackRange = _attackRange;
+        ownerPos = _ownerPos;
+        target = _target;
         damage = _damage;
     }
 
-    public void Attack()
+    public virtual void Attack(Animator _anim)
     {
-        //anim
+        if (!isAnimSetted)
+            _anim.SetTrigger(animState);
+        isAnimSetted = true;
+        Shoot();
+    }
+
+    public virtual void StayAway(Animator _anim)
+    {
+        if (isAnimSetted)
+            _anim.ResetTrigger(animState);
+        isAnimSetted = false;
+    }
+
+    protected virtual void Shoot()
+    {
     }
 }
