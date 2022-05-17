@@ -7,18 +7,18 @@ using UnityEngine.AI;
 public class Attack_SO : ScriptableObject
 {
     [SerializeField] protected string animState;
-    [SerializeField] protected float attackRange;
+    [SerializeField] protected float attackDamage;
     protected Vector3 ownerPos;
     protected Transform target;
-    protected float damage;
-    bool isAnimSetted;
+    protected float attackRange;
+    protected bool isAnimSetted;
     // oncollision so or particle system
 
-    public virtual void Init(Vector3 _ownerPos, Transform _target, float _damage)
+    public virtual void Init(Vector3 _ownerPos, Transform _target, float _attackRange)
     {
         ownerPos = _ownerPos;
         target = _target;
-        damage = _damage;
+        attackRange = _attackRange;
     }
 
     public virtual void Attack(Animator _anim)

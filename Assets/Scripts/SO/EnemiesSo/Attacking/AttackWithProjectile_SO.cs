@@ -7,12 +7,11 @@ public class AttackWithProjectile_SO : Attack_SO
 {
     // this one needs to stop after one shooting.
     [SerializeField] ProjectileType projectileType;
-    [SerializeField] public float projectileDamage; // ??
-    [SerializeField] public float projectileSpeed;
+    [SerializeField] float projectileSpeed;
 
-    public override void Init(Vector3 _ownerPos, Transform _target, float _damage)
+    public override void Init(Vector3 _ownerPos, Transform _target, float _attackRange)
     {
-        base.Init(_ownerPos, _target, _damage);
+        base.Init(_ownerPos, _target, _attackRange);
     }
 
     public override void Attack(Animator _anim)
@@ -22,13 +21,8 @@ public class AttackWithProjectile_SO : Attack_SO
     protected override void Shoot()
     {
         base.Shoot();
-        InstantiateProjectile(ownerPos, target);
-    }
-
-    void InstantiateProjectile(Vector3 spawnPos, Transform target)
-    {
         ProjectileManager.Instance.Create(projectileType,
-            new Projectile.Args(spawnPos, projectileType,
-            target, projectileSpeed, projectileDamage, Vector3.zero, false));
+            new Projectile.Args(ownerPos, projectileType,
+            target, projectileSpeed, attackDamage, Vector3.zero, false));
     }
 }

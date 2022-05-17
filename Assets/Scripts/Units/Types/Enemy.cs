@@ -9,7 +9,7 @@ using System.Collections;
 
 namespace Units.Types
 {
-    public enum EnemyStates { Wander, DeathAnimation, Death, Attacking}
+    public enum EnemyStates { Wander, DeathAnimation, Death, Attacking }
 
     public class Enemy : Unit, ICreatable<Enemy.Args>, IHittable
     {
@@ -79,14 +79,17 @@ namespace Units.Types
 
             movement_SO = Instantiate(movement_SO);
             targeting_SO = Instantiate(targeting_SO);
-            attack_SO = Instantiate(attack_SO);
 
             _player = PlayerUnitManager.Instance.GetTransform;
             _objective = NexusManager.Instance.GetTransform;
 
             movement_SO.Init(gameObject, _objective, speed);
             targeting_SO.Init(gameObject, detectRange);
-            attack_SO.Init(ShootingPosition.position, _objective,attackRange);
+            if (attack_SO)
+            {
+                Instantiate(attack_SO);
+                attack_SO.Init(ShootingPosition.position, _objective, attackRange);
+            }
 
             _fullHp = currentHp;
             _hpStack = new Stack<Hp>();
@@ -235,7 +238,7 @@ namespace Units.Types
         #region Attacking Player & Nexus
         void AttackState()
         {
-            attack_SO.Attack(Animator);
+            if (attack_SO) attack_SO.Attack(Animator);
         }
 
         void GetReadyToAttack()

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Projectile
   m_EditorClassIdentifier: 
   animState: IsShoot
-  attackRange: 160
+  attackRange: 100
   projectileType: 0
   projectileDamage: 5
   projectileSpeed: 5
