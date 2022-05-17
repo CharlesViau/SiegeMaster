@@ -47,7 +47,6 @@ namespace Units.Types
         #region Attacking
         public float detectRange;
         public float attackRange;
-        public float projectileSpeed;
         const float EnemyDamageToNexus = 1;
         #endregion
 
@@ -71,17 +70,19 @@ namespace Units.Types
         public override void Init()
         {
             base.Init();
-            _enemyAgent = GetComponent<NavMeshAgent>();
-
             enemyState = EnemyStates.Wander;
             alive = true;
             _enemyAgent.speed = speed;
 
-            movement_SO = Instantiate(movement_SO);
-            targeting_SO = Instantiate(targeting_SO);
+            _fullHp = currentHp;
+            _hpStack = new Stack<Hp>();
 
+            _enemyAgent = GetComponent<NavMeshAgent>();
             _player = PlayerUnitManager.Instance.GetTransform;
             _objective = NexusManager.Instance.GetTransform;
+            
+            movement_SO = Instantiate(movement_SO);
+            targeting_SO = Instantiate(targeting_SO);
 
             movement_SO.Init(gameObject, _objective, speed);
             targeting_SO.Init(gameObject, detectRange);
@@ -90,9 +91,6 @@ namespace Units.Types
                 Instantiate(attack_SO);
                 attack_SO.Init(ShootingPosition.position, _objective, attackRange);
             }
-
-            _fullHp = currentHp;
-            _hpStack = new Stack<Hp>();
         }
 
         public override void PostInit()
@@ -106,8 +104,7 @@ namespace Units.Types
 
             switch (enemyState)
             {
-                case EnemyStates.Wander:
-                    Animator.SetFloat(Speed, speed);
+                case EnemyStates.Wander:                    
                     Move(targeting_SO.GetTheTarget().position);
                     //FacingUIToPlayer();
                     GetReadyToAttack();
@@ -120,6 +117,7 @@ namespace Units.Types
                     break;
                 case EnemyStates.Attacking:
                     AttackState();
+                    GetReadyToAttack();
                     break;
                 default:
                     break;
@@ -172,6 +170,7 @@ namespace Units.Types
         #region Movement
         public override void Move(Vector3 direction)
         {
+            Animator.SetFloat(Speed, speed);
             if (direction != Vector3.zero)
                 movement_SO.MoveToPoint(direction);
         }
@@ -238,13 +237,22 @@ namespace Units.Types
         #region Attacking Player & Nexus
         void AttackState()
         {
-            if (attack_SO) attack_SO.Attack(Animator);
+            if (attack_SO) 
+            {
+                _enemyAgent.isStopped = true;
+                attack_SO.Refresh(Animator);
+            }
         }
 
         void GetReadyToAttack()
         {
             if (Vector3.Distance(transform.position, _objective.transform.position) <= attackRange)
-                enemyState = EnemyStates.Attacking; // needs to go back again to wander or to deathAnimation
+                enemyState = EnemyStates.Attacking;
+            else
+            {
+                _enemyAgent.isStopped = false;
+                enemyState = EnemyStates.Wander;
+            }
         }
 
         void OnCollisionEnter(Collision collision)
@@ -260,7 +268,7 @@ namespace Units.Types
 
             #region Deal damage to player
             if (collision.gameObject.CompareTag("Player")) // needs to drag & drop sword object
-                ;// needs to call function from collision SO
+                ;// needs to call function from collision SO or not important
             #endregion
         }
         #endregion
