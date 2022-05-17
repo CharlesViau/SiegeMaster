@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4486535011cef48408a9f8ab4383ef0e, type: 3}
   m_Name: Projectile
   m_EditorClassIdentifier: 
-  animState: IsShoot
-  attackRange: 100
+  attackAnimState: IsShoot
+  movementAnimState: IsMoving
+  attackDamage: 1
   projectileType: 0
-  projectileDamage: 5
   projectileSpeed: 5
+  cooldownTimer: 7

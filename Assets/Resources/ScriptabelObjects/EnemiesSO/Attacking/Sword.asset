@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c92d84cd16e1686408d60f09454c0817, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
-  animState: IsFight
-  attackRange: 56
+  attackAnimState: IsFight
+  movementAnimState: IsMoving
+  attackDamage: 1
