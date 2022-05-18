@@ -3,23 +3,62 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[CreateAssetMenu(fileName = "Attacking", menuName = "ScriptableObjects/Atack")]
+[CreateAssetMenu(fileName = "Sword", menuName = "ScriptableObjects/Attack/Without projectile")]
 public class Attack_SO : ScriptableObject
 {
-    [SerializeField] Animator anim;
-    float attackRange;
-    float damage;
-    // oncollision so or particle system
+    #region Fields
+    #region Set Attack Type
+    [SerializeField] protected string attackAnimState;
+    [SerializeField] protected string movementAnimState;
+    [SerializeField] protected float attackDamage;
+    #endregion
 
-    public void Init(Animator _anim, float _attackRange, float _damage)
+    #region Info from Attacker
+    protected Vector3 ownerPos;
+    protected Transform target;
+    protected float attackRange;
+    #endregion
+
+    #region Game Flow Control
+    protected bool isAnimSetted;
+    #endregion
+    #endregion
+
+    #region Methods
+    #region Game Flow
+    public virtual void Init(Vector3 _ownerPos, Transform _target, float _attackRange)
     {
-        anim = _anim;
+        ownerPos = _ownerPos;
+        target = _target;
         attackRange = _attackRange;
-        damage = _damage;
+        isAnimSetted = false;
     }
 
-    public void Attack()
+    public virtual void Refresh(Animator _anim)
     {
-        //anim
+        Attack(_anim);
     }
+    #endregion
+
+    #region Attack
+    protected virtual void Attack(Animator _anim)
+    {
+        if (!isAnimSetted)
+            _anim.SetTrigger(attackAnimState);
+        isAnimSetted = true;
+    }
+    #endregion
+
+    #region Cooldown
+    protected virtual void AttackReset(Animator _anim)
+    {
+        if (isAnimSetted)
+        {
+            _anim.ResetTrigger(attackAnimState);
+            _anim.SetTrigger(movementAnimState);
+        }
+        isAnimSetted = false;     
+    }
+    #endregion
+    #endregion
 }
