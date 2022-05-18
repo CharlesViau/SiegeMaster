@@ -1,26 +1,24 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using Units.Types;
 using System.Linq;
 using Units.Types.Towers;
 
-public enum TowerType { ArcherTower, Catapult,SeekingTower,FireBall , ArcherTowerPrediction }
-public class TowerManager : General.Manager<Tower, TowerType, Tower.Args, TowerManager>
+namespace Managers
 {
-    protected override string PrefabLocation => "Prefabs/Towers/";
-
-    public override void Init()
+    public enum TowerType { ArcherTower, Catapult,SeekingTower,FireBall , ArcherTowerPrediction }
+    public class TowerManager : General.Manager<Tower, TowerType, Tower.Args, TowerManager>
     {
-        var hashSet = new HashSet<Tower>(UnityEngine.Object.FindObjectsOfType<Tower>().ToList());
-        foreach (var item in hashSet)
+        protected override string PrefabLocation => "Prefabs/Towers/";
+
+        public override void Init()
         {
-            Add(item);
+            var hashSet = new HashSet<Tower>(UnityEngine.Object.FindObjectsOfType<Tower>().ToList());
+            foreach (var item in hashSet)
+            {
+                Add(item);
+            }
+
+            base.Init();
         }
 
-        base.Init();
     }
-
 }
-
-

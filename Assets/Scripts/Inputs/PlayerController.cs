@@ -20,9 +20,6 @@ namespace Inputs
     {
 
         #region Properties and Variables
-      
-        
-
         //Camera
 
         private Transform _mainCamera;
@@ -89,8 +86,6 @@ namespace Inputs
         }
 
         public void Refresh()
-
-
         {
             PollFireInput();
             PollAbilityInput();

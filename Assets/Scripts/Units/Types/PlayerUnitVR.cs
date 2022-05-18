@@ -7,7 +7,8 @@ namespace Units.Types
 
     public class PlayerUnitVR : PlayerUnit
     {
-        protected override Vector3 targetPosition => throw new System.NotImplementedException();
+        protected override Vector3 AimedPosition { get; }
+
         public override void Look()
         {
            

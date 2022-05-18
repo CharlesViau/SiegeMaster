@@ -17,7 +17,7 @@ namespace Units.Types.Towers
         public Transform barrel;
         public Transform particlePosition;
 
-        protected override Vector3 targetPosition => target.position;
+        protected override Vector3 AimedPosition => target.position;
 
         // Must have fire animation and one trigger parameter , the name of trigger must be  "Fire"
         private static readonly int Fire1 = Animator.StringToHash("Fire");

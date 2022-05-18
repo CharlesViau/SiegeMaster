@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Units.Types
 {
 
-    public class PlayerPC : PlayerUnit, ICameraController
+    public class PlayerPC : PlayerUnit
     {
         private CameraRaycast _cameraRayCast;
         
@@ -13,6 +13,7 @@ namespace Units.Types
         public float maxDistanceAiming;
         public float rayCastStartPointDistance;
         public float jumpHeight;
+      
         private CharacterController _characterController;
         
         public float groundDistance = 0.4f;
@@ -21,12 +22,11 @@ namespace Units.Types
 
 
         private Vector3 _moveVelocity;
-        private Vector3 _gravityvelocity;
+        private Vector3 _gravityVelocity;
 
         private bool _isGrounded;
-        private Vector3 HitPoint { get; set; }
+        protected override Vector3 AimedPosition => _cameraRayCast.RayCast(maxDistanceAiming, rayCastStartPointDistance);
         private const float Gravity = -20f;
-        protected override Vector3 targetPosition => HitPoint;
 
         public override void Init()
         {
@@ -39,20 +39,21 @@ namespace Units.Types
         {
             base.Refresh();
             _isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundLayer);
-            if (_isGrounded && _gravityvelocity.y<0)
+            if (_isGrounded && _gravityVelocity.y<0)
             {
-                _gravityvelocity.y = -2f;
+                _gravityVelocity.y = -2f;
             }
             
         }
         public override void FixedRefresh()
         {
-            _gravityvelocity.y += Gravity;
-            _characterController.Move((_gravityvelocity) * Time.fixedDeltaTime);
+            _gravityVelocity.y += Gravity * Time.fixedDeltaTime;
+            _characterController.Move((_gravityVelocity) * Time.fixedDeltaTime);
         }
         public override void Move(Vector3 direction)
         {
             _moveVelocity = (direction) * Time.fixedDeltaTime * speed;
+         //  Animator.SetFloat(_moveVelocity)
             _characterController.Move(_moveVelocity);
             _moveVelocity.y = 0;
         }
@@ -67,14 +68,12 @@ namespace Units.Types
         {
             if (_isGrounded)
             {
-               _gravityvelocity.y = Mathf.Sqrt(jumpHeight*-2f * Gravity);
+               _gravityVelocity.y = Mathf.Sqrt(jumpHeight*-2f * Gravity);
             }
-           
         }
         public override void Look()
         {
-            HitPoint = _cameraRayCast.RayCast(maxDistanceAiming, rayCastStartPointDistance);
-            playerRotationLook.forward = (HitPoint - playerRotationLook.position).normalized;
+            playerRotationLook.forward = (AimedPosition - playerRotationLook.position).normalized;
             
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, playerRotationLook.transform.eulerAngles.y, 0), turningSpeed*Time.fixedDeltaTime);
 

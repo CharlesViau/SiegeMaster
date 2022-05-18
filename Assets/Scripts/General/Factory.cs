@@ -57,7 +57,7 @@ namespace General
                 _prefabDictionary.Add(element, Resources.Load<GameObject>(PrefabLocation + element));
                 if (_prefabDictionary[element] is null)
                 {
-                    Debug.Log("Can't add " + element + "to prefab dictionary at location : " + PrefabLocation);
+                    Debug.Log("Can't add " + element + " to prefab dictionary at location : " + PrefabLocation);
                 }
             }
         }
@@ -77,6 +77,7 @@ namespace General
             {
                 obj = Object.Instantiate(_prefabDictionary[type]).GetComponent<T>();
                 obj.Init();
+                obj.PostInit();
             }
 
             obj.Construct(constructionArgs);
@@ -86,10 +87,10 @@ namespace General
 
         #endregion
     }
-
+    
     // ReSharper disable once UnusedTypeParameter
     public interface IFactory<out T, in E, in A>
-        where T : ICreatable<A>, IUpdatable, IPoolable
+        where T : ICreatable<A>, IBootable, IPoolable
         where E : Enum
         where A : ConstructionArgs
     {
@@ -101,9 +102,9 @@ namespace General
     {
         public Vector3 spawningPosition;
 
-        protected ConstructionArgs(Vector3 _spawningPosition)
+        protected ConstructionArgs(Vector3 spawningPosition)
         {
-            spawningPosition = _spawningPosition;
+            this.spawningPosition = spawningPosition;
         }
     }
 

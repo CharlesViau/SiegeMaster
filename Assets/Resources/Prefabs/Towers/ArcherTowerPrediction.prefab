@@ -234,7 +234,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e411a3579ca61dd4ca5e9742c225eb5f, type: 2}
+  - {fileID: -9184922342641321528, guid: 7c3c899cf008c8a4c97dc595bb5368a6, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -297,7 +297,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8005040781669466772}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 57.92, y: 3.2, z: -75}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5777529066339025739}
@@ -381,6 +381,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   basicAttack: {fileID: 0}
   abilities:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  towers:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
