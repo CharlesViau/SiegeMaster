@@ -3,80 +3,123 @@ using Managers;
 using UnityEngine;
 using Units.Types;
 
+public enum GameState { WaitToSpawn, Spawn, CheckAliveEnemies, LevelUp }
 public class GameFlowManager : MonoBehaviour
 {
     #region Fields
-    #region Set info of enemies
-    public Transform enemiesInManagerParent;
-    public Transform enemiesInPoolParent;
-    public EnemyType[] enemyType;
+    #region Set Hierarchy info of enemies
+    public Transform enemiesParent;
     public Transform[] spawnPositions;
     #endregion
 
     #region Waves manage
-    Waves_SO[] waves_SO;
+    GameState gameState;
+    public Waves_SO[] waves_SO;
     public float delayToSartWave;
-
-    float timer = 0;
-    int wave = 1;
-    bool levelIsOver;
+    int maxAmountsOfWaves;
+    int currentWave;
+    float timer;
     #endregion
     #endregion
-
+    
     #region Methods
     #region Unity Methods
-    private void Awake()
+    void Awake()
     {
+        maxAmountsOfWaves = waves_SO.Length;
+        gameState = GameState.WaitToSpawn;
 
+        
+        foreach (Waves_SO wave_SO in waves_SO)
+        {
+            Waves_SO clone = Instantiate(wave_SO);
+        }
+
+        foreach (Waves_SO wave_SO in waves_SO)
+        {
+            wave_SO.Init(enemiesParent, spawnPositions);
+        }
     }
 
-    private void Update()
+    void Update()
+    {
+        switch (gameState)
+        {
+            case GameState.Spawn:
+                SpawnEnemies();
+                break;
+            case GameState.CheckAliveEnemies:
+                CheckAliveEnemies();
+                break;
+            case GameState.WaitToSpawn:
+                Breakdown();
+                break;
+            case GameState.LevelUp:
+                LevelUp();
+                break;
+            default:
+                break;
+        }
+        //DebugTool();
+    }
+    #endregion
+
+    #region Waves Manage
+    void Breakdown()
     {
         timer += Time.deltaTime;
         if (timer > delayToSartWave)
         {
-            SpawnEnemies(EnemyType.ArcherEnemy);
-            SpawnEnemies(EnemyType.SneakyEnemy);
-            levelIsOver = CheckAliveEnemies();
             timer = 0;
-        }
-        //DebugTool();        
-    }
-    #endregion
-
-    #region Spawning enemy per wave
-    public void SpawnEnemies(EnemyType enemyType)
-    {
-        int random = Random.Range(0, spawnPositions.Length);
-        EnemyManager.Instance.Create(enemyType, new Enemy.Args(spawnPositions[random].position, enemiesInManagerParent));
-    }
-    #endregion
-
-    #region Waves manage
-    public void IncreaseWave(int maxWaves)
-    {
-        wave++;
-        if (wave > maxWaves)
-        {
-            wave = 0;
+            gameState = GameState.Spawn;
         }
     }
 
-    bool CheckAliveEnemies()
+    void SpawnEnemies()
+    {
+        waves_SO[currentWave].CreateEnemies();
+        gameState = GameState.CheckAliveEnemies;
+    }
+
+    void CheckAliveEnemies()
     {
         if (EnemyManager.Instance.Count == 0)
-            return true;
+            gameState = GameState.LevelUp;
+    }
+
+    void LevelUp()
+    {
+        if (currentWave <= maxAmountsOfWaves)
+        {
+            currentWave++;
+            gameState = GameState.WaitToSpawn;
+        }
         else
-            return false;
+            Debug.Log("Geme is over");
     }
     #endregion
 
     #region Debug Tool
     void DebugTool()
     {
-        //Debug.Log("Time to spawn: " + timer);
-        Debug.Log(levelIsOver);
-        Debug.Log(wave);
+        //Debug.Log("time to spawn: " + timer);
+        Debug.Log("wave " + currentWave);        
+    }
+
+    int nbDeadEnemies;
+    void AliveEnemiesCheck()
+    {
+        nbDeadEnemies = 0;
+        foreach (Transform child in enemiesParent)
+        {
+            if (child.gameObject.activeInHierarchy) continue;
+
+            nbDeadEnemies++;
+        }
+        if (nbDeadEnemies == enemiesParent.childCount)
+            LevelUp();
+        else
+            return;
     }
     #endregion
     #endregion

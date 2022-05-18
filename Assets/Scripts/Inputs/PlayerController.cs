@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 using Commands;
 using General;
 using Managers;
@@ -13,19 +15,13 @@ namespace Inputs
     /// the PlayerInput component of Unity. Depending on which action was done, this class will create the proper
     /// command. With this approach you can rebind key easily in the PlayerInput component without changing the code.
     /// </summary>
-    [RequireComponent(typeof(PlayerInput), typeof(PlayerUnit))]
+    [RequireComponent(typeof(PlayerInput))]
     public class PlayerController : MonoBehaviour, IUpdatable
     {
 
         #region Properties and Variables
-        [SerializeField] private Transform playerRotationLook;
-      
-        public Vector3 HitPoint => _cameraRayCast.RayCast(maxDistanceAiming, rayCastStartPointDistance);
-
         //Camera
-        private CameraRaycast _cameraRayCast;
-        public float maxDistanceAiming;
-        public float rayCastStartPointDistance;
+
         private Transform _mainCamera;
         
         //ComponentsCache
@@ -58,7 +54,6 @@ namespace Inputs
         #region IUpdatable (Init, Refresh...)
         public void Init()
         {
-            _cameraRayCast = FindObjectOfType<CameraRaycast>();
             //Get Camera Reference
             if (Camera.main != null) _mainCamera = Camera.main.transform;
             else Debug.Log("No Main Camera Found");
@@ -124,12 +119,12 @@ namespace Inputs
         private void PollLookInput()
         {
             if (!(_lookAction.ReadValue<Vector2>() is var mouseDelta) || mouseDelta == Vector2.zero) return;
-            playerRotationLook.forward = (HitPoint - playerRotationLook.position).normalized;
-            CommandManager.Instance.Add(new LookCommand(_unit, playerRotationLook.transform.eulerAngles.y));
+
+            CommandManager.Instance.Add(new LookCommand(_unit));
         }
 
         private void PollFireInput()
-        {
+        { 
             if (_basicAttackAction.WasPressedThisFrame())
             {
                 CommandManager.Instance.Add(new AttackPressCommand(_unit));

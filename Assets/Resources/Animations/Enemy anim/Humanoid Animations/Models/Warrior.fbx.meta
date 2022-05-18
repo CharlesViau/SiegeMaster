@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c7bdb7db48e00e347b4e57e6672512d0
+guid: 0191933314613df489ffc9097da274dd
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
@@ -10,13 +10,18 @@ ModelImporter:
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: Mutant_diffuse
-    second: {fileID: 2800000, guid: d85318dffa0b9b8428d842d12fe26d6c, type: 3}
+      name: maria_diffuse
+    second: {fileID: 2800000, guid: 4a94e5bad096d9d41b11ab769c06a03a, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: Mutant_normal
-    second: {fileID: 2800000, guid: 175cc6ffdc55e354ca010e77af6b6ed1, type: 3}
+      name: maria_normal
+    second: {fileID: 2800000, guid: 0eeb08f30cdf2fd43965714cbebfdfbd, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: maria_specular
+    second: {fileID: 2800000, guid: e682e760477424d4e82440490c2e7ff3, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

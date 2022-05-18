@@ -52,7 +52,7 @@ namespace Units.Types.Towers
 
             ProjectileManager.Instance.Create(projectileType,
                 new Projectile.Args(head.position, projectileType, targetTransform, projectileSpeed, projectileDamage,
-                    _projectileVelocity));
+                    _projectileVelocity,true));
             base.Fire(targetTransform);
         }
 

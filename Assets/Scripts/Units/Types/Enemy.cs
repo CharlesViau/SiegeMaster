@@ -9,21 +9,25 @@ using System.Collections;
 
 namespace Units.Types
 {
+    public enum EnemyStates { Wander, DeathAnimation, Death, Attacking }
+
     public class Enemy : Unit, ICreatable<Enemy.Args>, IHittable
     {
         #region Fields
-        /*public Transform[] targets;
-        int waypointCounter = 0;*/
+        #region Enemy states
+        EnemyStates enemyState;
+        #endregion
 
         #region Set Enemy Type
         public EnemyType enemyType;
         public EnemyMovement_SO movement_SO;
         public TargetingSo targeting_SO;
+        public Attack_SO attack_SO;
         protected override Vector3 AimedPosition
         {
             get
             {
-                //TODO : return position of the current objective?
+                //useless for enemies right now
                 return Vector3.zero;
             }
         }
@@ -41,20 +45,20 @@ namespace Units.Types
         #endregion
 
         #region Attacking
-        public ProjectileType projectileType;
-        public float projectileDamage;
+        public float detectRange;
         public float attackRange;
         public float projectileSpeed;
         const float EnemyDamageToNexus = 1;
         #endregion
 
         #region Animation
-        private static readonly int Speed = Animator.StringToHash("Speed");
-        private static readonly int IsDead = Animator.StringToHash("IsDead");
+        static readonly int Speed = Animator.StringToHash("Speed");
+        static readonly int IsDead = Animator.StringToHash("IsDead");
         #endregion
 
         #region UI & HP
         public Canvas canvasParent;
+        public Transform hpInPoolParent;
         public int currentHp;
         int _fullHp;
         Stack<Hp> _hpStack;
@@ -67,22 +71,27 @@ namespace Units.Types
         public override void Init()
         {
             base.Init();
-            _enemyAgent = GetComponent<NavMeshAgent>();
+            enemyState = EnemyStates.Wander;
             alive = true;
             _enemyAgent.speed = speed;
 
             _fullHp = currentHp;
+            _hpStack = new Stack<Hp>();
 
+            _enemyAgent = GetComponent<NavMeshAgent>();
+            _player = PlayerUnitManager.Instance.GetTransform;
+            _objective = NexusManager.Instance.GetTransform;
+            
             movement_SO = Instantiate(movement_SO);
             targeting_SO = Instantiate(targeting_SO);
 
-            _player = PlayerUnitManager.Instance.GetTransform;
-            _objective = NexusManager.Instance.GetTransform;
-
             movement_SO.Init(gameObject, _objective, speed);
-            targeting_SO.Init(gameObject, attackRange);
-
-            _hpStack = new Stack<Hp>();
+            targeting_SO.Init(gameObject, detectRange);
+            if (attack_SO)
+            {
+                Instantiate(attack_SO);
+                attack_SO.Init(ShootingPosition.position, _objective, attackRange);
+            }
         }
 
         public override void PostInit()
@@ -93,16 +102,27 @@ namespace Units.Types
         public override void Refresh()
         {
             base.Refresh();
-            if (alive)
-            {
-                Animator.SetFloat(Speed, speed);
-                Move(targeting_SO.GetTheTarget().position);
-                FacingUIToPlayer();
-                //Shoot();
-            }
 
-            if (!alive)
-                Death();
+            switch (enemyState)
+            {
+                case EnemyStates.Wander:                    
+                    Move(targeting_SO.GetTheTarget().position);
+                    //FacingUIToPlayer();
+                    GetReadyToAttack();
+                    break;
+                case EnemyStates.DeathAnimation:
+                    DeathAnimation();
+                    break;
+                case EnemyStates.Death:
+                    Death();
+                    break;
+                case EnemyStates.Attacking:
+                    AttackState();
+                    GetReadyToAttack();
+                    break;
+                default:
+                    break;
+            }
         }
 
         public override void FixedRefresh()
@@ -114,20 +134,22 @@ namespace Units.Types
         #region Factory & Pool manage
         public class Args : ConstructionArgs
         {
-            public readonly Transform Parent;
+            public Transform parent;
             public Args(Vector3 _spawningPosition, Transform parent) : base(_spawningPosition)
             {
-                Parent = parent;
+                this.parent = parent;
             }
         }
 
         public void Construct(Args constructionArgs)
         {
-            transform.SetParent(constructionArgs.Parent);
+            transform.position = constructionArgs.spawningPosition;
+            _enemyAgent.enabled = true;
+            transform.SetParent(constructionArgs.parent);
+            enemyState = EnemyStates.Wander;
             currentHp = _fullHp;
             alive = true;
             _delayToPool = 10;
-            _enemyAgent.Move(constructionArgs.spawningPosition);
             _hpStack.Clear();
             CreateHp(_fullHp);
         }
@@ -149,6 +171,7 @@ namespace Units.Types
         #region Movement
         public override void Move(Vector3 direction)
         {
+            Animator.SetFloat(Speed, speed);
             if (direction != Vector3.zero)
                 movement_SO.MoveToPoint(direction);
         }
@@ -165,36 +188,33 @@ namespace Units.Types
                 for (var i = 0; i < damage; i++)
                 {
                     var h = _hpStack.Pop();
-                    h.transform.SetParent(null);
+                    h.transform.SetParent(hpInPoolParent);
                     HPManager.Instance.Pool(HPType.EnemyHp, h);
                 }
             }
             if (alive && currentHp <= 0)
-                Death();
-            //DeathAnimation();
-            //if(!alive)
+                enemyState = EnemyStates.DeathAnimation;
         }
 
         private void DeathAnimation()
         {
-            //alive = false;
+            if (gameObject.activeInHierarchy)
+                _enemyAgent.ResetPath();
+
             Animator.SetTrigger(IsDead);
-            //Death();
+            alive = false;
+            enemyState = EnemyStates.Death;
         }
 
         void Death()
         {
-            if (gameObject.activeInHierarchy)
-                _enemyAgent.ResetPath();
+            StartCoroutine(DealyToPool());
+        }
 
-            _delayToPool -= Time.deltaTime;
-            if (_delayToPool <= 0)
-            {
-                EnemyManager.Instance.Pool(enemyType, this);
-            }
-
-            alive = false;
-            DeathAnimation();
+        IEnumerator DealyToPool()
+        {
+            yield return new WaitForSeconds(_delayToPool);
+            EnemyManager.Instance.Pool(enemyType, this);
         }
         #endregion
 
@@ -216,33 +236,48 @@ namespace Units.Types
         #endregion
 
         #region Attacking Player & Nexus
-
-        private void InstantiateProjectile(Transform target)
+        void AttackState()
         {
-            //Vector3 offset = new Vector3(0, 0, 5);
-            ProjectileManager.Instance.Create(projectileType,
-                new Projectile.Args((transform.position), projectileType,
-                target, projectileSpeed, projectileDamage, Vector3.zero));
-        }
-
-        private void Shoot()
-        {
-            if (Vector3.Distance(transform.position, _player.position) <= attackRange)
+            if (attack_SO) 
             {
-                InstantiateProjectile(_player);
+                _enemyAgent.isStopped = true;
+                attack_SO.Refresh(Animator);
             }
         }
 
-        private void OnCollisionEnter(Collision collision)
+        void GetReadyToAttack()
         {
-            if (!collision.gameObject.CompareTag("Nexus")) return;
-            GotShot(currentHp);
-            _delayToPool = 0;
-            NexusManager.Instance.DealDamage(EnemyDamageToNexus);
+            if (Vector3.Distance(transform.position, _objective.transform.position) <= attackRange)
+                enemyState = EnemyStates.Attacking;
+            else
+            {
+                _enemyAgent.isStopped = false;
+                enemyState = EnemyStates.Wander;
+            }
+        }
+
+        void OnCollisionEnter(Collision collision)
+        {
+            #region Deal damage to Nexus
+            if (collision.gameObject.CompareTag("Nexus"))
+            {
+                GotShot(currentHp);
+                _delayToPool = 0;
+                NexusManager.Instance.DealDamage(EnemyDamageToNexus);
+            }
+            #endregion
+
+            #region Deal damage to player
+            if (collision.gameObject.CompareTag("Player")) // needs to drag & drop sword object
+                ;// needs to call function from collision SO or not important
+            #endregion
         }
         #endregion
 
-        /*void WaypointsCheck()
+        #region Old targeting system
+        /*public Transform[] targets;
+        int waypointCounter = 0;
+        void WaypointsCheck()
         {
             if (Vector3.Distance(targets[waypointCounter].position, player.position) < 0.1f)
             {
@@ -256,6 +291,7 @@ namespace Units.Types
             //movement_SO.MoveToPoint(targets[waypointCounter].position);
             //rb.velocity = 20 * (targets[waypointCounter].position - player.position).normalized;
         }*/
+        #endregion
         #endregion
     }
 }

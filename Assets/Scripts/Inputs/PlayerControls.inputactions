@@ -158,8 +158,30 @@
                 },
                 {
                     "name": "",
+                    "id": "c761f5a5-4a8a-47fb-be9e-6e92e3a7e07b",
+                    "path": "<XRController>{RightHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BasicAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "6d436419-e1f8-464d-9a55-c4920beddf4a",
                     "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Ability1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "21b495f8-75f5-4749-9041-3f9430f37530",
+                    "path": "<XRController>{LeftHand}/primaryButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -180,6 +202,17 @@
                 },
                 {
                     "name": "",
+                    "id": "2a1dff67-fa1a-41bc-afb0-cabac4bce295",
+                    "path": "<XRController>{LeftHand}/secondaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Ability2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "99141acd-c412-43b0-aba0-887195cbd342",
                     "path": "<Keyboard>/r",
                     "interactions": "",
@@ -191,8 +224,30 @@
                 },
                 {
                     "name": "",
+                    "id": "a6d1d1e0-ec70-484f-8e81-7fafa958679e",
+                    "path": "<XRController>{RightHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Ability3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "820bedfe-e146-4384-b599-a2c6685a6643",
                     "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Ability4",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0249b571-1664-4bb5-b5fc-569f0b58a9f5",
+                    "path": "<XRController>{RightHand}/secondaryButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

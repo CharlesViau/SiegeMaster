@@ -21,9 +21,8 @@ public class Nexus : MonoBehaviour, IUpdatable, IPoolable, IHittable, ICreatable
 
     public void Refresh()
     {
-
-        //if (currentHP < 1) ;
-          //  Debug.Log("Game is over, nexus is destroyed");
+        /*if (currentHp < 1)
+            Debug.Log("Game is over, nexus is destroyed");*/
     }
 
     public void FixedRefresh()
@@ -33,7 +32,7 @@ public class Nexus : MonoBehaviour, IUpdatable, IPoolable, IHittable, ICreatable
 
     public void LateRefresh()
     {
-       
+
     }
 
     public void Pool()
