@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[CreateAssetMenu(fileName = "Sword", menuName = "ScriptableObjects/Attack/Without projectile")]
+
 public class Attack_SO : ScriptableObject
 {
     #region Fields
@@ -11,26 +11,28 @@ public class Attack_SO : ScriptableObject
     [SerializeField] protected string attackAnimState;
     [SerializeField] protected string movementAnimState;
     [SerializeField] protected float attackDamage;
+    [SerializeField] protected float cooldownTimer;
     #endregion
 
     #region Info from Attacker
     protected Vector3 ownerPos;
     protected Transform target;
-    protected float attackRange;
     #endregion
 
     #region Game Flow Control
     protected bool isAnimSetted;
+    protected float timer;
     #endregion
+
+    public float AttackDamage { get { return attackDamage; } }
     #endregion
 
     #region Methods
     #region Game Flow
-    public virtual void Init(Vector3 _ownerPos, Transform _target, float _attackRange)
+    public virtual void Init(Vector3 _ownerPos, Transform _target)
     {
         ownerPos = _ownerPos;
         target = _target;
-        attackRange = _attackRange;
         isAnimSetted = false;
     }
 
@@ -49,15 +51,11 @@ public class Attack_SO : ScriptableObject
     }
     #endregion
 
-    #region Cooldown
+    #region CoolDown
     protected virtual void AttackReset(Animator _anim)
     {
         if (isAnimSetted)
-        {
             _anim.ResetTrigger(attackAnimState);
-            _anim.SetTrigger(movementAnimState);
-        }
-        isAnimSetted = false;     
     }
     #endregion
     #endregion
