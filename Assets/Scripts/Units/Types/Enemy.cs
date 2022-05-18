@@ -23,7 +23,7 @@ namespace Units.Types
         public EnemyMovement_SO movement_SO;
         public TargetingSo targeting_SO;
         public Attack_SO attack_SO;
-        protected override Vector3 targetPosition
+        protected override Vector3 AimedPosition
         {
             get
             {
@@ -47,6 +47,7 @@ namespace Units.Types
         #region Attacking
         public float detectRange;
         public float attackRange;
+        public float projectileSpeed;
         const float EnemyDamageToNexus = 1;
         #endregion
 

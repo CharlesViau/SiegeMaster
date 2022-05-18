@@ -8,7 +8,7 @@ namespace Units.Interfaces
         public abstract Vector3 AimingDirection { get; }
         public abstract Vector3 TargetPosition{ get; }
         
-        public abstract Transform Target { get; set; }
+        public abstract Transform TargetTransform { get; set; }
         
     }
 }

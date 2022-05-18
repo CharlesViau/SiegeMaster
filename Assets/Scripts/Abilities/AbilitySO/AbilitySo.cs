@@ -1,7 +1,8 @@
 using System;
-using Abilities.AbilityState;
-using Abilities.TargetingSO;
+using Abilities.AbilityStates;
+using Abilities.TargetingStateSO;
 using General;
+using Managers;
 using Units.Interfaces;
 using Units.Types;
 using UnityEngine;
@@ -36,12 +37,15 @@ namespace Abilities.AbilitySO
 
         #endregion
 
+        public SpellUIType spellUIType;
+
         #region State Specifics and StateMachine
 
+/*
         [Header("State Machine Parameter")]
         [SerializeField]
         [Tooltip("If ability is a toggle or has a recast mechanic, put this true")]
-
+*/
         //State Machine
         private AbilityStateMachine _stateMachine;
 
@@ -58,28 +62,30 @@ namespace Abilities.AbilitySO
 
 
         //[Header("Targeting State")]
-        [Header("Channeling State")] public UnityEvent onChannelingEnter;
+        [Header("Channeling State")] public Action OnChannelingEnter;
         //[Header("Active State")]
-        
+
         public float activeTime;
         public int recastCharges;
 
         //Public events related to "Input" Handling
         public bool IsPress { get; private set; }
+        private bool IsSelected => Owner.AbilityHandler.SelectedAbility == this;
 
-        public Action OnPress;
-        public Action OnRelease;
+        public Action OnFirePress;
+        public Action OnFireRelease;
 
         protected Unit Owner;
 
         #region Targeting Stuff
 
         //Targeting
-        public TargetingSo targetingSo;
+        public AbilityTargetingStateSo targetingStateSo;
+        private AbilityTargetingStateSo _targetingStateSoClone;
         public Transform ShootingPosition => Owner.ShootingPosition;
         public Vector3 AimingDirection => Owner.AimingDirection;
         public Vector3 TargetPosition => Owner.TargetPosition;
-        public Transform Target { get; set; }
+        public Transform TargetTransform { get; set; }
 
         #endregion
 
@@ -87,16 +93,39 @@ namespace Abilities.AbilitySO
 
         #region Public Methods
 
+        public int guid;
         public virtual void Init(Unit owner)
         {
+            guid = UnityEngine.Random.Range(0, 9999);
+            //Init Properties and Variables
             Owner = owner;
+            
+            _targetingStateSoClone = Instantiate(targetingStateSo);
+            _targetingStateSoClone.Init(this);
+            _targetingStateSoClone.spellUIType = spellUIType;
+            
+            _stateMachine = new AbilityStateMachine(this, OnCast, OnActiveCast, ActiveStateRefresh, _targetingStateSoClone);
 
-            _stateMachine = new AbilityStateMachine(this, OnCast, OnActiveCast, ActiveStateRefresh);
+            //define Events
+            OnFirePress = () =>
+            {
+                IsPress = true;
+                if (_stateMachine.CurrentState as AbilityState is var state && state != null)
+                {
+                    state.OnFirePress?.Invoke();
+                }
+            };
 
-            //TODO : Invoke the Press Event of the current state!
-            OnPress = () => { IsPress = true; };
+            OnFireRelease = () =>
+            {
+                IsPress = false;
+                if (_stateMachine.CurrentState as AbilityState is var state && state != null)
+                {
+                    state.OnFireRelease?.Invoke();
+                }
+            };
 
-            OnRelease = () => { IsPress = false; };
+            IsPress = false;
         }
 
         public void Refresh()
@@ -118,7 +147,7 @@ namespace Abilities.AbilitySO
         private class AbilityStateMachine : StateMachine
         {
             #region Properties and Variables
-
+            
             //States
             private readonly AbilityReadyState _readyState;
             private readonly AbilityTargetingState _targetingState;
@@ -135,12 +164,13 @@ namespace Abilities.AbilitySO
 
             #endregion
 
-            public AbilityStateMachine(AbilitySo abilitySo, Action onCast, Action onActiveCast, Action activeStateRefresh)
+            public AbilityStateMachine(AbilitySo abilitySo, Action onCast, Action onActiveCast,
+                Action activeStateRefresh, AbilityTargetingStateSo targetingStateSo)
             {
                 #region State Creation (Bunch of "state = new state()")
 
                 _readyState = new AbilityReadyState(abilitySo);
-                _targetingState = new AbilityTargetingState(abilitySo);
+                _targetingState = new AbilityTargetingState(abilitySo, targetingStateSo);
                 _channelingState = new AbilityChannelingState(abilitySo);
                 _cooldownState = new AbilityCooldownState(abilitySo);
                 _activeState = new AbilityActiveState(abilitySo, onCast, onActiveCast, activeStateRefresh);
@@ -153,7 +183,7 @@ namespace Abilities.AbilitySO
                 AddTransition(_readyState, _targetingState, WasTrigger());
                 //Targeting
                 AddTransition(_targetingState, _channelingState, HasTarget());
-                //TODO: AddTransition(_targetingState, _readyState, () => ); // If spell cancel or switch spell before casting
+                AddTransition(_targetingState, _readyState,AbilityIsNotSelected());
                 //Channeling
                 AddTransition(_channelingState, _activeState, ChannelComplete());
                 AddTransition(_channelingState, _cooldownState, ChannelWasInterrupted());
@@ -168,7 +198,9 @@ namespace Abilities.AbilitySO
 
                 Func<bool> WasTrigger() => () => abilitySo.IsPress;
 
-                Func<bool> HasTarget() => () => abilitySo.Target != null;
+                Func<bool> HasTarget() => () => abilitySo.TargetTransform != null;
+
+                Func<bool> AbilityIsNotSelected() => () => !abilitySo.IsSelected;
 
                 Func<bool> ChannelComplete() => () => _channelingState.HasCompleted;
 
@@ -176,7 +208,9 @@ namespace Abilities.AbilitySO
 
                 Func<bool> CooldownIsOver() => () => _cooldownState.CooldownIsOver;
 
-                Func<bool> ActiveStateIsOver() => () => _activeState.HasNoRecastChargesLeft || _activeState.HasActiveTimer && _activeState.ActiveTimeRemainingIsOver;
+                Func<bool> ActiveStateIsOver() => () =>
+                    _activeState.HasNoRecastChargesLeft ||
+                    _activeState.HasActiveTimer && _activeState.ActiveTimeRemainingIsOver;
 
                 #endregion
 
@@ -184,7 +218,7 @@ namespace Abilities.AbilitySO
             }
         }
 
-        [System.Serializable]
+        [Serializable]
         public class AbilityStats
         {
             public string name;
@@ -195,7 +229,7 @@ namespace Abilities.AbilitySO
             public float baseCooldown;
         }
 
-        [System.Serializable]
+        [Serializable]
         public class Event : UnityEvent
         {
             public AnimationClip animationClipToPlay;

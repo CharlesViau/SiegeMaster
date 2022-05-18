@@ -7,11 +7,12 @@ namespace Abilities.TargetingSO
     {
         protected ITargetAcquirer Owner;
         protected float MaxRange;
-        public Transform TargetTransform { get; set; }
-
+        
+        public abstract Transform TargetTransform { get; }
+        
         public virtual void Init(ITargetAcquirer owner, float maxRange)
         {
-            this.Owner = owner;
+            Owner = owner;
             MaxRange = maxRange;
         }
 
