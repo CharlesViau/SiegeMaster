@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 03cd2cec76bb4174cad7c3234686f834, type: 2}
+  - {fileID: 2100000, guid: 650581fcacc5d844aa655ada8850e084, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -126,8 +126,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5637f44ad71d16b4eb0ec19a2564e95c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ownerIsPlayer: 0
   type: 0
-  behavior_SO: {fileID: 11400000, guid: fb8029befc7fa5844bda97bd6353c746, type: 2}
   movement_SO: {fileID: 11400000, guid: bfa8f950e95ce98448392833b44becfc, type: 2}
   onCollision_SO: {fileID: 11400000, guid: edb97fc1a3e4ef74b8c6a49ecfdeda81, type: 2}
   timeToPoolIfDidntHitAnything: 5
