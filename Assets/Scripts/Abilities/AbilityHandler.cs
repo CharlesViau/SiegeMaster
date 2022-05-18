@@ -63,11 +63,14 @@ namespace Abilities
 
         public void Refresh()
         {
+            if (SelectedAbility.IsOnCooldown) 
+                SelectedAbility =_basicAttackClone;
+            
+            _basicAttackClone.Refresh();
+            
             foreach (var ability in _abilitiesClone)
-            {
-                if (ability)
-                    ability.Refresh();
-            }
+                if (ability) ability.Refresh();
+            
         }
 
         public void FixedRefresh()
@@ -92,6 +95,7 @@ namespace Abilities
 
         private void OnAbilityReleaseEvent(int i)
         {
+            SelectedAbility.OnFireRelease?.Invoke();
         }
 
         private void OnAbilityPressEvent(int i)

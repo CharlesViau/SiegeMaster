@@ -69,7 +69,7 @@ namespace Abilities.AbilitySO
         public int recastCharges;
 
         //Public events related to "Input" Handling
-        public bool IsPress { get; private set; }
+        private bool IsPress { get; set; }
         private bool IsSelected => Owner.AbilityHandler.SelectedAbility == this;
 
         public Action OnFirePress;
