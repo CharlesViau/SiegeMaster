@@ -13,6 +13,7 @@ namespace Units.Types
         public float maxDistanceAiming;
         public float rayCastStartPointDistance;
         public float jumpHeight;
+      
         private CharacterController _characterController;
         
         public float groundDistance = 0.4f;
@@ -46,12 +47,13 @@ namespace Units.Types
         }
         public override void FixedRefresh()
         {
-            _gravityVelocity.y += Gravity;
+            _gravityVelocity.y += Gravity * Time.fixedDeltaTime;
             _characterController.Move((_gravityVelocity) * Time.fixedDeltaTime);
         }
         public override void Move(Vector3 direction)
         {
             _moveVelocity = (direction) * Time.fixedDeltaTime * speed;
+         //  Animator.SetFloat(_moveVelocity)
             _characterController.Move(_moveVelocity);
             _moveVelocity.y = 0;
         }
@@ -68,9 +70,7 @@ namespace Units.Types
             {
                _gravityVelocity.y = Mathf.Sqrt(jumpHeight*-2f * Gravity);
             }
-           
         }
-
         public override void Look()
         {
             playerRotationLook.forward = (AimedPosition - playerRotationLook.position).normalized;
