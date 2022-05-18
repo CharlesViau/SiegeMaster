@@ -9,9 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c92d84cd16e1686408d60f09454c0817, type: 3}
-  m_Name: Sword
+  m_Script: {fileID: 11500000, guid: aa77dd1f79d195e4689bb31db29cd001, type: 3}
+  m_Name: Melee
   m_EditorClassIdentifier: 
   attackAnimState: IsFight
   movementAnimState: IsMoving
   attackDamage: 1
+  cooldownTimer: 2
+  sword: {fileID: 1193726705093150061, guid: cb3afc74ce396b841b25e391ac10416f, type: 3}

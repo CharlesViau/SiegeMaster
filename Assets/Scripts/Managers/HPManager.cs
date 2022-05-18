@@ -10,6 +10,6 @@ namespace Managers
 
     public class HPManager : Manager<Hp, HPType, Hp.Args, HPManager>
     {
-        protected override string PrefabLocation => "Prefabs/UI/";    
+        protected override string PrefabLocation => "Prefabs/Canvas/Enemies UI/";    
     }
 }

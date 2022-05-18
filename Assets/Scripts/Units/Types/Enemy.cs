@@ -70,6 +70,10 @@ namespace Units.Types
         public override void Init()
         {
             base.Init();
+            _enemyAgent = GetComponent<NavMeshAgent>();
+            _player = PlayerUnitManager.Instance.GetTransform;
+            _objective = NexusManager.Instance.GetTransform;
+
             enemyState = EnemyStates.Wander;
             alive = true;
             _enemyAgent.speed = speed;
@@ -77,19 +81,14 @@ namespace Units.Types
             _fullHp = currentHp;
             _hpStack = new Stack<Hp>();
 
-            _enemyAgent = GetComponent<NavMeshAgent>();
-            _player = PlayerUnitManager.Instance.GetTransform;
-            _objective = NexusManager.Instance.GetTransform;
-            
             movement_SO = Instantiate(movement_SO);
             targeting_SO = Instantiate(targeting_SO);
-
             movement_SO.Init(gameObject, _objective, speed);
             targeting_SO.Init(gameObject, detectRange);
             if (attack_SO)
             {
                 Instantiate(attack_SO);
-                attack_SO.Init(ShootingPosition.position, _objective, attackRange);
+                attack_SO.Init(ShootingPosition.position, _objective);
             }
         }
 
@@ -104,7 +103,7 @@ namespace Units.Types
 
             switch (enemyState)
             {
-                case EnemyStates.Wander:                    
+                case EnemyStates.Wander:
                     Move(targeting_SO.GetTheTarget().position);
                     //FacingUIToPlayer();
                     GetReadyToAttack();
@@ -237,7 +236,7 @@ namespace Units.Types
         #region Attacking Player & Nexus
         void AttackState()
         {
-            if (attack_SO) 
+            if (attack_SO)
             {
                 _enemyAgent.isStopped = true;
                 attack_SO.Refresh(Animator);
@@ -258,17 +257,10 @@ namespace Units.Types
         void OnCollisionEnter(Collision collision)
         {
             #region Deal damage to Nexus
-            if (collision.gameObject.CompareTag("Nexus"))
-            {
-                GotShot(currentHp);
-                _delayToPool = 0;
-                NexusManager.Instance.DealDamage(EnemyDamageToNexus);
-            }
-            #endregion
-
-            #region Deal damage to player
-            if (collision.gameObject.CompareTag("Player")) // needs to drag & drop sword object
-                ;// needs to call function from collision SO or not important
+            if (!collision.gameObject.CompareTag("Nexus")) return;
+            GotShot(currentHp);
+            _delayToPool = 0;
+            NexusManager.Instance.DealDamage(EnemyDamageToNexus);
             #endregion
         }
         #endregion
