@@ -39,12 +39,12 @@ namespace Units.Types
             TryGetComponent<Rigidbody>(out Rigidbody);
             Animator = GetComponent<Animator>();
             AbilityHandler = GetComponent<AbilityHandler>();
+            AbilityHandler.Init();
             
         }
 
         public virtual void PostInit()
         {
-            AbilityHandler.Init();
             AbilityHandler.PostInit();
         }
 

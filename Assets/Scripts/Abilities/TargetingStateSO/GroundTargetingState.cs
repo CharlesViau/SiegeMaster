@@ -11,12 +11,14 @@ namespace Abilities.TargetingStateSO
 
         public override void Refresh()
         {
-            targetingSo.Refresh();
-            _spellUI.transform.position = targetingSo.TargetTransform.position;
+            TargetingSoClone.Refresh();
+            _spellUI.transform.position = TargetingSoClone.TargetTransform.position;
         }
 
         public override void OnEnter()
         {
+            TargetingSoClone.TargetTransform.position = AbilitySo.TargetPosition;
+            
             if (spellUIType != SpellUIType.None)
                 _spellUI = SpellUIManager.Instance.Create(spellUIType, new SpellUI.Args(AbilitySo.TargetPosition));
         }
@@ -29,7 +31,7 @@ namespace Abilities.TargetingStateSO
 
         protected override void OnFirePressEvent()
         {
-            AbilitySo.TargetTransform = targetingSo.TargetTransform;
+            AbilitySo.TargetTransform = TargetingSoClone.TargetTransform;
         }
 
         protected override void OnFireReleaseEvent()

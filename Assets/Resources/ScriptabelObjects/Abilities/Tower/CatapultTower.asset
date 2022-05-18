@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b35cd404587482b9443842bea788a19, type: 3}
-  m_Name: TowerAbility
+  m_Name: CatapultTower
   m_EditorClassIdentifier: 
   stats:
     name: 
@@ -25,4 +25,3 @@ MonoBehaviour:
   recastCharges: 0
   targetingStateSo: {fileID: 0}
   towerType: 0
-  spellUI: 0

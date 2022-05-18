@@ -14,15 +14,19 @@ namespace Abilities
         [Header("Attack and Abilities")] [SerializeField]
         private AbilitySo basicAttack;
 
+        private AbilitySo _basicAttackClone;
+
         [SerializeField] private AbilitySo[] abilities = new AbilitySo[NumberOfAbility];
+        private readonly AbilitySo[] _abilitiesClone = new AbilitySo[NumberOfAbility];
+        
+        [SerializeField] private AbilitySo[] towers = new AbilitySo[NumberOfAbility];
+        private readonly AbilitySo[] _towersClone = new AbilitySo[NumberOfAbility];
 
 
-        private AbilitySo _currentAbility;
+        public AbilitySo SelectedAbility { get; private set; }
+        private bool _inBuildingMode;
 
-        private bool IsChanneling => _currentAbility.IsChanneling;
-        private bool IsPress => _currentAbility.IsPress;
-        private bool IsReadyToCast => _currentAbility.IsReadyToCast;
-
+        //Events
         public Action<int> OnAbilityPress;
         public Action<int> OnAbilityRelease;
         public Action OnAttackPress;
@@ -30,63 +34,82 @@ namespace Abilities
         public void Init()
         {
             _owner = GetComponent<Unit>();
-            
+
             //Init Events
             OnAbilityPress = OnAbilityPressEvent;
             OnAbilityRelease = OnAbilityReleaseEvent;
             OnAttackPress = OnFirePressEvent;
-            
-            foreach (var ability in abilities)
+
+            //Abilities
+            for (var i = 0; i < NumberOfAbility; i++)
             {
-                if (!ability) continue;
-                Instantiate(ability);
-                ability.Init(_owner);
+                if (!abilities[i]) continue;
+                _abilitiesClone[i] = Instantiate(abilities[i]);
+                _abilitiesClone[i].Init(_owner);
             }
 
+
+            if (basicAttack == null) return;
+            _basicAttackClone = Instantiate(basicAttack);
+            _basicAttackClone.Init(_owner);
+
+            //Towers
         }
-        
+
         public void PostInit()
         {
-            _currentAbility = basicAttack;
+            SelectedAbility = _basicAttackClone;
         }
 
         public void Refresh()
         {
-            foreach (var ability in abilities)
+            foreach (var ability in _abilitiesClone)
             {
-                if(ability) ability.Refresh();
+                if (ability)
+                    ability.Refresh();
             }
         }
 
         public void FixedRefresh()
         {
-            
         }
 
         public void LateRefresh()
         {
-          
-            
         }
-        
+
+        public void ToggleBuildingMode()
+        {
+            _inBuildingMode = !_inBuildingMode;
+        }
+
         #region Private Methods
+
         private void OnFirePressEvent()
         {
-            _currentAbility.OnFirePress?.Invoke();
+            SelectedAbility.OnFirePress?.Invoke();
         }
-        
+
         private void OnAbilityReleaseEvent(int i)
         {
-            
         }
 
         private void OnAbilityPressEvent(int i)
         {
-            if (IsChanneling || !abilities[i].IsReadyToCast) return;
-            _currentAbility = abilities[i];
-            abilities[i].OnFirePress?.Invoke();
+            if (_abilitiesClone[i] is null || SelectedAbility.IsChanneling) return;
+
+            if (!_inBuildingMode)
+            {
+                SelectedAbility = _abilitiesClone[i];
+                _abilitiesClone[i].OnFirePress?.Invoke();
+            }
+            else
+            {
+                SelectedAbility = towers[i];
+                towers[i].OnFirePress?.Invoke();
+            }
         }
-        
+
         #endregion
     }
 }

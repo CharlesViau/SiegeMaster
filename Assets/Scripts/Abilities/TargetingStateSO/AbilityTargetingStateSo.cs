@@ -9,7 +9,8 @@ namespace Abilities.TargetingStateSO
 {
     public abstract class AbilityTargetingStateSo : ScriptableObject
     {
-        public TargetingSo targetingSo;
+        [SerializeField]private TargetingSo targetingSo;
+        protected TargetingSo TargetingSoClone;
         protected AbilitySo AbilitySo;
         [HideInInspector] public SpellUIType spellUIType;
 
@@ -22,8 +23,8 @@ namespace Abilities.TargetingStateSO
             OnFirePress = OnFirePressEvent;
             OnFireRelease = OnFireReleaseEvent;
 
-            Instantiate(targetingSo);
-            targetingSo.Init(abilitySo, abilitySo.stats.maxRange);
+            TargetingSoClone = Instantiate(targetingSo);
+            TargetingSoClone.Init(abilitySo, abilitySo.stats.maxRange);
         }
 
         public abstract void Refresh();

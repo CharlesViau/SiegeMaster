@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Abilities.AbilitySO;
+using UnityEngine;
 
 
 namespace General

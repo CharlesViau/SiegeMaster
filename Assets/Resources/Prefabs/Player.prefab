@@ -316,9 +316,9 @@ MonoBehaviour:
   basicAttack: {fileID: 0}
   abilities:
   - {fileID: 11400000, guid: dc0639331159711468e515e4f1424d68, type: 2}
-  - {fileID: 11400000, guid: dc0639331159711468e515e4f1424d68, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 81774bb3e0cff8e4a9536ba099868fe3, type: 2}
+  - {fileID: 11400000, guid: 96b53eda64d7d164b82f526ffc8d118b, type: 2}
+  - {fileID: 11400000, guid: d18c7b6aab1adff499c1b1f87bdbc85a, type: 2}
 --- !u!143 &1862070886049339
 CharacterController:
   m_ObjectHideFlags: 0

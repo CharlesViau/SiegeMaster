@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Abilities.AbilityStates
 {
-    public class AbilityCooldownState : AbilityStates.AbilityState
+    public class AbilityCooldownState : AbilityState
     {
         private float _cooldownTimeLeft;
 

@@ -38,6 +38,7 @@ namespace Abilities.AbilitySO
         #endregion
 
         public SpellUIType spellUIType;
+
         #region State Specifics and StateMachine
 
 /*
@@ -69,6 +70,7 @@ namespace Abilities.AbilitySO
 
         //Public events related to "Input" Handling
         public bool IsPress { get; private set; }
+        private bool IsSelected => Owner.AbilityHandler.SelectedAbility == this;
 
         public Action OnFirePress;
         public Action OnFireRelease;
@@ -79,6 +81,7 @@ namespace Abilities.AbilitySO
 
         //Targeting
         public AbilityTargetingStateSo targetingStateSo;
+        private AbilityTargetingStateSo _targetingStateSoClone;
         public Transform ShootingPosition => Owner.ShootingPosition;
         public Vector3 AimingDirection => Owner.AimingDirection;
         public Vector3 TargetPosition => Owner.TargetPosition;
@@ -90,11 +93,18 @@ namespace Abilities.AbilitySO
 
         #region Public Methods
 
+        public int guid;
         public virtual void Init(Unit owner)
         {
+            guid = UnityEngine.Random.Range(0, 9999);
             //Init Properties and Variables
             Owner = owner;
-            _stateMachine = new AbilityStateMachine(this, OnCast, OnActiveCast, ActiveStateRefresh, targetingStateSo);
+            
+            _targetingStateSoClone = Instantiate(targetingStateSo);
+            _targetingStateSoClone.Init(this);
+            _targetingStateSoClone.spellUIType = spellUIType;
+            
+            _stateMachine = new AbilityStateMachine(this, OnCast, OnActiveCast, ActiveStateRefresh, _targetingStateSoClone);
 
             //define Events
             OnFirePress = () =>
@@ -115,9 +125,7 @@ namespace Abilities.AbilitySO
                 }
             };
 
-            Instantiate(targetingStateSo);
-            targetingStateSo.Init(this);
-            targetingStateSo.spellUIType = spellUIType;
+            IsPress = false;
         }
 
         public void Refresh()
@@ -139,7 +147,7 @@ namespace Abilities.AbilitySO
         private class AbilityStateMachine : StateMachine
         {
             #region Properties and Variables
-
+            
             //States
             private readonly AbilityReadyState _readyState;
             private readonly AbilityTargetingState _targetingState;
@@ -175,7 +183,7 @@ namespace Abilities.AbilitySO
                 AddTransition(_readyState, _targetingState, WasTrigger());
                 //Targeting
                 AddTransition(_targetingState, _channelingState, HasTarget());
-                //TODO: AddTransition(_targetingState, _readyState, () => ); // If spell cancel or switch spell before casting
+                AddTransition(_targetingState, _readyState,AbilityIsNotSelected());
                 //Channeling
                 AddTransition(_channelingState, _activeState, ChannelComplete());
                 AddTransition(_channelingState, _cooldownState, ChannelWasInterrupted());
@@ -191,6 +199,8 @@ namespace Abilities.AbilitySO
                 Func<bool> WasTrigger() => () => abilitySo.IsPress;
 
                 Func<bool> HasTarget() => () => abilitySo.TargetTransform != null;
+
+                Func<bool> AbilityIsNotSelected() => () => !abilitySo.IsSelected;
 
                 Func<bool> ChannelComplete() => () => _channelingState.HasCompleted;
 
