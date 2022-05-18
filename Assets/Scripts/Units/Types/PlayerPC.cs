@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Units.Types
 {
 
-    public class PlayerPC : PlayerUnit, ICameraController
+    public class PlayerPC : PlayerUnit
     {
         private CameraRaycast _cameraRayCast;
         
@@ -21,12 +21,11 @@ namespace Units.Types
 
 
         private Vector3 _moveVelocity;
-        private Vector3 _gravityvelocity;
+        private Vector3 _gravityVelocity;
 
         private bool _isGrounded;
-        private Vector3 HitPoint { get; set; }
+        protected override Vector3 AimedPosition => _cameraRayCast.RayCast(maxDistanceAiming, rayCastStartPointDistance);
         private const float Gravity = -20f;
-        protected override Vector3 targetPosition => HitPoint;
 
         public override void Init()
         {
@@ -39,16 +38,16 @@ namespace Units.Types
         {
             base.Refresh();
             _isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundLayer);
-            if (_isGrounded && _gravityvelocity.y<0)
+            if (_isGrounded && _gravityVelocity.y<0)
             {
-                _gravityvelocity.y = -2f;
+                _gravityVelocity.y = -2f;
             }
             
         }
         public override void FixedRefresh()
         {
-            _gravityvelocity.y += Gravity;
-            _characterController.Move((_gravityvelocity) * Time.fixedDeltaTime);
+            _gravityVelocity.y += Gravity;
+            _characterController.Move((_gravityVelocity) * Time.fixedDeltaTime);
         }
         public override void Move(Vector3 direction)
         {
@@ -67,14 +66,14 @@ namespace Units.Types
         {
             if (_isGrounded)
             {
-               _gravityvelocity.y = Mathf.Sqrt(jumpHeight*-2f * Gravity);
+               _gravityVelocity.y = Mathf.Sqrt(jumpHeight*-2f * Gravity);
             }
            
         }
+
         public override void Look()
         {
-            HitPoint = _cameraRayCast.RayCast(maxDistanceAiming, rayCastStartPointDistance);
-            playerRotationLook.forward = (HitPoint - playerRotationLook.position).normalized;
+            playerRotationLook.forward = (AimedPosition - playerRotationLook.position).normalized;
             
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, playerRotationLook.transform.eulerAngles.y, 0), turningSpeed*Time.fixedDeltaTime);
 
