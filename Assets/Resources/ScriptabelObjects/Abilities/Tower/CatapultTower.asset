@@ -20,8 +20,9 @@ MonoBehaviour:
     baseCooldown: 0
   castMethod: 0
   castMethodIsLock: 0
-  spellUIType: 0
+  spellUIType: 4
   activeTime: 0
   recastCharges: 0
-  targetingStateSo: {fileID: 0}
-  towerType: 0
+  targetingStateSo: {fileID: 11400000, guid: 42321570041424145b976077f64cf828, type: 2}
+  guid: 0
+  towerType: 1
