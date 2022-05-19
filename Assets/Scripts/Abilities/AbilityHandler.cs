@@ -18,7 +18,7 @@ namespace Abilities
 
         [SerializeField] private AbilitySo[] abilities = new AbilitySo[NumberOfAbility];
         private readonly AbilitySo[] _abilitiesClone = new AbilitySo[NumberOfAbility];
-        
+
         [SerializeField] private AbilitySo[] towers = new AbilitySo[NumberOfAbility];
         private readonly AbilitySo[] _towersClone = new AbilitySo[NumberOfAbility];
 
@@ -58,19 +58,22 @@ namespace Abilities
 
         public void PostInit()
         {
-            SelectedAbility = _basicAttackClone;
+            if (basicAttack)
+                SelectedAbility = _basicAttackClone;
         }
 
         public void Refresh()
         {
-            if (SelectedAbility.IsOnCooldown) 
-                SelectedAbility =_basicAttackClone;
-            
-            _basicAttackClone.Refresh();
-            
+            if (SelectedAbility && SelectedAbility.IsOnCooldown && SelectedAbility != _basicAttackClone &&
+                basicAttack != null)
+                SelectedAbility = _basicAttackClone;
+
+            if (basicAttack)
+                _basicAttackClone.Refresh();
+
             foreach (var ability in _abilitiesClone)
-                if (ability) ability.Refresh();
-            
+                if (ability)
+                    ability.Refresh();
         }
 
         public void FixedRefresh()
@@ -90,27 +93,29 @@ namespace Abilities
 
         private void OnFirePressEvent()
         {
-            SelectedAbility.OnFirePress?.Invoke();
+            if (SelectedAbility)
+                SelectedAbility.OnFirePress?.Invoke();
         }
 
         private void OnAbilityReleaseEvent(int i)
         {
-            SelectedAbility.OnFireRelease?.Invoke();
+            if (abilities[i] is null) return;
+           _abilitiesClone[i].OnFireRelease?.Invoke();
         }
 
         private void OnAbilityPressEvent(int i)
         {
-            if (_abilitiesClone[i] is null || SelectedAbility.IsChanneling) return;
+            if (_abilitiesClone[i] is null || SelectedAbility && SelectedAbility.IsChanneling) return;
 
             if (!_inBuildingMode)
             {
                 SelectedAbility = _abilitiesClone[i];
-                _abilitiesClone[i].OnFirePress?.Invoke();
+                SelectedAbility.OnFirePress?.Invoke();
             }
             else
             {
-                SelectedAbility = towers[i];
-                towers[i].OnFirePress?.Invoke();
+                SelectedAbility = _towersClone[i];
+                SelectedAbility.OnFirePress?.Invoke();
             }
         }
 
