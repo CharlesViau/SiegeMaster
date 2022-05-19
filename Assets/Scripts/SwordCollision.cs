@@ -7,13 +7,14 @@ public class SwordCollision : MonoBehaviour
 {
     PlayerUnit player;
     Attack_SO damage;
-    public bool isCollide;
+    [HideInInspector] public bool isCollide;
     
     private void Start()
     {
         player = FindObjectOfType<PlayerUnit>();
         damage = GetComponentInParent<Enemy>().attack_SO;
         isCollide = false;
+        Debug.Log("Damage: " + damage.AttackDamage);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -22,7 +23,7 @@ public class SwordCollision : MonoBehaviour
         {
             player.GotShot(damage.AttackDamage);
             isCollide = true;
-        }
-        Debug.Log("Damage: "+ damage.AttackDamage);
+           
+        }        
     }
 }

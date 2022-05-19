@@ -20,7 +20,7 @@ public class ProjectileAttack_SO : Attack_SO
 
     #region Methods
     #region Game Flow
-    public override void Init(Vector3 _ownerPos, Transform _target)
+    public override void Init(Transform _ownerPos, Transform _target)
     {
         base.Init(_ownerPos, _target);        
         attackState = AttackStates.Shoot;
@@ -49,13 +49,14 @@ public class ProjectileAttack_SO : Attack_SO
     protected override void Attack(Animator _anim)
     {        
         base.Attack(_anim);
+        
         InstantiateAProjectile();
     }
 
     void InstantiateAProjectile()
     {
         ProjectileManager.Instance.Create(projectileType,
-            new Projectile.Args(ownerPos, projectileType,
+            new Projectile.Args(ownerPos.position, projectileType,
             target, projectileSpeed, attackDamage, Vector3.zero, false));
 
         attackState = AttackStates.OnShootReset;

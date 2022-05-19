@@ -11,7 +11,7 @@ public class MeleeAttack_SO : Attack_SO
     SwordCollision script;
     [SerializeField] GameObject sword;
 
-    public override void Init(Vector3 _ownerPos, Transform _target)
+    public override void Init(Transform _ownerPos, Transform _target)
     {
         base.Init(_ownerPos, _target);
         meleeState = MeleeStates.CollisionOn;

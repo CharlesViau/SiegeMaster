@@ -330,6 +330,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  towers:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &5129017198868165810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,6 +357,7 @@ MonoBehaviour:
   alive: 0
   detectRange: 50
   attackRange: 100
+  projectileSpeed: 0
   canvasParent: {fileID: 5583393310480434975}
   hpInPoolParent: {fileID: 8020514184768218357}
   currentHp: 5
@@ -2338,7 +2344,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7917766537380780102}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.3, z: 0.5}
+  m_LocalPosition: {x: 0, y: 1.529, z: 0.757}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2007242801968439255}
@@ -2645,13 +2651,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9049833101619211866}
-  m_LocalRotation: {x: 0.019017082, y: -0.07707383, z: -0.23893847, w: 0.9677843}
+  m_LocalRotation: {x: 0.12718561, y: 0.27715832, z: 0.39720836, w: 0.8655822}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7581074797744853286}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -0.001, y: -9.106, z: -27.737}
+  m_LocalEulerAnglesHint: {x: 0, y: 35.51, z: 49.3}
 --- !u!136 &1078087626477259822
 CapsuleCollider:
   m_ObjectHideFlags: 0

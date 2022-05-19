@@ -15,7 +15,7 @@ public class Attack_SO : ScriptableObject
     #endregion
 
     #region Info from Attacker
-    protected Vector3 ownerPos;
+    protected Transform ownerPos;
     protected Transform target;
     #endregion
 
@@ -29,7 +29,7 @@ public class Attack_SO : ScriptableObject
 
     #region Methods
     #region Game Flow
-    public virtual void Init(Vector3 _ownerPos, Transform _target)
+    public virtual void Init(Transform _ownerPos, Transform _target)
     {
         ownerPos = _ownerPos;
         target = _target;

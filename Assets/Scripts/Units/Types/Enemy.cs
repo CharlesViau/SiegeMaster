@@ -47,7 +47,6 @@ namespace Units.Types
         #region Attacking
         public float detectRange;
         public float attackRange;
-        public float projectileSpeed;
         const float EnemyDamageToNexus = 1;
         #endregion
 
@@ -88,8 +87,8 @@ namespace Units.Types
             targeting_SO.Init(gameObject, detectRange);
             if (attack_SO)
             {
-                Instantiate(attack_SO);
-                attack_SO.Init(ShootingPosition.position, _objective);
+                attack_SO = Instantiate(attack_SO);
+                attack_SO.Init(ShootingPosition, _objective);
             }
         }
 
@@ -100,7 +99,7 @@ namespace Units.Types
 
         public override void Refresh()
         {
-            base.Refresh();
+            //base.Refresh();
 
             switch (enemyState)
             {
@@ -240,6 +239,14 @@ namespace Units.Types
             if (attack_SO)
             {
                 _enemyAgent.isStopped = true;
+                Vector3 dir = (_objective.position - transform.position).normalized;
+
+                transform.forward = dir;
+                Vector3 rot = transform.eulerAngles;
+                rot.x = 0;
+                rot.z = 0;
+                transform.eulerAngles = rot;
+
                 attack_SO.Refresh(Animator);
             }
         }
