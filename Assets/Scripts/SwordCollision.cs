@@ -5,16 +5,18 @@ using Units.Types;
 
 public class SwordCollision : MonoBehaviour
 {
+    #region Fields
     PlayerUnit player;
     Attack_SO damage;
     [HideInInspector] public bool isCollide;
-    
+    #endregion
+
+    #region Methods
     private void Start()
     {
         player = FindObjectOfType<PlayerUnit>();
         damage = GetComponentInParent<Enemy>().attack_SO;
-        isCollide = false;
-        Debug.Log("Damage: " + damage.AttackDamage);
+        isCollide = false;        
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -22,8 +24,8 @@ public class SwordCollision : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             player.GotShot(damage.AttackDamage);
-            isCollide = true;
-           
+            isCollide = true;           
         }        
     }
+    #endregion
 }

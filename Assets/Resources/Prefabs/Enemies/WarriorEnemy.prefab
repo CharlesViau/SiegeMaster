@@ -356,8 +356,7 @@ MonoBehaviour:
   attack_SO: {fileID: 11400000, guid: 87adb54cd3a5a7243b75c8be3459db9e, type: 2}
   alive: 0
   detectRange: 50
-  attackRange: 100
-  projectileSpeed: 0
+  attackRange: 10
   canvasParent: {fileID: 5583393310480434975}
   hpInPoolParent: {fileID: 8020514184768218357}
   currentHp: 5

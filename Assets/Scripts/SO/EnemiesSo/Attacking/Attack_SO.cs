@@ -12,6 +12,7 @@ public class Attack_SO : ScriptableObject
     [SerializeField] protected string movementAnimState;
     [SerializeField] protected float attackDamage;
     [SerializeField] protected float cooldownTimer;
+    public float AttackDamage { get { return attackDamage; } }
     #endregion
 
     #region Info from Attacker
@@ -24,7 +25,6 @@ public class Attack_SO : ScriptableObject
     protected float timer;
     #endregion
 
-    public float AttackDamage { get { return attackDamage; } }
     #endregion
 
     #region Methods

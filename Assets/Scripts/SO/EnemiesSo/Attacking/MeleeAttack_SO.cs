@@ -7,10 +7,14 @@ enum MeleeStates { CollisionOn, CollisionOff }
 [CreateAssetMenu(fileName = "Melee", menuName = "ScriptableObjects/Attack/Melee Attack")]
 public class MeleeAttack_SO : Attack_SO
 {
+    #region Fields
     MeleeStates meleeState;
     SwordCollision script;
     [SerializeField] GameObject sword;
+    #endregion
 
+    #region Methods
+    #region Game flow
     public override void Init(Transform _ownerPos, Transform _target)
     {
         base.Init(_ownerPos, _target);
@@ -33,22 +37,13 @@ public class MeleeAttack_SO : Attack_SO
                 break;
         }
     }
+    #endregion
 
+    #region Attack
     protected override void Attack(Animator _anim)
     {
         base.Attack(_anim);
         IsCollide();
-    }
-
-    protected override void AttackReset(Animator _anim)
-    {
-        base.AttackReset(_anim);
-        timer += Time.deltaTime;
-        isAnimSetted = false;
-        script.enabled = true;
-
-        if (timer > cooldownTimer)
-            meleeState = MeleeStates.CollisionOn;
     }
 
     void IsCollide()
@@ -59,4 +54,19 @@ public class MeleeAttack_SO : Attack_SO
             meleeState = MeleeStates.CollisionOff;
         }
     }
+    #endregion
+
+    #region Cooldown
+    protected override void AttackReset(Animator _anim)
+    {
+        base.AttackReset(_anim);
+        timer += Time.deltaTime;
+        isAnimSetted = false;
+        script.enabled = true;
+
+        if (timer > cooldownTimer)
+            meleeState = MeleeStates.CollisionOn;
+    }
+    #endregion
+    #endregion
 }
