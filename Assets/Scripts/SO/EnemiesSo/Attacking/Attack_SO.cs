@@ -18,6 +18,7 @@ public class Attack_SO : ScriptableObject
     #region Info from Attacker
     protected Transform ownerPos;
     protected Transform target;
+    protected NavMeshAgent ownerNavMesh;
     #endregion
 
     #region Game Flow Control
@@ -29,8 +30,9 @@ public class Attack_SO : ScriptableObject
 
     #region Methods
     #region Game Flow
-    public virtual void Init(Transform _ownerPos, Transform _target)
+    public virtual void Init(NavMeshAgent _ownerNavMesh, Transform _ownerPos, Transform _target)
     {
+        ownerNavMesh = _ownerNavMesh;
         ownerPos = _ownerPos;
         target = _target;
         isAnimSetted = false;

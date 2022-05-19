@@ -88,7 +88,7 @@ namespace Units.Types
             if (attack_SO)
             {
                 attack_SO = Instantiate(attack_SO);
-                attack_SO.Init(ShootingPosition, _player);
+                attack_SO.Init(_enemyAgent, ShootingPosition, _player);
             }
         }
 
@@ -235,8 +235,7 @@ namespace Units.Types
         void AttackState()
         {
             if (attack_SO)
-            {
-                _enemyAgent.isStopped = true;
+            {                
                 Vector3 dir = (_objective.position - transform.position).normalized;
 
                 transform.forward = dir;

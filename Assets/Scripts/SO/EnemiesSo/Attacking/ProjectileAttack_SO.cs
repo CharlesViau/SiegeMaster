@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 enum AttackStates { Shoot, Cooldown, ReadyToAttackChecking }
 
@@ -20,9 +21,10 @@ public class ProjectileAttack_SO : Attack_SO
 
     #region Methods
     #region Game Flow
-    public override void Init(Transform _ownerPos, Transform _target)
+    public override void Init(NavMeshAgent _ownerNavMesh, Transform _ownerPos, Transform _target)
     {
-        base.Init(_ownerPos, _target);        
+        base.Init(_ownerNavMesh, _ownerPos, _target);
+        ownerNavMesh.isStopped = true;
         attackState = AttackStates.Shoot;
     }
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 enum MeleeStates { CollisionOn, CollisionOff }
 
@@ -15,14 +16,14 @@ public class MeleeAttack_SO : Attack_SO
 
     #region Methods
     #region Game flow
-    public override void Init(Transform _ownerPos, Transform _target)
+    public override void Init(NavMeshAgent _ownerNavMesh, Transform _ownerPos, Transform _target)
     {
-        base.Init(_ownerPos, _target);
+        base.Init(_ownerNavMesh, _ownerPos, _target);
 
         sword = FindObjectOfType<SwordCollision>();
         swordCollider = sword.GetComponent<Collider>();
         sword.Init(attackDamage, target);
-        
+
         meleeState = MeleeStates.CollisionOn;
     }
 
@@ -33,6 +34,13 @@ public class MeleeAttack_SO : Attack_SO
         {
             case MeleeStates.CollisionOn:
                 Attack(_anim);
+                if (Vector3.Distance(ownerNavMesh.transform.position, target.position) < 5)
+                    ownerNavMesh.isStopped = true;
+                if (Vector3.Distance(ownerNavMesh.transform.position, target.position) > 5)
+                {
+                    ownerNavMesh.isStopped = false;
+                    //_anim.SetFloat("Speed", 0.2f);
+                }
                 break;
             case MeleeStates.CollisionOff:
                 Cooldown(_anim);
@@ -47,6 +55,8 @@ public class MeleeAttack_SO : Attack_SO
     protected override void Attack(Animator _anim)
     {
         base.Attack(_anim);
+
+
         if (swordCollider.enabled == false)
             meleeState = MeleeStates.CollisionOff;
     }
