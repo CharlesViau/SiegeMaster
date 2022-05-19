@@ -1625,11 +1625,10 @@ MonoBehaviour:
   enemyType: 1
   movement_SO: {fileID: 11400000, guid: 12c3ff3e48a540748aca02716d57c38d, type: 2}
   targeting_SO: {fileID: 11400000, guid: d9393c587e8531d4eb130a27c7f8eeb7, type: 2}
-  attack_SO: {fileID: 0}
+  attack_SO: {fileID: 11400000, guid: 87adb54cd3a5a7243b75c8be3459db9e, type: 2}
   alive: 0
   detectRange: 0
   attackRange: 0
-  projectileSpeed: 0
   canvasParent: {fileID: 7021727840524194907}
   hpInPoolParent: {fileID: 7566384886091024912}
   currentHp: 5
