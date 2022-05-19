@@ -7266,6 +7266,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player vr
       objectReference: {fileID: 0}
+    - target: {fileID: 6572562775045675076, guid: b477ffce807c0404ea474a9737777f5f, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 6572562775045675084, guid: b477ffce807c0404ea474a9737777f5f, type: 3}
       propertyPath: m_RootOrder
       value: 8

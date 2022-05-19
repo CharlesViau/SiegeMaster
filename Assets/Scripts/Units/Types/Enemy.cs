@@ -88,7 +88,7 @@ namespace Units.Types
             if (attack_SO)
             {
                 attack_SO = Instantiate(attack_SO);
-                attack_SO.Init(ShootingPosition, _objective);
+                attack_SO.Init(ShootingPosition, _player);
             }
         }
 

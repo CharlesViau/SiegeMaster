@@ -6,24 +6,29 @@ using Units.Types;
 public class SwordCollision : MonoBehaviour
 {
     #region Fields
-    PlayerUnit player;
-    Attack_SO damage;
+    PlayerUnit target;
+    float damage;
     [HideInInspector] public bool isCollide;
     #endregion
 
     #region Methods
-    private void Start()
+    public void Init(float _damage, Transform _target)
     {
-        player = FindObjectOfType<PlayerUnit>();
-        damage = GetComponentInParent<Enemy>().attack_SO;
+        damage = _damage;
+        target = _target.GetComponent<PlayerUnit>();
         isCollide = false;        
+    }
+
+    public void ToggleActive(bool setActive)
+    {
+        this.enabled = setActive;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Player")
         {
-            player.GotShot(damage.AttackDamage);
+            target.GotShot(damage);
             isCollide = true;           
         }        
     }
