@@ -100,12 +100,19 @@ namespace Abilities
         private void OnAbilityReleaseEvent(int i)
         {
             if (abilities[i] is null) return;
-           _abilitiesClone[i].OnFireRelease?.Invoke();
+            _abilitiesClone[i].OnFireRelease?.Invoke();
         }
 
         private void OnAbilityPressEvent(int i)
         {
             if (_abilitiesClone[i] is null || SelectedAbility && SelectedAbility.IsChanneling) return;
+
+            //Cancel Spell
+            if (_abilitiesClone[i] == SelectedAbility || _towersClone[i] == SelectedAbility)
+            {
+                SelectedAbility = _basicAttackClone;
+                return;
+            }
 
             if (!_inBuildingMode)
             {
