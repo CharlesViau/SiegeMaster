@@ -9,8 +9,7 @@ public class MeleeAttack_SO : Attack_SO
 {
     #region Fields
     MeleeStates meleeState;
-    SwordCollision script;
-    [SerializeField] GameObject sword;
+    SwordCollision sword;
     #endregion
 
     #region Methods
@@ -19,7 +18,6 @@ public class MeleeAttack_SO : Attack_SO
     {
         base.Init(_ownerPos, _target);
         meleeState = MeleeStates.CollisionOn;
-        script = sword.GetComponent<SwordCollision>();
     }
 
     public override void Refresh(Animator _anim)
@@ -43,14 +41,15 @@ public class MeleeAttack_SO : Attack_SO
     protected override void Attack(Animator _anim)
     {
         base.Attack(_anim);
+        sword.Init(attackDamage, target);
         IsCollide();
     }
 
     void IsCollide()
     {
-        if (script && script.isCollide)
+        if (sword && sword.isCollide)
         {
-            script.enabled = false;
+            sword.ToggleActive(false);
             meleeState = MeleeStates.CollisionOff;
         }
     }
@@ -62,7 +61,7 @@ public class MeleeAttack_SO : Attack_SO
         base.AttackReset(_anim);
         timer += Time.deltaTime;
         isAnimSetted = false;
-        script.enabled = true;
+        sword.ToggleActive(true);
 
         if (timer > cooldownTimer)
             meleeState = MeleeStates.CollisionOn;
