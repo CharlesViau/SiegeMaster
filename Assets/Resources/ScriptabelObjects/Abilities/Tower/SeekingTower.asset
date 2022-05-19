@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: SeekingTower
   m_EditorClassIdentifier: 
   stats:
-    name: 
     manaCost: 0
     maxRange: 200
     baseChannelTime: 0
@@ -24,5 +23,4 @@ MonoBehaviour:
   activeTime: 0
   recastCharges: 0
   targetingStateSo: {fileID: 11400000, guid: 42321570041424145b976077f64cf828, type: 2}
-  guid: 0
   towerType: 2

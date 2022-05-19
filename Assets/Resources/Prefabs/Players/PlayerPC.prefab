@@ -1718,12 +1718,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8d409f0e9950bc45b207514544f016a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  basicAttack: {fileID: 0}
+  basicAttack: {fileID: 11400000, guid: e505ed3a576d35d48908af2f31947f96, type: 2}
   abilities:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: dc0639331159711468e515e4f1424d68, type: 2}
+  - {fileID: 11400000, guid: 81774bb3e0cff8e4a9536ba099868fe3, type: 2}
+  - {fileID: 11400000, guid: 96b53eda64d7d164b82f526ffc8d118b, type: 2}
+  - {fileID: 11400000, guid: d18c7b6aab1adff499c1b1f87bdbc85a, type: 2}
   towers:
   - {fileID: 0}
   - {fileID: 0}
@@ -1743,7 +1743,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turningSpeed: 10
   speed: 10
-  shootingPosition: {fileID: 8947192532628187619}
+  shootingPosition: {fileID: 5925056181607034002}
   playerRotationLook: {fileID: 8947192532628187619}
   maxDistanceAiming: 100
   rayCastStartPointDistance: 5
