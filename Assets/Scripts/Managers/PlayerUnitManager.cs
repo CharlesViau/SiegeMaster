@@ -5,13 +5,13 @@ using UnityEngine;
 
 namespace Managers
 {
-    public class PlayerUnitManager : Manager<PlayerPC, PlayerUnitManager>
+    public class PlayerUnitManager : Manager<PlayerUnit, PlayerUnitManager>
     {
         Transform playerUnit;
         public Transform GetTransform { get { return playerUnit; } }
         public override void Init()
         {
-            foreach (var player in Object.FindObjectsOfType<PlayerPC>().ToList())
+            foreach (var player in Object.FindObjectsOfType<PlayerUnit>().ToList())
             {
                 Add(player);
                 playerUnit = player.transform;

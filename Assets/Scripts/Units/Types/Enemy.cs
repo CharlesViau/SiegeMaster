@@ -100,12 +100,11 @@ namespace Units.Types
         public override void Refresh()
         {
             //base.Refresh();
-
             switch (enemyState)
             {
                 case EnemyStates.Wander:
                     Move(targeting_SO.GetTheTarget().position);
-                    //FacingUIToPlayer();
+                    FacingUIToPlayer();
                     GetReadyToAttack();
                     break;
                 case EnemyStates.DeathAnimation:
@@ -217,7 +216,6 @@ namespace Units.Types
         #endregion
 
         #region HP & UI manage
-
         private void CreateHp(int numberOfHp)
         {
             for (int i = 0; i < numberOfHp; i++)

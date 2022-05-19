@@ -10,6 +10,7 @@ public class MeleeAttack_SO : Attack_SO
     #region Fields
     MeleeStates meleeState;
     SwordCollision sword;
+    Collider swordCollider;
     #endregion
 
     #region Methods
@@ -17,6 +18,11 @@ public class MeleeAttack_SO : Attack_SO
     public override void Init(Transform _ownerPos, Transform _target)
     {
         base.Init(_ownerPos, _target);
+
+        sword = FindObjectOfType<SwordCollision>();
+        swordCollider = sword.GetComponent<Collider>();
+        sword.Init(attackDamage, target);
+        
         meleeState = MeleeStates.CollisionOn;
     }
 
@@ -29,7 +35,7 @@ public class MeleeAttack_SO : Attack_SO
                 Attack(_anim);
                 break;
             case MeleeStates.CollisionOff:
-                AttackReset(_anim);
+                Cooldown(_anim);
                 break;
             default:
                 break;
@@ -41,30 +47,24 @@ public class MeleeAttack_SO : Attack_SO
     protected override void Attack(Animator _anim)
     {
         base.Attack(_anim);
-        sword.Init(attackDamage, target);
-        IsCollide();
-    }
-
-    void IsCollide()
-    {
-        if (sword && sword.isCollide)
-        {
-            sword.ToggleActive(false);
+        if (swordCollider.enabled == false)
             meleeState = MeleeStates.CollisionOff;
-        }
     }
     #endregion
 
     #region Cooldown
-    protected override void AttackReset(Animator _anim)
+    protected override void Cooldown(Animator _anim)
     {
-        base.AttackReset(_anim);
+        base.Cooldown(_anim);
         timer += Time.deltaTime;
         isAnimSetted = false;
-        sword.ToggleActive(true);
 
         if (timer > cooldownTimer)
+        {
+            timer = 0;
+            sword.ToggleColliderActive(true);
             meleeState = MeleeStates.CollisionOn;
+        }
     }
     #endregion
     #endregion

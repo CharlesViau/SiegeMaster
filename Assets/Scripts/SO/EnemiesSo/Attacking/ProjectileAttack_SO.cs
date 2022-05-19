@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-enum AttackStates { Shoot, OnShootReset, Cooldown }
+enum AttackStates { Shoot, Cooldown, ReadyToAttackChecking }
 
 [CreateAssetMenu(fileName = "Projectile", menuName = "ScriptableObjects/Attack/Projectile Attack")]
 public class ProjectileAttack_SO : Attack_SO
@@ -33,11 +33,11 @@ public class ProjectileAttack_SO : Attack_SO
             case AttackStates.Shoot:
                 Attack(_anim);
                 break;
-            case AttackStates.OnShootReset:
-                AttackReset(_anim);
-                break;
             case AttackStates.Cooldown:
                 Cooldown(_anim);
+                break;
+            case AttackStates.ReadyToAttackChecking:
+                ReadyToAttackChecking(_anim);
                 break;
             default:
                 break;
@@ -59,23 +59,23 @@ public class ProjectileAttack_SO : Attack_SO
             new Projectile.Args(ownerPos.position, projectileType,
             target, projectileSpeed, attackDamage, Vector3.zero, false));
 
-        attackState = AttackStates.OnShootReset;
+        attackState = AttackStates.Cooldown;
     }
     #endregion
 
     #region Cooldown
-    protected override void AttackReset(Animator _anim)
+    protected override void Cooldown(Animator _anim)
     {
         _anim.SetFloat("Speed", 0);
-        base.AttackReset(_anim);
+        base.Cooldown(_anim);
         if (isAnimSetted)
             _anim.SetTrigger(movementAnimState);
 
         isAnimSetted = false;
-        attackState = AttackStates.Cooldown;
+        attackState = AttackStates.ReadyToAttackChecking;
     }
 
-    void Cooldown(Animator _anim)
+    void ReadyToAttackChecking(Animator _anim)
     {        
         timer += Time.deltaTime;
         if (timer > cooldownTimer)

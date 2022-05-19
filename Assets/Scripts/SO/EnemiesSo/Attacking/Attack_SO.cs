@@ -52,7 +52,7 @@ public class Attack_SO : ScriptableObject
     #endregion
 
     #region CoolDown
-    protected virtual void AttackReset(Animator _anim)
+    protected virtual void Cooldown(Animator _anim)
     {
         if (isAnimSetted)
             _anim.ResetTrigger(attackAnimState);

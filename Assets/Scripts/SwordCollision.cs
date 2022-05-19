@@ -7,8 +7,8 @@ public class SwordCollision : MonoBehaviour
 {
     #region Fields
     PlayerUnit target;
+    Collider collider;
     float damage;
-    [HideInInspector] public bool isCollide;
     #endregion
 
     #region Methods
@@ -16,12 +16,12 @@ public class SwordCollision : MonoBehaviour
     {
         damage = _damage;
         target = _target.GetComponent<PlayerUnit>();
-        isCollide = false;        
+        collider = GetComponent<Collider>();
     }
 
-    public void ToggleActive(bool setActive)
+    public void ToggleColliderActive(bool setActive)
     {
-        this.enabled = setActive;
+        collider.enabled = setActive;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -29,8 +29,8 @@ public class SwordCollision : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             target.GotShot(damage);
-            isCollide = true;           
-        }        
+            ToggleColliderActive(false);
+        }
     }
     #endregion
 }

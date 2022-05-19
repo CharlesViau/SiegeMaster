@@ -16,4 +16,3 @@ MonoBehaviour:
   movementAnimState: IsMoving
   attackDamage: 1
   cooldownTimer: 2
-  sword: {fileID: 1193726705093150061, guid: cb3afc74ce396b841b25e391ac10416f, type: 3}
