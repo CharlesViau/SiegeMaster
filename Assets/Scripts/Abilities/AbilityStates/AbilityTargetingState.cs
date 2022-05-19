@@ -20,7 +20,6 @@ namespace Abilities.AbilityStates
 
         public override void OnEnter()
         {
-           
             AbilitySo.TargetTransform = null;
            _targetingStateSo.OnEnter();
         }
