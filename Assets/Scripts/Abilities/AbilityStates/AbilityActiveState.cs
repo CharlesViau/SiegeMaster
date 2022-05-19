@@ -51,7 +51,7 @@ namespace Abilities.AbilityStates
 
         protected override void OnFirePressAction()
         {
-           
+           _onActiveCast.Invoke();
         }
 
         protected override void OnFireReleaseAction()
