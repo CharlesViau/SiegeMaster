@@ -3,22 +3,23 @@ using UnityEngine;
 
 namespace Abilities.TargetingStateSO
 {
-    [CreateAssetMenu(fileName = "GroundTargeting",
-        menuName = "ScriptableObjects/Ability State/Targeting/Ground Targeting")]
-    public class GroundTargetingState : AbilityTargetingStateSo
+    [CreateAssetMenu(fileName = "LocationTargeting",
+        menuName = "ScriptableObjects/Ability State/Targeting/Location Targeting")]
+    public class LocationTargetingState : AbilityTargetingStateSo
     {
         private SpellUI _spellUI;
 
         public override void Refresh()
         {
             TargetingSoClone.Refresh();
-            _spellUI.transform.position = TargetingSoClone.TargetTransform.position;
+            if (_spellUI)
+                _spellUI.transform.position = TargetingSoClone.TargetTransform.position;
         }
 
         public override void OnEnter()
         {
             TargetingSoClone.TargetTransform.position = AbilitySo.TargetPosition;
-            
+
             if (spellUIType != SpellUIType.None)
                 _spellUI = SpellUIManager.Instance.Create(spellUIType, new SpellUI.Args(AbilitySo.TargetPosition));
         }

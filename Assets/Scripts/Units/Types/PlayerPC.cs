@@ -1,5 +1,3 @@
-using Inputs;
-using Units.Interfaces;
 using UnityEngine;
 
 namespace Units.Types
@@ -12,7 +10,6 @@ namespace Units.Types
         public Transform playerRotationLook;
         public float maxDistanceAiming;
         public float rayCastStartPointDistance;
-
         
         public float playerForce;
         public float maxSpeed;
@@ -24,17 +21,8 @@ namespace Units.Types
         public override void Init()
         {
             base.Init();
-            PlayerAnimation =GetComponent<PlayerAnimation>();
-            rb =GetComponent<Rigidbody>();
-             _cameraRayCast = FindObjectOfType<CameraRaycast>();
+            _cameraRayCast = FindObjectOfType<CameraRaycast>();
 
-        }
-        public override void Refresh()
-        {
-            base.Refresh();
-            
-         
-            
         }
         public override void FixedRefresh()
         {
@@ -43,16 +31,15 @@ namespace Units.Types
         public override void Move(Vector3 direction)
         {
            
-            rb.AddForce(direction* playerForce);
-            if (rb.velocity.magnitude >maxSpeed)
+            Rigidbody.AddForce(direction* playerForce);
+            if (Rigidbody.velocity.magnitude >maxSpeed)
             {
-                rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
+                Rigidbody.velocity = Vector3.ClampMagnitude(Rigidbody.velocity, maxSpeed);
             }
         }
         public void Rotate(Vector3 target)
         {
             transform.LookAt(target);
-
         }
 
 
