@@ -12,50 +12,37 @@ namespace Units.Types
         public Transform playerRotationLook;
         public float maxDistanceAiming;
         public float rayCastStartPointDistance;
-        public float jumpHeight;
-      
-        private CharacterController _characterController;
-        
-        public float groundDistance = 0.4f;
-        public LayerMask groundLayer;
-        public Transform groundCheck;
 
-
-        private Vector3 _moveVelocity;
-        private Vector3 _gravityVelocity;
-
-        private bool _isGrounded;
+        Rigidbody rb;
+        public float playerForce;
+        public float maxSpeed;
         protected override Vector3 AimedPosition => _cameraRayCast.RayCast(maxDistanceAiming, rayCastStartPointDistance);
-        private const float Gravity = -20f;
 
         public override void Init()
         {
             base.Init();
-            _cameraRayCast = FindObjectOfType<CameraRaycast>();
-            _characterController = GetComponent<CharacterController>();
+            rb =GetComponent<Rigidbody>();
+             _cameraRayCast = FindObjectOfType<CameraRaycast>();
 
         }
         public override void Refresh()
         {
             base.Refresh();
-            _isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundLayer);
-            if (_isGrounded && _gravityVelocity.y<0)
-            {
-                _gravityVelocity.y = -2f;
-            }
+         
             
         }
         public override void FixedRefresh()
         {
-            _gravityVelocity.y += Gravity * Time.fixedDeltaTime;
-            _characterController.Move((_gravityVelocity) * Time.fixedDeltaTime);
+            
         }
         public override void Move(Vector3 direction)
         {
-            _moveVelocity = (direction) * Time.fixedDeltaTime * speed;
-         //  Animator.SetFloat(_moveVelocity)
-            _characterController.Move(_moveVelocity);
-            _moveVelocity.y = 0;
+           
+            rb.AddForce(direction* playerForce);
+            if (rb.velocity.magnitude >maxSpeed)
+            {
+                rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
+            }
         }
         public void Rotate(Vector3 target)
         {
@@ -66,10 +53,7 @@ namespace Units.Types
 
         public override void Jump()
         {
-            if (_isGrounded)
-            {
-               _gravityVelocity.y = Mathf.Sqrt(jumpHeight*-2f * Gravity);
-            }
+            
         }
         public override void Look()
         {
