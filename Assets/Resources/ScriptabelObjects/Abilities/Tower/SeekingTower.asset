@@ -15,9 +15,9 @@ MonoBehaviour:
   stats:
     name: 
     manaCost: 0
-    maxRange: 0
+    maxRange: 200
     baseChannelTime: 0
-    baseCooldown: 0
+    baseCooldown: 1
   castMethod: 0
   castMethodIsLock: 0
   spellUIType: 5

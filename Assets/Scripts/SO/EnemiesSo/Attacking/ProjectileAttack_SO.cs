@@ -4,27 +4,25 @@ using UnityEngine;
 
 enum AttackStates { Shoot, OnShootReset, Cooldown }
 
-[CreateAssetMenu(fileName = "Projectile", menuName = "ScriptableObjects/Attack/WithProjectile")]
-public class AttackWithProjectile_SO : Attack_SO
+[CreateAssetMenu(fileName = "Projectile", menuName = "ScriptableObjects/Attack/Projectile Attack")]
+public class ProjectileAttack_SO : Attack_SO
 {
     #region Fields
     #region Set Projectile Type
     [SerializeField] ProjectileType projectileType;
     [SerializeField] float projectileSpeed;
-    [SerializeField] float cooldownTimer;
     #endregion
 
     #region Game Flow Control
     AttackStates attackState;
-    float timer;
     #endregion
     #endregion
 
     #region Methods
     #region Game Flow
-    public override void Init(Vector3 _ownerPos, Transform _target, float _attackRange)
+    public override void Init(Transform _ownerPos, Transform _target)
     {
-        base.Init(_ownerPos, _target, _attackRange);        
+        base.Init(_ownerPos, _target);        
         attackState = AttackStates.Shoot;
     }
 
@@ -51,13 +49,14 @@ public class AttackWithProjectile_SO : Attack_SO
     protected override void Attack(Animator _anim)
     {        
         base.Attack(_anim);
+        
         InstantiateAProjectile();
     }
 
     void InstantiateAProjectile()
     {
         ProjectileManager.Instance.Create(projectileType,
-            new Projectile.Args(ownerPos, projectileType,
+            new Projectile.Args(ownerPos.position, projectileType,
             target, projectileSpeed, attackDamage, Vector3.zero, false));
 
         attackState = AttackStates.OnShootReset;
@@ -69,6 +68,10 @@ public class AttackWithProjectile_SO : Attack_SO
     {
         _anim.SetFloat("Speed", 0);
         base.AttackReset(_anim);
+        if (isAnimSetted)
+            _anim.SetTrigger(movementAnimState);
+
+        isAnimSetted = false;
         attackState = AttackStates.Cooldown;
     }
 

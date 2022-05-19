@@ -69,7 +69,6 @@ namespace Abilities.AbilitySO
         public int recastCharges;
 
         //Public events related to "Input" Handling
-        public bool IsPress { get; private set; }
         private bool IsSelected => Owner.AbilityHandler.SelectedAbility == this;
 
         public Action OnFirePress;
@@ -92,11 +91,8 @@ namespace Abilities.AbilitySO
         #endregion
 
         #region Public Methods
-
-        public int guid;
         public virtual void Init(Unit owner)
         {
-            guid = UnityEngine.Random.Range(0, 9999);
             //Init Properties and Variables
             Owner = owner;
             
@@ -109,8 +105,7 @@ namespace Abilities.AbilitySO
             //define Events
             OnFirePress = () =>
             {
-                IsPress = true;
-                if (_stateMachine.CurrentState as AbilityState is var state && state != null)
+                if (IsSelected && _stateMachine.CurrentState as AbilityState is var state && state != null)
                 {
                     state.OnFirePress?.Invoke();
                 }
@@ -118,14 +113,12 @@ namespace Abilities.AbilitySO
 
             OnFireRelease = () =>
             {
-                IsPress = false;
-                if (_stateMachine.CurrentState as AbilityState is var state && state != null)
+                if (IsSelected && _stateMachine.CurrentState as AbilityState is var state && state != null)
                 {
                     state.OnFireRelease?.Invoke();
                 }
             };
-
-            IsPress = false;
+            
         }
 
         public void Refresh()
@@ -196,7 +189,7 @@ namespace Abilities.AbilitySO
 
                 #region Conditions
 
-                Func<bool> WasTrigger() => () => abilitySo.IsPress;
+                Func<bool> WasTrigger() => () => abilitySo.IsSelected;
 
                 Func<bool> HasTarget() => () => abilitySo.TargetTransform != null;
 
@@ -221,7 +214,6 @@ namespace Abilities.AbilitySO
         [Serializable]
         public class AbilityStats
         {
-            public string name;
             public int manaCost;
             public int maxRange;
 
