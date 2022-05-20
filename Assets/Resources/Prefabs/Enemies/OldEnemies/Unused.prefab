@@ -604,7 +604,7 @@ GameObject:
   - component: {fileID: 413098803780014678}
   - component: {fileID: 4619171436650278084}
   m_Layer: 7
-  m_Name: BossEnemy
+  m_Name: Unused
   m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

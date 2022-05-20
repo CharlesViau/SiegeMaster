@@ -22,10 +22,10 @@ public class Attack_SO : ScriptableObject
     #endregion
 
     #region Game Flow Control
-    protected bool isAnimSetted;
+    [HideInInspector] public bool isAnimSetted;
     protected float timer;
+    protected static readonly int Speed = Animator.StringToHash("Speed");
     #endregion
-
     #endregion
 
     #region Methods
@@ -46,7 +46,7 @@ public class Attack_SO : ScriptableObject
 
     #region Attack
     protected virtual void Attack(Animator _anim)
-    {
+    {        
         if (!isAnimSetted)
             _anim.SetTrigger(attackAnimState);
         isAnimSetted = true;
@@ -59,6 +59,21 @@ public class Attack_SO : ScriptableObject
         if (isAnimSetted)
             _anim.ResetTrigger(attackAnimState);
     }
+    #endregion
+
+    #region Saftey Check
+    /*protected void CheckIfPlayerAround(Animator _anim)
+    {
+        if (Vector3.Distance(ownerPos.transform.position, target.position) > attackRange)
+        {
+            *//*_anim.SetFloat(Speed, 10);
+            _anim.ResetTrigger(attackAnimState);
+            _anim.SetTrigger(movementAnimState);
+            ownerNavMesh.isStopped = false;
+            Debug.Log("Attack"+_anim.GetBool(attackAnimState));
+            Debug.Log("Move"+_anim.GetBool(movementAnimState));*//*
+        }
+    }*/
     #endregion
     #endregion
 }

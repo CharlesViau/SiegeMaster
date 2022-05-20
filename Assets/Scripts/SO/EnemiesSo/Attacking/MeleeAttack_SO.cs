@@ -12,6 +12,8 @@ public class MeleeAttack_SO : Attack_SO
     MeleeStates meleeState;
     SwordCollision sword;
     Collider swordCollider;
+    float distanceToHitPlayer;
+    float speed;
     #endregion
 
     #region Methods
@@ -23,24 +25,18 @@ public class MeleeAttack_SO : Attack_SO
         sword = FindObjectOfType<SwordCollision>();
         swordCollider = sword.GetComponent<Collider>();
         sword.Init(attackDamage, target);
-
+        distanceToHitPlayer = 1.7f;
         meleeState = MeleeStates.CollisionOn;
     }
 
     public override void Refresh(Animator _anim)
     {
         base.Refresh(_anim);
+        _anim.ResetTrigger(movementAnimState);
         switch (meleeState)
         {
             case MeleeStates.CollisionOn:
                 Attack(_anim);
-                if (Vector3.Distance(ownerNavMesh.transform.position, target.position) < 5)
-                    ownerNavMesh.isStopped = true;
-                if (Vector3.Distance(ownerNavMesh.transform.position, target.position) > 5)
-                {
-                    ownerNavMesh.isStopped = false;
-                    //_anim.SetFloat("Speed", 0.2f);
-                }
                 break;
             case MeleeStates.CollisionOff:
                 Cooldown(_anim);
@@ -48,6 +44,7 @@ public class MeleeAttack_SO : Attack_SO
             default:
                 break;
         }
+        GetColserToPlayer(_anim);
     }
     #endregion
 
@@ -55,8 +52,6 @@ public class MeleeAttack_SO : Attack_SO
     protected override void Attack(Animator _anim)
     {
         base.Attack(_anim);
-
-
         if (swordCollider.enabled == false)
             meleeState = MeleeStates.CollisionOff;
     }
@@ -75,6 +70,23 @@ public class MeleeAttack_SO : Attack_SO
             sword.ToggleColliderActive(true);
             meleeState = MeleeStates.CollisionOn;
         }
+    }
+    #endregion
+
+    #region Make the fighting more real
+    void GetColserToPlayer(Animator _anim)
+    {
+        float distanceToTarget = Vector3.Distance(ownerNavMesh.transform.position, target.position);
+        if (distanceToTarget <= distanceToHitPlayer)
+        {
+            ownerNavMesh.isStopped = true;
+            _anim.SetFloat(Speed, 0);
+        }
+        if (distanceToTarget > distanceToHitPlayer)
+        {
+            _anim.SetFloat(Speed, 5);
+            ownerNavMesh.isStopped = false;
+        }            
     }
     #endregion
     #endregion

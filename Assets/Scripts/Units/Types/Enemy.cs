@@ -53,6 +53,9 @@ namespace Units.Types
         #region Animation
         static readonly int Speed = Animator.StringToHash("Speed");
         static readonly int IsDead = Animator.StringToHash("IsDead");
+        static readonly int IsMoving = Animator.StringToHash("IsMoving");
+        static readonly int IsFight = Animator.StringToHash("IsFight");
+        static readonly int IsShoot = Animator.StringToHash("IsShoot");
         #endregion
 
         #region UI & HP
@@ -235,28 +238,36 @@ namespace Units.Types
         void AttackState()
         {
             if (attack_SO)
-            {                
-                Vector3 dir = (_objective.position - transform.position).normalized;
+            {
+                if (enemyType == EnemyType.ArcherEnemy)
+                    _enemyAgent.isStopped = true;
+
+                Vector3 dir = (_player.position - transform.position).normalized;
 
                 transform.forward = dir;
                 Vector3 rot = transform.eulerAngles;
                 rot.x = 0;
                 rot.z = 0;
                 transform.eulerAngles = rot;
-
                 attack_SO.Refresh(Animator);
             }
         }
 
         void GetReadyToAttack()
         {
-            if (Vector3.Distance(transform.position, _objective.transform.position) <= attackRange)
+            if (Vector3.Distance(transform.position, _player.transform.position) <= attackRange)
                 enemyState = EnemyStates.Attacking;
-            else
+            if (Vector3.Distance(transform.position, _player.transform.position) > attackRange)
             {
+                Animator.SetFloat(Speed, speed);
+                Animator.ResetTrigger(IsShoot);
+                Animator.ResetTrigger(IsFight);
+                Animator.SetTrigger(IsMoving);
                 _enemyAgent.isStopped = false;
+                attack_SO.isAnimSetted = false;
                 enemyState = EnemyStates.Wander;
             }
+            //Debug.Log(Vector3.Distance(ShootingPosition.position, _player.transform.position));
         }
 
         void OnCollisionEnter(Collision collision)

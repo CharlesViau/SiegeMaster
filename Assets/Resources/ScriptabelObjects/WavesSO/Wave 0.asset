@@ -19,5 +19,3 @@ MonoBehaviour:
     count: 0
   - enemyType: 1
     count: 0
-  - enemyType: 3
-    count: 0

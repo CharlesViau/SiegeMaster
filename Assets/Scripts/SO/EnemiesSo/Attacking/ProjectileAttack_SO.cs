@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-enum AttackStates { Shoot, Cooldown, ReadyToAttackChecking }
+enum AttackStates { Shoot, Cooldown, CheackIfReadyToAttack }
 
 [CreateAssetMenu(fileName = "Projectile", menuName = "ScriptableObjects/Attack/Projectile Attack")]
 public class ProjectileAttack_SO : Attack_SO
@@ -24,7 +24,6 @@ public class ProjectileAttack_SO : Attack_SO
     public override void Init(NavMeshAgent _ownerNavMesh, Transform _ownerPos, Transform _target)
     {
         base.Init(_ownerNavMesh, _ownerPos, _target);
-        ownerNavMesh.isStopped = true;
         attackState = AttackStates.Shoot;
     }
 
@@ -38,8 +37,8 @@ public class ProjectileAttack_SO : Attack_SO
             case AttackStates.Cooldown:
                 Cooldown(_anim);
                 break;
-            case AttackStates.ReadyToAttackChecking:
-                ReadyToAttackChecking(_anim);
+            case AttackStates.CheackIfReadyToAttack:
+                CheackIfReadyToAttack(_anim);
                 break;
             default:
                 break;
@@ -51,7 +50,6 @@ public class ProjectileAttack_SO : Attack_SO
     protected override void Attack(Animator _anim)
     {        
         base.Attack(_anim);
-        
         InstantiateAProjectile();
     }
 
@@ -61,6 +59,7 @@ public class ProjectileAttack_SO : Attack_SO
             new Projectile.Args(ownerPos.position, projectileType,
             target, projectileSpeed, attackDamage, Vector3.zero, false));
 
+
         attackState = AttackStates.Cooldown;
     }
     #endregion
@@ -68,17 +67,15 @@ public class ProjectileAttack_SO : Attack_SO
     #region Cooldown
     protected override void Cooldown(Animator _anim)
     {
-        _anim.SetFloat("Speed", 0);
+        _anim.SetFloat(Speed, 0);
         base.Cooldown(_anim);
-        if (isAnimSetted)
-            _anim.SetTrigger(movementAnimState);
-
+        _anim.SetTrigger(movementAnimState);
         isAnimSetted = false;
-        attackState = AttackStates.ReadyToAttackChecking;
+        attackState = AttackStates.CheackIfReadyToAttack;
     }
 
-    void ReadyToAttackChecking(Animator _anim)
-    {        
+    void CheackIfReadyToAttack(Animator _anim)
+    {
         timer += Time.deltaTime;
         if (timer > cooldownTimer)
         {
