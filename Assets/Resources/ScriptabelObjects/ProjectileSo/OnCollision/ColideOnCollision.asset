@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d071990e069d4b343970d7eacaf0989a, type: 3}
   m_Name: ColideOnCollision
   m_EditorClassIdentifier: 
-  onCollisionParticleType: 0
+  onCollisionParticleType: 1
