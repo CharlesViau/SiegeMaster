@@ -129,6 +129,10 @@ namespace Inputs
             {
                 CommandManager.Instance.Add(new AttackPressCommand(_unit));
             }
+            else if (_basicAttackAction.WasReleasedThisFrame())
+            {
+                CommandManager.Instance.Add(new AttackReleaseCommand(_unit));
+            }
         }
         private void PollJumpInput()
         {
