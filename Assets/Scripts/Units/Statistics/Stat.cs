@@ -1,32 +1,79 @@
 using System;
-using General;
 using UnityEngine;
 
 namespace Units.Statistics
 {
+    [Serializable]
     public abstract class Stat
     {
-        protected float current;
-        [SerializeField] 
-        private readonly float baseValue;
-        protected float growthPerLevel; 
-        public float Maximum => baseValue + bonus;
-        protected float bonus;
-        
+        public float Current { get; set; }
 
-        public virtual void Refresh() { }
+        [SerializeField] protected float baseValue;
+
+        public virtual void Init()
+        {
+            Current = baseValue;
+        }
     }
-
-    public class HealthRegen : Stat
+    [Serializable]
+    public class Regeneration : Stat
     {
-        public float Current => current;
-        
-    }
+        [SerializeField] public float timeInterval;
+        private float _currentTime;
+        private Stat _stat;
 
+        public void InitRegen(Stat stat)
+        {
+            _stat = stat;
+        }
+        public override void Init()
+        {
+            base.Init();
+            _currentTime = timeInterval;
+        }
+
+        public void Refresh()
+        {
+            _currentTime -= Time.deltaTime;
+
+            if (!(_currentTime <= 0)) return;
+            _stat.Current += baseValue;
+            _currentTime = timeInterval;
+        }
+    }
+    [Serializable]
     public class Health : Stat
     {
-        public float Current => current;
-        public HealthRegen HealthRegen;
-        
+        public Regeneration regeneration;
+
+        public override void Init()
+        {
+            base.Init();
+            regeneration.InitRegen(this);
+            regeneration.Init();
+        }
+
+        public void Refresh()
+        {
+            regeneration.Refresh();
+        }
+    }
+
+    [Serializable]
+    public class Mana : Stat
+    {
+        public Regeneration regeneration;
+
+        public override void Init()
+        {
+            base.Init();
+            regeneration.InitRegen(this);
+            regeneration.Init();
+        }
+
+        public void Refresh()
+        {
+            regeneration.Refresh();
+        }
     }
 }

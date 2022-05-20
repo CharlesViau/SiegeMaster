@@ -1,4 +1,5 @@
-﻿using Abilities.AbilitySO;
+﻿using System.Runtime.InteropServices;
+using Abilities.AbilitySO;
 using UnityEngine;
 
 namespace Abilities.AbilityStates
@@ -21,6 +22,8 @@ namespace Abilities.AbilityStates
         {
             _channelTime = 0;
             HasBeenInterrupt = false;
+            AbilitySo.Owner.PayGold(AbilitySo.stats.goldCost);
+            //TODO CONSUME MANA
         }
 
         public override void OnExit()

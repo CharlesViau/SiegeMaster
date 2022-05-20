@@ -29,9 +29,26 @@ namespace Units.Types
 
         public Vector3 TargetPosition => AimedPosition;
         public Transform TargetTransform { get; set; }
+        
+        //Stat
+        [SerializeField]
+        protected int goldValue;
+        public int GoldValue => goldValue;
+
+        public int Gold { get; private set; }
 
         #endregion
 
+        public void ReceiveGold(int gold)
+        {
+            Gold += gold;
+        }
+
+        public void PayGold(int gold)
+        {
+            Gold -= gold;
+        }
+        
         public virtual void Init()
         {
             //Caching Components
@@ -40,7 +57,6 @@ namespace Units.Types
             Animator = GetComponent<Animator>();
             AbilityHandler = GetComponent<AbilityHandler>();
             AbilityHandler.Init();
-            
         }
 
         public virtual void PostInit()
@@ -59,7 +75,6 @@ namespace Units.Types
 
         public void LateRefresh()
         {
-            
         }
 
         public virtual void Pool()
@@ -69,7 +84,7 @@ namespace Units.Types
         public virtual void Depool()
         {
         }
-        
+
         public virtual void Move(Vector3 direction)
         {
             if (Rigidbody == null) return;
