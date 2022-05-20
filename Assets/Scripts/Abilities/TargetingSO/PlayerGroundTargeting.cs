@@ -8,7 +8,7 @@ namespace Abilities.TargetingSO
     {
         public override void Refresh()
         {
-            if (!Physics.Raycast(Owner.TargetPosition, -Owner.TargetPosition, out var hitDown, MaxRange)) return;
+            if (!Physics.Raycast(Owner.TargetPosition, Vector3.down, out var hitDown, MaxRange)) return;
             Vector3 endPoint;
                 
             if (Physics.Raycast(Owner.ShootingPosition.position, Owner.AimingDirection, out var aimDirectionHit,
@@ -18,6 +18,7 @@ namespace Abilities.TargetingSO
                 endPoint = Owner.ShootingPosition.position + Owner.AimingDirection.normalized * MaxRange;
 
             TemporaryTransform.position = new Vector3(endPoint.x, hitDown.point.y, endPoint.z);
+       
         }
     }
 }

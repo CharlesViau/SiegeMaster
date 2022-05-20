@@ -67,7 +67,7 @@ namespace Units.Types
         }
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.tag =="Target")
+            if (collision.gameObject.tag =="Projectile")
             {
                
                 body.CellDeath(this);

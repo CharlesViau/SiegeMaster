@@ -14,10 +14,12 @@ namespace Abilities.TargetingStateSO
             TargetingSoClone.Refresh();
             if (_spellUI)
                 _spellUI.transform.position = TargetingSoClone.TargetTransform.position;
+
         }
 
         public override void OnEnter()
         {
+            Debug.Log("OnEnter: " + AbilitySo.TargetPosition);
             TargetingSoClone.TargetTransform.position = AbilitySo.TargetPosition;
 
             if (spellUIType != SpellUIType.None)
