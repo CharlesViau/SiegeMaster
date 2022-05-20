@@ -13,7 +13,6 @@ namespace Units.Types
         
         public float playerForce;
         public float maxSpeed;
-        Rigidbody rb;
         PlayerAnimation PlayerAnimation;
 
         protected override Vector3 AimedPosition => _cameraRayCast.RayCast(maxDistanceAiming, rayCastStartPointDistance);
@@ -21,6 +20,7 @@ namespace Units.Types
         public override void Init()
         {
             base.Init();
+            PlayerAnimation =GetComponent<PlayerAnimation>();
             _cameraRayCast = FindObjectOfType<CameraRaycast>();
 
         }
@@ -45,7 +45,13 @@ namespace Units.Types
 
         public override void Jump()
         {
-            PlayerAnimation.Jump();
+            if (PlayerAnimation.isGrounded)
+            {
+                PlayerAnimation.Jump();
+                Rigidbody.AddForce(Vector3.up * 1000, ForceMode.Impulse);
+            }
+         
+         
         }
         public override void Look()
         {

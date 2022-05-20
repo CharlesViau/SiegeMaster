@@ -15,7 +15,7 @@ MonoBehaviour:
   stats:
     manaCost: 0
     maxRange: 200
-    baseChannelTime: 0
+    baseChannelTime: 0.5
     baseCooldown: 0
   castMethod: 0
   castMethodIsLock: 0
@@ -24,5 +24,5 @@ MonoBehaviour:
   recastCharges: 0
   targetingStateSo: {fileID: 11400000, guid: f8d2b025ef6f0784885f7c9dd42b228d, type: 2}
   type: 0
-  projectileSpeed: 0
-  projectileDamage: 0
+  projectileSpeed: 50
+  projectileDamage: 50
