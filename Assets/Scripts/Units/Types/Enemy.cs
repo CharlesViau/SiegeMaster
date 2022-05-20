@@ -214,6 +214,8 @@ namespace Units.Types
         IEnumerator DealyToPool()
         {
             yield return new WaitForSeconds(_delayToPool);
+            _enemyAgent.enabled = false;
+            enemyState = EnemyStates.Wander;
             EnemyManager.Instance.Pool(enemyType, this);
         }
         #endregion
@@ -239,7 +241,7 @@ namespace Units.Types
         {
             if (attack_SO)
             {
-                if (enemyType == EnemyType.ArcherEnemy)
+                if (enemyType != EnemyType.WarriorEnemy)
                     _enemyAgent.isStopped = true;
 
                 Vector3 dir = (_player.position - transform.position).normalized;
@@ -264,10 +266,9 @@ namespace Units.Types
                 Animator.ResetTrigger(IsFight);
                 Animator.SetTrigger(IsMoving);
                 _enemyAgent.isStopped = false;
-                attack_SO.isAnimSetted = false;
+                if (attack_SO) attack_SO.isAnimSetted = false;
                 enemyState = EnemyStates.Wander;
             }
-            //Debug.Log(Vector3.Distance(ShootingPosition.position, _player.transform.position));
         }
 
         void OnCollisionEnter(Collision collision)

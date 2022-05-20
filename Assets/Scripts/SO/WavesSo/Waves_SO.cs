@@ -55,15 +55,4 @@ public class Waves_SO : ScriptableObject
         public int count;
     }
     #endregion
-
-    #region old version
-    /*[SerializeField] int nbOfArcherEnemies;
-    [SerializeField] int nbOfSneakyEnemies;
-    [SerializeField] int nbOfWarriorEnemies;
-    [SerializeField] int nbOfBossEnemies;
-    public int NbOfArcherEnemies { get { return nbOfArcherEnemies; } }
-    public int NbOfSneakyEnemies { get { return nbOfSneakyEnemies; } }
-    public int NbOfWarriorEnemies { get { return nbOfWarriorEnemies; } }
-    public int NbOfBossEnemies { get { return nbOfBossEnemies; } }*/
-    #endregion
 }
