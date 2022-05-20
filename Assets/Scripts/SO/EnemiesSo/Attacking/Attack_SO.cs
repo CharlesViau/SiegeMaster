@@ -46,7 +46,7 @@ public class Attack_SO : ScriptableObject
 
     #region Attack
     protected virtual void Attack(Animator _anim)
-    {        
+    {
         if (!isAnimSetted)
             _anim.SetTrigger(attackAnimState);
         isAnimSetted = true;
@@ -62,18 +62,17 @@ public class Attack_SO : ScriptableObject
     #endregion
 
     #region Saftey Check
-    /*protected void CheckIfPlayerAround(Animator _anim)
+    public virtual void ResetBehaviors(Animator _anim)
     {
-        if (Vector3.Distance(ownerPos.transform.position, target.position) > attackRange)
-        {
-            *//*_anim.SetFloat(Speed, 10);
-            _anim.ResetTrigger(attackAnimState);
-            _anim.SetTrigger(movementAnimState);
-            ownerNavMesh.isStopped = false;
-            Debug.Log("Attack"+_anim.GetBool(attackAnimState));
-            Debug.Log("Move"+_anim.GetBool(movementAnimState));*//*
-        }
-    }*/
+        _anim.SetFloat(Speed, 10);
+        _anim.ResetTrigger(attackAnimState);
+        _anim.SetTrigger(movementAnimState);
+        ownerNavMesh.isStopped = false;
+        isAnimSetted = false;
+
+
+        //_enemyAgent.isStopped = false;
+    }
     #endregion
     #endregion
 }

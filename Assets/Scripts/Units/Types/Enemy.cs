@@ -261,12 +261,13 @@ namespace Units.Types
                 enemyState = EnemyStates.Attacking;
             if (Vector3.Distance(transform.position, _player.transform.position) > attackRange)
             {
-                Animator.SetFloat(Speed, speed);
+                if (attack_SO) attack_SO.ResetBehaviors(Animator);
+                /*Animator.SetFloat(Speed, speed);
                 Animator.ResetTrigger(IsShoot);
                 Animator.ResetTrigger(IsFight);
                 Animator.SetTrigger(IsMoving);
                 _enemyAgent.isStopped = false;
-                if (attack_SO) attack_SO.isAnimSetted = false;
+                if (attack_SO) attack_SO.isAnimSetted = false;*/
                 enemyState = EnemyStates.Wander;
             }
         }

@@ -12,6 +12,7 @@ public class ProjectileAttack_SO : Attack_SO
     #region Set Projectile Type
     [SerializeField] ProjectileType projectileType;
     [SerializeField] float projectileSpeed;
+    [SerializeField] float AttackAnimationLengh;
     #endregion
 
     #region Game Flow Control
@@ -48,9 +49,14 @@ public class ProjectileAttack_SO : Attack_SO
 
     #region Shoot
     protected override void Attack(Animator _anim)
-    {        
+    {
+        timer += Time.deltaTime;
         base.Attack(_anim);
-        InstantiateAProjectile();
+        if (timer > AttackAnimationLengh)
+        {
+            timer = 0;
+            InstantiateAProjectile();
+        }
     }
 
     void InstantiateAProjectile()
@@ -67,11 +73,13 @@ public class ProjectileAttack_SO : Attack_SO
     #region Cooldown
     protected override void Cooldown(Animator _anim)
     {
+        timer += Time.deltaTime;
         _anim.SetFloat(Speed, 0);
         base.Cooldown(_anim);
         _anim.SetTrigger(movementAnimState);
         isAnimSetted = false;
-        attackState = AttackStates.CheackIfReadyToAttack;
+        if (timer > 2)
+            attackState = AttackStates.CheackIfReadyToAttack;
     }
 
     void CheackIfReadyToAttack(Animator _anim)
@@ -85,5 +93,10 @@ public class ProjectileAttack_SO : Attack_SO
         }
     }
     #endregion
+
+    public override void ResetBehaviors(Animator _anim)
+    {
+        base.ResetBehaviors(_anim);
+    }
     #endregion
 }

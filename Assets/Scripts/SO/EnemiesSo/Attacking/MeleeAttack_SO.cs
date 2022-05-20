@@ -89,5 +89,9 @@ public class MeleeAttack_SO : Attack_SO
         }            
     }
     #endregion
+    public override void ResetBehaviors(Animator _anim)
+    {
+        base.ResetBehaviors(_anim);
+    }
     #endregion
 }
