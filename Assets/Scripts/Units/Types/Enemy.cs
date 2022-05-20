@@ -190,6 +190,7 @@ namespace Units.Types
             }
             if (alive && currentHp <= 0)
                 enemyState = EnemyStates.DeathAnimation;
+            //TODO : Give gold to player
         }
 
         private void DeathAnimation()
