@@ -10,18 +10,13 @@ using System.Linq;
 public class puQUEST : MonoBehaviour
 {
     PlayerUnit player;
-    NavMeshAgent navMeshAgent;
     public Body balls;
+    public float speed;
   //  int numberOfFrame = 0;
-
-    int i = 0;
-
    // int numberOfList = 0;
    // int numberOfBatchFrame = 0;
-    int numberOfBatchFrameSave = 0;
     private void Start()
     {
-        navMeshAgent = GetComponent<NavMeshAgent>();
         player = FindObjectOfType<PlayerUnit>();
         balls.StartBD(balls);
      //   numberOfBatchFrameSave = balls.partsList.Count /15;
@@ -29,8 +24,9 @@ public class puQUEST : MonoBehaviour
     }
     public void Update()
     {
-        navMeshAgent.SetDestination(player.transform.position);
-
+        var step = speed * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, step);
+        #region Batching
         //Batching 
 
         //if (numberOfBatchFrame >= balls.partsList.Count)
@@ -54,13 +50,15 @@ public class puQUEST : MonoBehaviour
         //}
 
 
-     //   balls.RefreshBD(balls);
+        //   balls.RefreshBD(balls);
+        #endregion
 
     }
 
     [Serializable]
     public class Body
     {
+        #region variables
         bool isAlive = true;
         public string partName;
         public Transform centerOfCell;
@@ -68,10 +66,8 @@ public class puQUEST : MonoBehaviour
         public int numberOfDesireCells;
         public List<Body> children = new List<Body>();
         public HashSet<Cell> partsList = new HashSet<Cell>();
-
-
-       public  Stack<Cell> toRemove=new Stack<Cell>();
-
+        public  Stack<Cell> toRemove=new Stack<Cell>();
+        #endregion
         public void StartBD(Body bd)
         {
             for (int i = 0; i < bd.children.Count; i++)
@@ -110,39 +106,6 @@ public class puQUEST : MonoBehaviour
             }   
         }
 
-
-
-
-        //public void RefreshBD(Body bd)
-        //{
-        //    for (int i = 0; i < bd.children.Count; i++)
-        //    {
-        //        for (int j = 0; j < bd.children[i].numberOfCells; j++)
-        //        {
-        //         //   Debug.Log(bd.children[i].numberOfCells);
-        //            if (bd.children[i].numberOfCells < bd.children[i].numberOfDesireCells && CheckIfIhaveCellInChild(bd.children[i]))
-        //            {
-
-
-        //                Cell cell;
-        //                cell = bd.children[0].partsList[0];                 
-        //                toRemove.Push(cell);
-        //               // bd.children[rand].partsList.Remove(cell);
-
-        //                cell.body = bd.children[i];
-        //                cell.cellPosition = bd.children[i].centerOfCell;
-        //            }
-        //        }
-        //        RefreshBD(bd.children[i]);
-
-        //    }
-
-        //    foreach (Cell item in toRemove)
-        //    {
-        //        item.body.partsList.Remove(item);
-        //    }
-        //    toRemove.Clear();
-        //}
         public bool CheckIfIhaveCellInChild(Body bd)
         {
             bool findCell = false;

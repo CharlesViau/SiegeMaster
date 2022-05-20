@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats:
     manaCost: 0
-    maxRange: 200
+    maxRange: 50
     baseChannelTime: 0
     baseCooldown: 1
   castMethod: 0

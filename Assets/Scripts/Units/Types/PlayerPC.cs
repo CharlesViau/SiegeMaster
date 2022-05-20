@@ -6,16 +6,26 @@ namespace Units.Types
     public class PlayerPC : PlayerUnit
     {
         private CameraRaycast _cameraRayCast;
-       
+
         public Transform playerRotationLook;
         public float maxDistanceAiming;
         public float rayCastStartPointDistance;
-        
+
         public float playerForce;
         public float maxSpeed;
         PlayerAnimation PlayerAnimation;
 
-        protected override Vector3 AimedPosition => _cameraRayCast.RayCast(maxDistanceAiming, rayCastStartPointDistance);
+        protected override Vector3 AimedPosition 
+            {
+            get
+            {
+                if (Input.GetKeyDown(KeyCode.X))
+                    Debug.Log("");
+
+                return _cameraRayCast.RayCast(maxDistanceAiming, rayCastStartPointDistance);
+            }
+
+            }
 
         public override void Init()
         {
