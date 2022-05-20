@@ -7,6 +7,7 @@ using Units.Interfaces;
 using Units.Types;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace Abilities.AbilitySO
 {
@@ -219,6 +220,9 @@ namespace Abilities.AbilitySO
 
             public float baseChannelTime;
             public float baseCooldown;
+            
+            //UI
+            public Sprite art;
         }
 
         [Serializable]

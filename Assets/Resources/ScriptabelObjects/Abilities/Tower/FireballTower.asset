@@ -17,6 +17,7 @@ MonoBehaviour:
     maxRange: 50
     baseChannelTime: 0
     baseCooldown: 1
+    art: {fileID: 21300000, guid: 6bf69891ff947604ca2d26fc5bc0d49b, type: 3}
   castMethod: 0
   castMethodIsLock: 0
   spellUIType: 3
