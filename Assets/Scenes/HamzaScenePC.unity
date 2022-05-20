@@ -13610,6 +13610,11 @@ Transform:
   m_Father: {fileID: 25599035}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &2111847069 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8947192531652376456, guid: 3e60f0370e41eae419a0eaed2f872eeb, type: 3}
+  m_PrefabInstance: {fileID: 8947192531812343394}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2114746573
 GameObject:
   m_ObjectHideFlags: 0
@@ -16759,6 +16764,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 124f3c47f65d44342ac4d3929c776e69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundCheckPosition: {fileID: 2111847069}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 96247
+  isGrounded: 1
 --- !u!136 &3159244276184118865
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -23389,6 +23399,18 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 5e2208a2e7bcba44583653bf6d663c82, type: 2}
+    - target: {fileID: 6340280863331199021, guid: 3e60f0370e41eae419a0eaed2f872eeb, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6340280863331199021, guid: 3e60f0370e41eae419a0eaed2f872eeb, type: 3}
+      propertyPath: m_UIInputModule
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6340280863331199021, guid: 3e60f0370e41eae419a0eaed2f872eeb, type: 3}
+      propertyPath: m_NotificationBehavior
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6680777196444873361, guid: 3e60f0370e41eae419a0eaed2f872eeb, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -23435,6 +23457,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6340280863331199017, guid: 3e60f0370e41eae419a0eaed2f872eeb, type: 3}
+    - {fileID: 5703934396323048616, guid: 3e60f0370e41eae419a0eaed2f872eeb, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3e60f0370e41eae419a0eaed2f872eeb, type: 3}
 --- !u!4 &8951310855215055823
 Transform:

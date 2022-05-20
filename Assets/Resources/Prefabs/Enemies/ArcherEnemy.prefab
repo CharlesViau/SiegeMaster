@@ -2594,7 +2594,7 @@ MonoBehaviour:
   targeting_SO: {fileID: 11400000, guid: cac941549c978834b8b983c5e7b75cbc, type: 2}
   attack_SO: {fileID: 11400000, guid: 2a02cffeebf0331488099664a6df46e6, type: 2}
   alive: 0
-  detectRange: 80
+  rangeToMoveTowardPlayer: 80
   attackRange: 50
   canvasParent: {fileID: 4657122710452571864}
   hpInPoolParent: {fileID: 5541061898818692875}

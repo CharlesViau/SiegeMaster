@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8ad4139a2754737bcbe8c77a0c5cae6, type: 3}
   m_Name: LocationTargeting
   m_EditorClassIdentifier: 
-  targetingSo: {fileID: 0}
+  targetingSo: {fileID: 11400000, guid: 31a500554335df348915647183dbe890, type: 2}
   spellUIType: 0
