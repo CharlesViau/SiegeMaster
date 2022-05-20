@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: ArcherTower
   m_EditorClassIdentifier: 
   stats:
-    name: 
     manaCost: 0
     maxRange: 200
     baseChannelTime: 0
