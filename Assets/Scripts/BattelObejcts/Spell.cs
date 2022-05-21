@@ -43,11 +43,14 @@ namespace BattelObejcts
         }
         void ExplosionDamage(Vector3 center, float radius,float damage)
         {
-            Collider[] hitColliders = Physics.OverlapSphere(center, radius);
-            foreach (var hitCollider in hitColliders)
+            RaycastHit[] ray = Physics.SphereCastAll(center, radius, transform.forward);
+            
+            foreach (var hitCollider in ray)
             {
-
-                Debug.Log(hitCollider.gameObject.name);
+                if ( hitCollider.collider.gameObject.TryGetComponent(out IHittable hittable))
+                {
+                    hittable.GotShot(damage);
+                } 
             }
         }
         public void Construct(Args constructionArgs)

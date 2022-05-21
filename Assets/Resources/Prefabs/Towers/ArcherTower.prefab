@@ -23,13 +23,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 833737523209293078}
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 48, z: -0}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 48.000366, z: 0.000166893}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children: []
   m_Father: {fileID: 6592554438504343144}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1 &833737523921360980
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,9 +342,10 @@ MonoBehaviour:
   turningSpeed: 0
   speed: 0
   shootingPosition: {fileID: 833737524629397917}
+  goldValue: 0
   target: {fileID: 0}
   projectileType: 0
-  towerParticleType: 4
+  towerParticleType: 1
   targetingSo: {fileID: 11400000, guid: 39976aa8fee26ac4690be1badbe5fe68, type: 2}
   projectileDamage: 1
   towerAttackRange: 100

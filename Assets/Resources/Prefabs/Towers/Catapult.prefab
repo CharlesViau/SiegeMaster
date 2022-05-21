@@ -149,6 +149,7 @@ MonoBehaviour:
   turningSpeed: 0
   speed: 0
   shootingPosition: {fileID: 4661301985406220709}
+  goldValue: 0
   target: {fileID: 0}
   projectileType: 3
   towerParticleType: 4
@@ -255,7 +256,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0da717a3c606b90428f06fcea0376bde, type: 2}
+  - {fileID: 2100000, guid: 083240493d7dd2f4ba676366d2b28d6d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3107869348590249543}
   - component: {fileID: 7357309966027855028}
   - component: {fileID: 5979971682499611977}
-  - component: {fileID: 7724946545353294226}
   - component: {fileID: -7054020090001244557}
   m_Layer: 0
   m_Name: Storm
@@ -83,19 +82,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7724946545353294226
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3329113376875349500}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-7054020090001244557
 MonoBehaviour:
   m_ObjectHideFlags: 0
