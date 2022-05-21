@@ -287,11 +287,6 @@ namespace Units.Types
         {
             if (attack_SO)
             {
-                if (enemyType != EnemyType.WarriorEnemy)
-                {
-                    _enemyAgent.isStopped = true;
-                }
-
                 FacingToTarget();
                 attack_SO.Refresh(Animator);
             }
