@@ -356,8 +356,9 @@ MonoBehaviour:
   targeting_SO: {fileID: 11400000, guid: cac941549c978834b8b983c5e7b75cbc, type: 2}
   attack_SO: {fileID: 11400000, guid: 87adb54cd3a5a7243b75c8be3459db9e, type: 2}
   alive: 0
-  rangeToMoveTowardPlayer: 50
-  attackRange: 6
+  rangeToMoveTowardPlayer: 70
+  maxAttackRange: 9
+  minAttackRange: 6
   canvasParent: {fileID: 5583393310480434975}
   hpInPoolParent: {fileID: 8020514184768218357}
   currentHp: 5
