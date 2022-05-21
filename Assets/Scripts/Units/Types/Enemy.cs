@@ -63,7 +63,9 @@ namespace Units.Types
         #region Attacking
 
         public float rangeToMoveTowardPlayer;
-        public float attackRange;
+        public float maxAttackRange;
+        public float minAttackRange; 
+        float attackRange;
         const float EnemyDamageToNexus = 1;
 
         #endregion
@@ -102,6 +104,7 @@ namespace Units.Types
             enemyState = EnemyStates.Wander;
             alive = true;
             _enemyAgent.speed = speed;
+            attackRange = Random.Range(minAttackRange, maxAttackRange);
 
             _fullHp = currentHp;
             _hpStack = new Stack<Hp>();
@@ -115,6 +118,7 @@ namespace Units.Types
                 attack_SO = Instantiate(attack_SO);
                 attack_SO.Init(_enemyAgent, ShootingPosition, _player);
             }
+
         }
 
         public override void PostInit()
@@ -173,6 +177,7 @@ namespace Units.Types
             currentHp = _fullHp;
             alive = true;
             _delayToPool = 10;
+            attackRange = Random.Range(minAttackRange, maxAttackRange);
             _hpStack.Clear();
             CreateHp(_fullHp);
         }
@@ -273,7 +278,7 @@ namespace Units.Types
         #region Attacking Player & Nexus
 
         void GetReadyToAttack()
-        {
+        {            
             if (Vector3.Distance(transform.position, _player.transform.position) <= attackRange)
                 enemyState = EnemyStates.Attacking;
             if (Vector3.Distance(transform.position, _player.transform.position) > attackRange)
@@ -287,11 +292,6 @@ namespace Units.Types
         {
             if (attack_SO)
             {
-                if (enemyType != EnemyType.WarriorEnemy)
-                {
-                    _enemyAgent.isStopped = true;
-                }
-
                 FacingToTarget();
                 attack_SO.Refresh(Animator);
             }

@@ -26,7 +26,7 @@ namespace Units.Types
         protected override void OnDeathEvent()
         {
             //TODO: trigger death animation, Put a countdown to Respawn player.
-            Debug.Log("IsDead");
+         //   Debug.Log("IsDead");
         }
 
         protected void OnRespawnEvent()

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-enum AttackStates { Shoot, Cooldown, CheackIfReadyToAttack }
+enum AttackStates { GetReadyToShoot, Shoot, Cooldown, CheackIfReadyToAttack }
 
 [CreateAssetMenu(fileName = "Projectile", menuName = "ScriptableObjects/Attack/Projectile Attack")]
 public class ProjectileAttack_SO : Attack_SO
@@ -25,13 +25,16 @@ public class ProjectileAttack_SO : Attack_SO
     public override void Init(NavMeshAgent _ownerNavMesh, Transform _ownerPos, Transform _target)
     {
         base.Init(_ownerNavMesh, _ownerPos, _target);
-        attackState = AttackStates.Shoot;
+        attackState = AttackStates.GetReadyToShoot;
     }
 
     public override void Refresh(Animator _anim)
     {
         switch (attackState)
         {
+            case AttackStates.GetReadyToShoot:
+                StandbyToShoot(_anim);
+                break;
             case AttackStates.Shoot:
                 Attack(_anim);
                 break;
@@ -47,9 +50,17 @@ public class ProjectileAttack_SO : Attack_SO
     }
     #endregion
 
-    #region Shoot
-    protected override void Attack(Animator _anim)
+    #region Shooting Phase
+    void StandbyToShoot(Animator _anim)
     {
+        _anim.SetFloat(Speed, 0);
+        ownerNavMesh.isStopped = true;
+        _anim.ResetTrigger(movementAnimState);
+        attackState = AttackStates.Shoot;
+    }
+
+    protected override void Attack(Animator _anim)
+    {        
         timer += Time.deltaTime;
         base.Attack(_anim);
         if (timer > AttackAnimationLengh)
@@ -88,7 +99,7 @@ public class ProjectileAttack_SO : Attack_SO
         {
             timer = 0;
             _anim.ResetTrigger(movementAnimState);
-            attackState = AttackStates.Shoot;
+            attackState = AttackStates.GetReadyToShoot;
         }
     }
     #endregion
@@ -96,6 +107,8 @@ public class ProjectileAttack_SO : Attack_SO
     public override void ResetBehaviors(Animator _anim)
     {
         base.ResetBehaviors(_anim);
+        attackState = AttackStates.GetReadyToShoot;
+        timer = 0;
     }
     #endregion
 }
