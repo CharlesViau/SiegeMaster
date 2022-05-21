@@ -9,20 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90d788c4e71e8ce4cbc547824af40077, type: 3}
-  m_Name: LightningBasicAttack
+  m_Script: {fileID: 11500000, guid: 9ba59086b1fad0d43948e37d07a59aac, type: 3}
+  m_Name: Blood
   m_EditorClassIdentifier: 
   stats:
     manaCost: 0
     goldCost: 0
-    maxRange: 200
-    baseChannelTime: 0.01
+    maxRange: 50
+    baseChannelTime: 0.5
     baseCooldown: 0
     art: {fileID: 0}
-  spellUIType: 0
+  spellUIType: 9
   activeTime: 0
   recastCharges: 0
-  targetingStateSo: {fileID: 11400000, guid: f8d2b025ef6f0784885f7c9dd42b228d, type: 2}
-  type: 0
-  projectileSpeed: 50
-  projectileDamage: 1
+  targetingStateSo: {fileID: 11400000, guid: 42321570041424145b976077f64cf828, type: 2}
+  type: 3
+  SphireCastRadius: 0
