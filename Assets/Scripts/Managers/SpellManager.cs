@@ -1,6 +1,8 @@
-﻿namespace Managers
+﻿using General;
+
+namespace Managers
 {
-    public class SpellManager
+    public class SpellManager 
     {
         
     }
