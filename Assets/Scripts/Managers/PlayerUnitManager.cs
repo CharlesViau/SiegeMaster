@@ -7,21 +7,28 @@ namespace Managers
 {
     public class PlayerUnitManager : Manager<PlayerUnit, PlayerUnitManager>
     {
-        Transform playerUnit;
-        Rigidbody PlayerRb;
-        public Rigidbody GetRigidbody { get { return PlayerRb; } }
-        public Transform GetTransform { get { return playerUnit; } }
+        public Rigidbody GetRigidbody { get; private set; }
+        public Transform GetTransform { get; private set; }
+
         public override void Init()
         {
             
             foreach (var player in Object.FindObjectsOfType<PlayerUnit>().ToList())
             {
                 Add(player);
-                playerUnit = player.transform;
-                PlayerRb = player.GetComponent<Rigidbody>();
+                GetTransform = player.transform;
+                GetRigidbody = player.GetComponent<Rigidbody>();
             }
 
             base.Init();
+        }
+
+        public void AddGold(int gold)
+        {
+            foreach (var player in collection)
+            {
+                player.AddGold(gold);
+            }
         }
     }
 }

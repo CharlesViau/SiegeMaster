@@ -4,6 +4,8 @@ using UnityEngine;
 using General;
 using System;
 using System.Reflection;
+using Units.Interfaces;
+
 [CreateAssetMenu(fileName = "OnCollision", menuName = "ScriptableObjects/OnCollision/HitObject")]
 
 public class OnCollition_CollideWithObject_SO : OnCollisionSO

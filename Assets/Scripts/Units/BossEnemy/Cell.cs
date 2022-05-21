@@ -1,11 +1,10 @@
 using General;
+using Units.Interfaces;
+using Units.Types;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.UI;
-using System.Collections.Generic;
 using static puQUEST;
 
-namespace Units.Types
+namespace Units.BossEnemy
 {
     public class Cell : Unit, ICreatable<Cell.Args>, IHittable
     {
@@ -56,7 +55,7 @@ namespace Units.Types
 
         }
 
-        public void GotShot(float damage)
+        public override void GotShot(float damage)
         {
             
         }

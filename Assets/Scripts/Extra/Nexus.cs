@@ -3,6 +3,7 @@ using Managers;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using Units.Interfaces;
 
 public class Nexus : MonoBehaviour, IUpdatable, IPoolable, IHittable, ICreatable<Nexus.Args>
 {
