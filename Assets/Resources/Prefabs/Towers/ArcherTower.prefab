@@ -344,7 +344,7 @@ MonoBehaviour:
   shootingPosition: {fileID: 833737524629397917}
   target: {fileID: 0}
   projectileType: 0
-  towerParticleType: 1
+  towerParticleType: 4
   targetingSo: {fileID: 11400000, guid: 39976aa8fee26ac4690be1badbe5fe68, type: 2}
   projectileDamage: 1
   towerAttackRange: 100

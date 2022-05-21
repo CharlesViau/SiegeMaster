@@ -17,6 +17,6 @@ MonoBehaviour:
   attackDamage: 1
   cooldownTimer: 7
   isAnimSetted: 0
-  projectileType: 0
+  projectileType: 5
   projectileSpeed: 5
   AttackAnimationLengh: 2.9

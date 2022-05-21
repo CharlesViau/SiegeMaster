@@ -47,7 +47,7 @@ public class Waves_SO : ScriptableObject
     #endregion
     #endregion
 
-    #region Manage Spawning Tool
+    #region Tool for Manage Spawning
     [System.Serializable]
     public class CountPerEnemy
     {

@@ -7,9 +7,13 @@ namespace SO.Enemies.Targeting
     [CreateAssetMenu(fileName = "Target Player", menuName = "ScriptableObjects/Targeting/Target Player")]
     public class TargetPlayerSo : TargetingSo
     {
+        #region Fields
         private Transform _nexus;
         private Transform _player;
+        #endregion
 
+        #region Methods
+        #region Game Flow
         public override void Init(GameObject unit, float range)
         {
             base.Init(unit, range);
@@ -21,11 +25,15 @@ namespace SO.Enemies.Targeting
         {
             return DetectPlayer() ? _player : _nexus;
         }
+        #endregion
 
+        #region Check the player
         private bool DetectPlayer()
         {
             if (_player == null) return false;
             return Vector3.Distance(Owner.transform.position, _player.position) < MaxRange;
         }
+        #endregion
+        #endregion
     }
 }
