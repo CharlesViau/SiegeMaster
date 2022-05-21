@@ -13,7 +13,8 @@ public class ProjectileAttack_SO : Attack_SO
     [SerializeField] ProjectileType projectileType;
     [SerializeField] float projectileSpeed;
     [SerializeField] float AttackAnimationLengh;
-
+    [SerializeField] float maxAttackRange;
+    [SerializeField] float minAttackRange;
     #endregion
 
     #region Game Flow Control
