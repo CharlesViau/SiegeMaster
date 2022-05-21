@@ -1,9 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using BattelObejcts;
+﻿using BatteObjects;
 using General;
-using Units.Types;
-using UnityEngine;
 
 namespace Managers
 {

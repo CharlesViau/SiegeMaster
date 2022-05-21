@@ -1,5 +1,4 @@
-﻿using System.Runtime.InteropServices;
-using Abilities.AbilitySO;
+﻿using Abilities.AbilitySO;
 using UnityEngine;
 
 namespace Abilities.AbilityStates
@@ -22,7 +21,7 @@ namespace Abilities.AbilityStates
         {
             _channelTime = 0;
             HasBeenInterrupt = false;
-            AbilitySo.Owner.PayGold(AbilitySo.stats.goldCost);
+            AbilitySo.Owner.RemoveGold(AbilitySo.stats.goldCost);
             //TODO CONSUME MANA
         }
 

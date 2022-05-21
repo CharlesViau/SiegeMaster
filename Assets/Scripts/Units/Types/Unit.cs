@@ -1,3 +1,4 @@
+using System;
 using Abilities;
 using General;
 using Units.Interfaces;
@@ -6,7 +7,8 @@ using UnityEngine;
 namespace Units.Types
 {
     [RequireComponent(typeof(Animator), typeof(AbilityHandler))]
-    public abstract class Unit : MonoBehaviour, IUpdatable, IPoolable, IMovable, ITargetAcquirer
+    public abstract class Unit : MonoBehaviour, IUpdatable, IPoolable, IMovable, ITargetAcquirer, IHittable
+
     {
         #region Properties and Variables
 
@@ -15,12 +17,13 @@ namespace Units.Types
         protected Animator Animator;
         public AbilityHandler AbilityHandler { get; private set; }
 
-        //Variables
+        //Stats
         [SerializeField] public float turningSpeed;
         private float _turnSmoothVelocity;
         [SerializeField] public float speed;
 
-        //Targeting
+        #region Targeting stuff
+
         [SerializeField] private Transform shootingPosition;
         public Transform ShootingPosition => shootingPosition;
         public Vector3 AimingDirection => TargetPosition - shootingPosition.position;
@@ -29,26 +32,36 @@ namespace Units.Types
 
         public Vector3 TargetPosition => AimedPosition;
         public Transform TargetTransform { get; set; }
-        
-        //Stat
-        [SerializeField]
-        protected int goldValue;
+
+        #endregion
+
+        #region Gold
+
+        [SerializeField] protected int goldValue;
         public int GoldValue => goldValue;
 
         public int Gold { get; private set; }
 
-        #endregion
-
-        public void ReceiveGold(int gold)
+        public void AddGold(int gold)
         {
             Gold += gold;
         }
 
-        public void PayGold(int gold)
+        public void RemoveGold(int gold)
         {
             Gold -= gold;
         }
+
+        #endregion
         
+        #region Events
+
+        protected bool IsDead;
+        public Action OnDeath;
+        #endregion
+
+        #endregion
+
         public virtual void Init()
         {
             //Caching Components
@@ -57,6 +70,8 @@ namespace Units.Types
             Animator = GetComponent<Animator>();
             AbilityHandler = GetComponent<AbilityHandler>();
             AbilityHandler.Init();
+
+            OnDeath = OnDeathEvent;
         }
 
         public virtual void PostInit()
@@ -99,6 +114,12 @@ namespace Units.Types
 
         public virtual void Jump()
         {
+        }
+
+        public abstract void GotShot(float damage);
+        protected virtual void OnDeathEvent()
+        {
+            
         }
     }
 }

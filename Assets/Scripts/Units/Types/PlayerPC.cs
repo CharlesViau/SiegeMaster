@@ -13,7 +13,7 @@ namespace Units.Types
 
         public float playerForce;
         public float maxSpeed;
-        PlayerAnimation PlayerAnimation;
+        private PlayerAnimation _playerAnimation;
 
         public Vector3 hitpoint;
         protected override Vector3 AimedPosition
@@ -57,9 +57,9 @@ namespace Units.Types
 
         public override void Jump()
         {
-            if (PlayerAnimation.isGrounded)
+            if (_playerAnimation.isGrounded)
             {
-                PlayerAnimation.Jump();
+                _playerAnimation.Jump();
                 Rigidbody.AddForce(Vector3.up * 1000, ForceMode.Impulse);
             }
 

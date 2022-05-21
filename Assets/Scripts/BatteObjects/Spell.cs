@@ -1,20 +1,17 @@
 ﻿using General;
+using Units.Interfaces;
 using UnityEngine;
 
-namespace BattelObejcts
+namespace BatteObjects
 {
     public class Spell : MonoBehaviour, IUpdatable, IPoolable, ICreatable<Spell.Args>
     {
-    
-
         public void PostInit()
         {
         }
 
         public void Init()
         {
-           
-
         }
 
         public void FixedRefresh()
@@ -23,12 +20,10 @@ namespace BattelObejcts
 
         public void LateRefresh()
         {
-
         }
 
         public void Refresh()
         {
-
         }
 
         public void Pool()
@@ -36,7 +31,7 @@ namespace BattelObejcts
             gameObject.SetActive(false);
         }
 
-    
+
         public void Depool()
         {
             gameObject.SetActive(true);
@@ -53,6 +48,7 @@ namespace BattelObejcts
                 } 
             }
         }
+
         public void Construct(Args constructionArgs)
         {
             transform.position = constructionArgs.spawningPosition;

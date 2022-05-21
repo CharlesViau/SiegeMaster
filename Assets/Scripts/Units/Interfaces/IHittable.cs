@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public interface IHittable 
+namespace Units.Interfaces
 {
-    public void GotShot(float damage);
+    public interface IHittable 
+    {
+        public void GotShot(float damage);
+    }
 }

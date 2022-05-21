@@ -1,18 +1,23 @@
 using System;
+using System.Runtime.InteropServices;
+using Units.Types;
 using UnityEngine;
+
 
 namespace Units.Statistics
 {
     [Serializable]
     public abstract class Stat
     {
+        protected Unit Owner;
         public float Current { get; set; }
 
         [SerializeField] protected float baseValue;
 
-        public virtual void Init()
+        public virtual void Init(Unit owner)
         {
             Current = baseValue;
+            Owner = owner;
         }
     }
     [Serializable]
@@ -22,13 +27,14 @@ namespace Units.Statistics
         private float _currentTime;
         private Stat _stat;
 
-        public void InitRegen(Stat stat)
+        public void InitRegen(Stat stat, Unit owner)
         {
             _stat = stat;
+            Init(owner);
         }
-        public override void Init()
+        public override void Init(Unit owner)
         {
-            base.Init();
+            base.Init(owner);
             _currentTime = timeInterval;
         }
 
@@ -46,16 +52,19 @@ namespace Units.Statistics
     {
         public Regeneration regeneration;
 
-        public override void Init()
+        public override void Init(Unit owner)
         {
-            base.Init();
-            regeneration.InitRegen(this);
-            regeneration.Init();
+            base.Init(owner);
+            regeneration.InitRegen(this, owner);
         }
 
         public void Refresh()
         {
             regeneration.Refresh();
+            if (Current <= 0)
+            {
+                Owner.OnDeath.Invoke();
+            }
         }
     }
 
@@ -64,11 +73,10 @@ namespace Units.Statistics
     {
         public Regeneration regeneration;
 
-        public override void Init()
+        public override void Init(Unit owner)
         {
-            base.Init();
-            regeneration.InitRegen(this);
-            regeneration.Init();
+            base.Init(owner);
+            regeneration.InitRegen(this, owner);
         }
 
         public void Refresh()

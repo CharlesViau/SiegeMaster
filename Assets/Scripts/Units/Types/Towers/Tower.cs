@@ -38,17 +38,23 @@ namespace Units.Types.Towers
             CoolDown(attackSpeed);
             
         }
-        
+
+        public override void GotShot(float damage)
+        {
+            
+        }
+
 
         protected virtual void GetTarget()
         {
             target = targetingSo.GetTheTarget();
         }
-        public void CoolDown(float _attackSpeed)
+
+        private void CoolDown(float attackSpeed)
         {
             
             _timer += Time.deltaTime;
-            if (_timer > _attackSpeed)
+            if (_timer > attackSpeed)
             {
                 GetTarget();
                 ExtraBehaviorBeforeFire();
@@ -85,7 +91,7 @@ namespace Units.Types.Towers
         public class Args : ConstructionArgs
         {
 
-            public Args(Vector3 _spawningPosition) : base(_spawningPosition)
+            public Args(Vector3 spawningPosition) : base(spawningPosition)
             {
 
             }

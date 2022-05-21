@@ -1,7 +1,6 @@
-using BattelObejcts;
+
+using BatteObjects;
 using Managers;
-using Units.Types;
-using Units.Types.Towers;
 using UnityEngine;
 
 namespace Abilities.AbilitySO
@@ -24,12 +23,12 @@ namespace Abilities.AbilitySO
 
         protected override void OnActiveCast()
         {
-            
+
         }
 
         protected override void ActiveStateRefresh()
         {
-            
+
         }
     }
 }
