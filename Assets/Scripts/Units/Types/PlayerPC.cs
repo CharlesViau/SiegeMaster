@@ -28,7 +28,7 @@ namespace Units.Types
         public override void Init()
         {
             base.Init();
-            PlayerAnimation = GetComponent<PlayerAnimation>();
+            _playerAnimation = GetComponent<PlayerAnimation>();
             _cameraRayCast = FindObjectOfType<CameraRaycast>();
 
         }
