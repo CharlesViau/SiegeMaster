@@ -45,7 +45,7 @@ namespace Units.Types
         #endregion
 
         #region Attacking
-        public float detectRange;
+        public float rangeToMoveTowardPlayer;
         public float attackRange;
         const float EnemyDamageToNexus = 1;
         #endregion
@@ -53,9 +53,6 @@ namespace Units.Types
         #region Animation
         static readonly int Speed = Animator.StringToHash("Speed");
         static readonly int IsDead = Animator.StringToHash("IsDead");
-        static readonly int IsMoving = Animator.StringToHash("IsMoving");
-        static readonly int IsFight = Animator.StringToHash("IsFight");
-        static readonly int IsShoot = Animator.StringToHash("IsShoot");
         #endregion
 
         #region UI & HP
@@ -87,7 +84,7 @@ namespace Units.Types
             movement_SO = Instantiate(movement_SO);
             targeting_SO = Instantiate(targeting_SO);
             movement_SO.Init(gameObject, _objective, speed);
-            targeting_SO.Init(gameObject, detectRange);
+            targeting_SO.Init(gameObject, rangeToMoveTowardPlayer);
             if (attack_SO)
             {
                 attack_SO = Instantiate(attack_SO);
@@ -102,7 +99,6 @@ namespace Units.Types
 
         public override void Refresh()
         {
-            //base.Refresh();
             switch (enemyState)
             {
                 case EnemyStates.Wander:
@@ -194,6 +190,7 @@ namespace Units.Types
             }
             if (alive && currentHp <= 0)
                 enemyState = EnemyStates.DeathAnimation;
+            //TODO : Give gold to player
         }
 
         private void DeathAnimation()
@@ -215,7 +212,6 @@ namespace Units.Types
         {
             yield return new WaitForSeconds(_delayToPool);
             _enemyAgent.enabled = false;
-            enemyState = EnemyStates.Wander;
             EnemyManager.Instance.Pool(enemyType, this);
         }
         #endregion
@@ -237,24 +233,6 @@ namespace Units.Types
         #endregion
 
         #region Attacking Player & Nexus
-        void AttackState()
-        {
-            if (attack_SO)
-            {
-                if (enemyType != EnemyType.WarriorEnemy)
-                    _enemyAgent.isStopped = true;
-
-                Vector3 dir = (_player.position - transform.position).normalized;
-
-                transform.forward = dir;
-                Vector3 rot = transform.eulerAngles;
-                rot.x = 0;
-                rot.z = 0;
-                transform.eulerAngles = rot;
-                attack_SO.Refresh(Animator);
-            }
-        }
-
         void GetReadyToAttack()
         {
             if (Vector3.Distance(transform.position, _player.transform.position) <= attackRange)
@@ -262,14 +240,32 @@ namespace Units.Types
             if (Vector3.Distance(transform.position, _player.transform.position) > attackRange)
             {
                 if (attack_SO) attack_SO.ResetBehaviors(Animator);
-                /*Animator.SetFloat(Speed, speed);
-                Animator.ResetTrigger(IsShoot);
-                Animator.ResetTrigger(IsFight);
-                Animator.SetTrigger(IsMoving);
-                _enemyAgent.isStopped = false;
-                if (attack_SO) attack_SO.isAnimSetted = false;*/
                 enemyState = EnemyStates.Wander;
             }
+        }
+
+        void AttackState()
+        {
+            if (attack_SO)
+            {
+                if (enemyType != EnemyType.WarriorEnemy)
+                {
+                    _enemyAgent.isStopped = true;
+                }
+                FacingToTarget();
+                attack_SO.Refresh(Animator);
+            }
+        }
+
+        void FacingToTarget()
+        {
+            Vector3 dir = (_player.position - transform.position).normalized;
+            transform.forward = dir;
+
+            Vector3 rot = transform.eulerAngles;
+            rot.x = 0;
+            rot.z = 0;            
+            transform.eulerAngles = rot;
         }
 
         void OnCollisionEnter(Collision collision)
@@ -283,7 +279,7 @@ namespace Units.Types
         }
         #endregion
 
-        #region Old targeting system
+        #region Old targeting logic
         /*public Transform[] targets;
         int waypointCounter = 0;
         void WaypointsCheck()

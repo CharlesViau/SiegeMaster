@@ -13,7 +13,6 @@ public class MeleeAttack_SO : Attack_SO
     SwordCollision sword;
     Collider swordCollider;
     float distanceToHitPlayer;
-    float speed;
     #endregion
 
     #region Methods
@@ -73,7 +72,7 @@ public class MeleeAttack_SO : Attack_SO
     }
     #endregion
 
-    #region Make the fighting more real
+    #region While fighting, Check if the player close enough to hit
     void GetColserToPlayer(Animator _anim)
     {
         float distanceToTarget = Vector3.Distance(ownerNavMesh.transform.position, target.position);
@@ -84,7 +83,8 @@ public class MeleeAttack_SO : Attack_SO
         }
         if (distanceToTarget > distanceToHitPlayer)
         {
-            _anim.SetFloat(Speed, 5);
+            ownerNavMesh.SetDestination(target.position);
+            _anim.SetFloat(Speed, ownerSpeed/4);
             ownerNavMesh.isStopped = false;
         }            
     }

@@ -12,13 +12,13 @@ public class Attack_SO : ScriptableObject
     [SerializeField] protected string movementAnimState;
     [SerializeField] protected float attackDamage;
     [SerializeField] protected float cooldownTimer;
-    public float AttackDamage { get { return attackDamage; } }
     #endregion
 
     #region Info from Attacker
     protected Transform ownerPos;
     protected Transform target;
     protected NavMeshAgent ownerNavMesh;
+    protected float ownerSpeed;
     #endregion
 
     #region Game Flow Control
@@ -33,6 +33,7 @@ public class Attack_SO : ScriptableObject
     public virtual void Init(NavMeshAgent _ownerNavMesh, Transform _ownerPos, Transform _target)
     {
         ownerNavMesh = _ownerNavMesh;
+        ownerSpeed = _ownerNavMesh.speed;
         ownerPos = _ownerPos;
         target = _target;
         isAnimSetted = false;
@@ -61,17 +62,14 @@ public class Attack_SO : ScriptableObject
     }
     #endregion
 
-    #region Saftey Check
+    #region Reset attacking values
     public virtual void ResetBehaviors(Animator _anim)
     {
-        _anim.SetFloat(Speed, 10);
+        _anim.SetFloat(Speed, ownerSpeed);
         _anim.ResetTrigger(attackAnimState);
         _anim.SetTrigger(movementAnimState);
         ownerNavMesh.isStopped = false;
         isAnimSetted = false;
-
-
-        //_enemyAgent.isStopped = false;
     }
     #endregion
     #endregion

@@ -73,13 +73,12 @@ public class ProjectileAttack_SO : Attack_SO
     #region Cooldown
     protected override void Cooldown(Animator _anim)
     {
-        timer += Time.deltaTime;
-        _anim.SetFloat(Speed, 0);
         base.Cooldown(_anim);
-        _anim.SetTrigger(movementAnimState);
+        _anim.SetFloat(Speed, 0);        
+        if (isAnimSetted)
+            _anim.SetTrigger(movementAnimState);
         isAnimSetted = false;
-        if (timer > 2)
-            attackState = AttackStates.CheackIfReadyToAttack;
+        attackState = AttackStates.CheackIfReadyToAttack;
     }
 
     void CheackIfReadyToAttack(Animator _anim)
