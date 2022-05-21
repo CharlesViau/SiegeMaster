@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: f8a60d169ab8a46b09c9b01a3e51601f, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: e11f5b66aad75483b8cd16ee18a0c917, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.002681641, g: 0.28734255, b: 0.30507603, a: 1}
+  m_IndirectSpecularColor: {r: 0.31302607, g: 0.6291564, b: 0.85844326, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -17174,6 +17174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbdff949a6b381b4085af9ca6e40b1e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rot: {x: 0, y: 0, z: 0}
 --- !u!1 &2870547321516045394
 GameObject:
   m_ObjectHideFlags: 0
@@ -17475,11 +17476,24 @@ MonoBehaviour:
   turningSpeed: 10
   speed: 10
   shootingPosition: {fileID: 3444877088523327551}
+  goldValue: 0
+  stats:
+    health:
+      baseValue: 0
+      regeneration:
+        baseValue: 0
+        timeInterval: 0
+    mana:
+      baseValue: 0
+      regeneration:
+        baseValue: 0
+        timeInterval: 0
   playerRotationLook: {fileID: 134684083651304782}
   maxDistanceAiming: 50
   rayCastStartPointDistance: 2
   playerForce: 3000
   maxSpeed: 10
+  hitpoint: {x: 0, y: 0, z: 0}
 --- !u!1 &3029125517684759686
 GameObject:
   m_ObjectHideFlags: 0
@@ -20573,7 +20587,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4941380736535661778}
-  m_LocalRotation: {x: 0.04578307, y: -0.07754261, z: 0.0035646434, w: 0.9959309}
+  m_LocalRotation: {x: 0.045783065, y: -0.0775426, z: 0.0035646432, w: 0.9959309}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
