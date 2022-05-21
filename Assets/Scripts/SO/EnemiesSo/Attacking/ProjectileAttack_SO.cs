@@ -13,8 +13,6 @@ public class ProjectileAttack_SO : Attack_SO
     [SerializeField] ProjectileType projectileType;
     [SerializeField] float projectileSpeed;
     [SerializeField] float AttackAnimationLengh;
-    [SerializeField] float maxAttackRange;
-    [SerializeField] float minAttackRange;
     #endregion
 
     #region Game Flow Control
@@ -52,7 +50,7 @@ public class ProjectileAttack_SO : Attack_SO
     }
     #endregion
 
-    #region Shoot
+    #region Shooting Phase
     void StandbyToShoot(Animator _anim)
     {
         _anim.SetFloat(Speed, 0);
