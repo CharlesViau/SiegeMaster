@@ -15,34 +15,36 @@ namespace Units.Types
         public float maxSpeed;
         PlayerAnimation PlayerAnimation;
 
-        protected override Vector3 AimedPosition 
-            {
+        public Vector3 hitpoint;
+        protected override Vector3 AimedPosition
+        {
             get
             {
-                if (Input.GetKeyDown(KeyCode.X))
-                    Debug.Log("");
-
-                return _cameraRayCast.RayCast(maxDistanceAiming, rayCastStartPointDistance);
+                return hitpoint;
             }
 
-            }
+        }
 
         public override void Init()
         {
             base.Init();
-            PlayerAnimation =GetComponent<PlayerAnimation>();
+            PlayerAnimation = GetComponent<PlayerAnimation>();
             _cameraRayCast = FindObjectOfType<CameraRaycast>();
 
         }
+        public override void Refresh()
+        {
+            base.Refresh();
+            hitpoint = _cameraRayCast.RayCast(maxDistanceAiming, rayCastStartPointDistance);
+        }
         public override void FixedRefresh()
         {
-            
         }
         public override void Move(Vector3 direction)
         {
-           
-            Rigidbody.AddForce(direction* playerForce);
-            if (Rigidbody.velocity.magnitude >maxSpeed)
+
+            Rigidbody.AddForce(direction * playerForce);
+            if (Rigidbody.velocity.magnitude > maxSpeed)
             {
                 Rigidbody.velocity = Vector3.ClampMagnitude(Rigidbody.velocity, maxSpeed);
             }
@@ -60,14 +62,14 @@ namespace Units.Types
                 PlayerAnimation.Jump();
                 Rigidbody.AddForce(Vector3.up * 1000, ForceMode.Impulse);
             }
-         
-         
+
+
         }
         public override void Look()
         {
             playerRotationLook.forward = (AimedPosition - playerRotationLook.position).normalized;
-            
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, playerRotationLook.transform.eulerAngles.y, 0), turningSpeed*Time.fixedDeltaTime);
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, playerRotationLook.transform.eulerAngles.y, 0), turningSpeed * Time.fixedDeltaTime);
 
         }
 

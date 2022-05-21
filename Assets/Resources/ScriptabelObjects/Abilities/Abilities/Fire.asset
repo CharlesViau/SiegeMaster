@@ -16,7 +16,7 @@ MonoBehaviour:
     manaCost: 0
     goldCost: 0
     maxRange: 50
-    baseChannelTime: 0.5
+    baseChannelTime: 0.01
     baseCooldown: 0
     art: {fileID: 0}
   spellUIType: 8
@@ -24,4 +24,5 @@ MonoBehaviour:
   recastCharges: 0
   targetingStateSo: {fileID: 11400000, guid: 42321570041424145b976077f64cf828, type: 2}
   type: 2
-  SphireCastRadius: 0
+  sphereCastRadius: 5
+  explosionDamage: 2

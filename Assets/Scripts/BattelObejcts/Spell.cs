@@ -41,28 +41,30 @@ namespace BattelObejcts
         {
             gameObject.SetActive(true);
         }
-         void ExplosionDamage(Vector3 center, float radius)
+        void ExplosionDamage(Vector3 center, float radius,float damage)
         {
             Collider[] hitColliders = Physics.OverlapSphere(center, radius);
             foreach (var hitCollider in hitColliders)
             {
-              Debug.Log(hitCollider.gameObject.name);
+
+                Debug.Log(hitCollider.gameObject.name);
             }
         }
         public void Construct(Args constructionArgs)
         {
             transform.position = constructionArgs.spawningPosition;
-            ExplosionDamage(transform.position, constructionArgs.radius);
+            ExplosionDamage(transform.position, constructionArgs.radius, constructionArgs.explosionDamage);
         }
 
 
         public class Args : ConstructionArgs
         {
             public float radius;
-
-            public Args(Vector3 _spawningPosition,float _radius) : base(_spawningPosition)
+            public float explosionDamage;
+            public Args(Vector3 _spawningPosition,float _radius, float _explosionDamage) : base(_spawningPosition)
             {
                 radius = _radius;
+                explosionDamage = _explosionDamage;
             }
         }
     }

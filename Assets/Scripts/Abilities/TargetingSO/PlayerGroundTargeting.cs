@@ -8,7 +8,14 @@ namespace Abilities.TargetingSO
     {
         public override void Refresh()
         {
-            if (!Physics.Raycast(Owner.TargetPosition, Vector3.down, out var hitDown, MaxRange)) return;
+            //Debug.Log("sds");
+            if (!Physics.Raycast(Owner.TargetPosition, Vector3.down, out var hitDown, MaxRange))
+            {
+                //if we are looking at the ground we dont make the second ray to snap to the ground
+                TemporaryTransform.position = Owner.TargetPosition;
+                return;
+            }
+
             Vector3 endPoint;
                 
             if (Physics.Raycast(Owner.ShootingPosition.position, Owner.AimingDirection, out var aimDirectionHit,

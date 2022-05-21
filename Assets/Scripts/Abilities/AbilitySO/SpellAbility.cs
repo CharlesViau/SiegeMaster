@@ -10,8 +10,8 @@ namespace Abilities.AbilitySO
     public class SpellAbility : AbilitySo
     {
         public SpellType type;
-        public float SphireCastRadius;
-
+        public float sphereCastRadius;
+        public float explosionDamage;
 
         protected override void ReadyStateRefresh()
         {
@@ -19,7 +19,7 @@ namespace Abilities.AbilitySO
 
         protected override void OnCast()
         {
-            SpellManager.Instance.Create(type,new Spell.Args(TargetTransform.position, SphireCastRadius));
+            SpellManager.Instance.Create(type,new Spell.Args(TargetTransform.position, sphereCastRadius, explosionDamage));
         }
 
         protected override void OnActiveCast()

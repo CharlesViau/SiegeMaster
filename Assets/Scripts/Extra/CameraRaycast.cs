@@ -16,9 +16,8 @@ public class CameraRaycast : MonoBehaviour
         if (Physics.Raycast(transform.position + transform.forward* rayCastStartPointDistance, transform.forward, out hit, maxDistanceForRay,layerMask)) 
         
         {
-            //Debug.Log(hit.collider.transform.gameObject.name);
             hitPoint = hit.point;
-            // Debug.Log(hitPoint);
+
         }
         else
         {

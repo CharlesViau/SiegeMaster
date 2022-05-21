@@ -69,7 +69,7 @@ namespace Units.Types.Towers
         public  virtual void Fire(Transform targetTransform)
         {
 
-                Animator.SetTrigger(Fire1);
+            Animator.SetTrigger(Fire1);
          
             
             ParticleSystemManager.Instance.Create(towerParticleType, new ParticleSystemScript.Args(particlePosition.position));
