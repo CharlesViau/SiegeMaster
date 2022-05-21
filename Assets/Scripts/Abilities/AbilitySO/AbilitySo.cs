@@ -23,8 +23,9 @@ namespace Abilities.AbilitySO
 
         [Header("Stats")] public AbilityStats stats;
 
-        #region Cast Method
+        #region Cast Method (NOT IMPLEMENTED)
 
+/*
         [Header("Cast Method")] public CastMethod castMethod;
 
         [InspectorName("Lock Cast Method")]
@@ -34,9 +35,11 @@ namespace Abilities.AbilitySO
         protected bool castMethodIsLock;
 
         public bool IsPressAndRelease => castMethod == CastMethod.PressAndRelease;
+*/
 
         #endregion
 
+        public Unit Owner { get; private set; }
         public SpellUIType spellUIType;
 
         #region State Specifics and StateMachine
@@ -58,14 +61,14 @@ namespace Abilities.AbilitySO
 
         #endregion
 
+/*
         [Header("Ready State")] public Action OnReadyEnter;
 
 
         //[Header("Targeting State")]
         [Header("Channeling State")] public Action OnChannelingEnter;
-        //[Header("Active State")]
-
-        public float activeTime;
+        */
+        [Header("Active State")] public float activeTime;
         public int recastCharges;
 
         //Public events related to "Input" Handling
@@ -73,8 +76,6 @@ namespace Abilities.AbilitySO
 
         public Action OnFirePress;
         public Action OnFireRelease;
-
-        protected Unit Owner;
 
         #region Targeting Stuff
 
@@ -91,16 +92,18 @@ namespace Abilities.AbilitySO
         #endregion
 
         #region Public Methods
+
         public virtual void Init(Unit owner)
         {
             //Init Properties and Variables
             Owner = owner;
-            
+
             _targetingStateSoClone = Instantiate(targetingStateSo);
             _targetingStateSoClone.Init(this);
             _targetingStateSoClone.spellUIType = spellUIType;
-            
-            _stateMachine = new AbilityStateMachine(this, OnCast, OnActiveCast, ActiveStateRefresh, _targetingStateSoClone);
+
+            _stateMachine =
+                new AbilityStateMachine(this, OnCast, OnActiveCast, ActiveStateRefresh, _targetingStateSoClone);
 
             //define Events
             OnFirePress = () =>
@@ -118,12 +121,17 @@ namespace Abilities.AbilitySO
                     state.OnFireRelease?.Invoke();
                 }
             };
-            
         }
 
         public void Refresh()
         {
             _stateMachine.Refresh();
+        }
+
+        private bool OwnerHasResources()
+        {
+            //TODO : ADD MANA CHECK
+            return Owner.Gold >= stats.goldCost;
         }
 
         #endregion
@@ -140,7 +148,7 @@ namespace Abilities.AbilitySO
         private class AbilityStateMachine : StateMachine
         {
             #region Properties and Variables
-            
+
             //States
             private readonly AbilityReadyState _readyState;
             private readonly AbilityTargetingState _targetingState;
@@ -175,8 +183,8 @@ namespace Abilities.AbilitySO
                 //Ready 
                 AddTransition(_readyState, _targetingState, WasTrigger());
                 //Targeting
-                AddTransition(_targetingState, _channelingState, HasTarget());
-                AddTransition(_targetingState, _readyState,AbilityIsNotSelected());
+                AddTransition(_targetingState, _channelingState, HasTargetAndResources());
+                AddTransition(_targetingState, _readyState, AbilityIsNotSelected());
                 //Channeling
                 AddTransition(_channelingState, _activeState, ChannelComplete());
                 AddTransition(_channelingState, _cooldownState, ChannelWasInterrupted());
@@ -191,7 +199,8 @@ namespace Abilities.AbilitySO
 
                 Func<bool> WasTrigger() => () => abilitySo.IsSelected;
 
-                Func<bool> HasTarget() => () => abilitySo.TargetTransform != null;
+                Func<bool> HasTargetAndResources() =>
+                    () => abilitySo.TargetTransform != null && abilitySo.OwnerHasResources();
 
                 Func<bool> AbilityIsNotSelected() => () => !abilitySo.IsSelected;
 
@@ -215,12 +224,17 @@ namespace Abilities.AbilitySO
         public class AbilityStats
         {
             public int manaCost;
+            public int goldCost;
             public int maxRange;
 
             public float baseChannelTime;
             public float baseCooldown;
+
+            //UI
+            public Sprite art;
         }
 
+        //Not used yet, but could store specific animation and audio to play for different part of the ability
         [Serializable]
         public class Event : UnityEvent
         {

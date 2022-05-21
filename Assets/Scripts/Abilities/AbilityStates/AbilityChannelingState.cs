@@ -21,6 +21,8 @@ namespace Abilities.AbilityStates
         {
             _channelTime = 0;
             HasBeenInterrupt = false;
+            AbilitySo.Owner.RemoveGold(AbilitySo.stats.goldCost);
+            //TODO CONSUME MANA
         }
 
         public override void OnExit()

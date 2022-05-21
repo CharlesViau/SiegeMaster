@@ -1,32 +1,87 @@
 using System;
-using General;
+using System.Runtime.InteropServices;
+using Units.Types;
 using UnityEngine;
+
 
 namespace Units.Statistics
 {
+    [Serializable]
     public abstract class Stat
     {
-        protected float current;
-        [SerializeField] 
-        private readonly float baseValue;
-        protected float growthPerLevel; 
-        public float Maximum => baseValue + bonus;
-        protected float bonus;
-        
+        protected Unit Owner;
+        public float Current { get; set; }
 
-        public virtual void Refresh() { }
+        [SerializeField] protected float baseValue;
+
+        public virtual void Init(Unit owner)
+        {
+            Current = baseValue;
+            Owner = owner;
+        }
     }
-
-    public class HealthRegen : Stat
+    [Serializable]
+    public class Regeneration : Stat
     {
-        public float Current => current;
-        
-    }
+        [SerializeField] public float timeInterval;
+        private float _currentTime;
+        private Stat _stat;
 
+        public void InitRegen(Stat stat, Unit owner)
+        {
+            _stat = stat;
+            Init(owner);
+        }
+        public override void Init(Unit owner)
+        {
+            base.Init(owner);
+            _currentTime = timeInterval;
+        }
+
+        public void Refresh()
+        {
+            _currentTime -= Time.deltaTime;
+
+            if (!(_currentTime <= 0)) return;
+            _stat.Current += baseValue;
+            _currentTime = timeInterval;
+        }
+    }
+    [Serializable]
     public class Health : Stat
     {
-        public float Current => current;
-        public HealthRegen HealthRegen;
-        
+        public Regeneration regeneration;
+
+        public override void Init(Unit owner)
+        {
+            base.Init(owner);
+            regeneration.InitRegen(this, owner);
+        }
+
+        public void Refresh()
+        {
+            regeneration.Refresh();
+            if (Current <= 0)
+            {
+                Owner.OnDeath.Invoke();
+            }
+        }
+    }
+
+    [Serializable]
+    public class Mana : Stat
+    {
+        public Regeneration regeneration;
+
+        public override void Init(Unit owner)
+        {
+            base.Init(owner);
+            regeneration.InitRegen(this, owner);
+        }
+
+        public void Refresh()
+        {
+            regeneration.Refresh();
+        }
     }
 }

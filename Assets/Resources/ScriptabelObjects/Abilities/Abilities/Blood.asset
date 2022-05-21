@@ -9,19 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b35cd404587482b9443842bea788a19, type: 3}
-  m_Name: SeekingTower
+  m_Script: {fileID: 11500000, guid: 9ba59086b1fad0d43948e37d07a59aac, type: 3}
+  m_Name: Blood
   m_EditorClassIdentifier: 
   stats:
     manaCost: 0
+    goldCost: 0
     maxRange: 50
-    baseChannelTime: 0
-    baseCooldown: 1
-    art: {fileID: 21300000, guid: a7934d80303e26a42b6a47fccb1c7201, type: 3}
-  castMethod: 0
-  castMethodIsLock: 0
-  spellUIType: 5
+    baseChannelTime: 0.5
+    baseCooldown: 0
+    art: {fileID: 0}
+  spellUIType: 9
   activeTime: 0
   recastCharges: 0
   targetingStateSo: {fileID: 11400000, guid: 42321570041424145b976077f64cf828, type: 2}
-  towerType: 2
+  type: 3
+  SphireCastRadius: 0

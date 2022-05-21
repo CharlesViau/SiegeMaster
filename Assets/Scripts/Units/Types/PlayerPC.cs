@@ -13,36 +13,38 @@ namespace Units.Types
 
         public float playerForce;
         public float maxSpeed;
-        PlayerAnimation PlayerAnimation;
+        private PlayerAnimation _playerAnimation;
 
-        protected override Vector3 AimedPosition 
-            {
+        public Vector3 hitpoint;
+        protected override Vector3 AimedPosition
+        {
             get
             {
-                if (Input.GetKeyDown(KeyCode.X))
-                    Debug.Log("");
-
-                return _cameraRayCast.RayCast(maxDistanceAiming, rayCastStartPointDistance);
+                return hitpoint;
             }
 
-            }
+        }
 
         public override void Init()
         {
             base.Init();
-            PlayerAnimation =GetComponent<PlayerAnimation>();
+            _playerAnimation = GetComponent<PlayerAnimation>();
             _cameraRayCast = FindObjectOfType<CameraRaycast>();
 
         }
+        public override void Refresh()
+        {
+            base.Refresh();
+            hitpoint = _cameraRayCast.RayCast(maxDistanceAiming, rayCastStartPointDistance);
+        }
         public override void FixedRefresh()
         {
-            
         }
         public override void Move(Vector3 direction)
         {
-           
-            Rigidbody.AddForce(direction* playerForce);
-            if (Rigidbody.velocity.magnitude >maxSpeed)
+
+            Rigidbody.AddForce(direction * playerForce);
+            if (Rigidbody.velocity.magnitude > maxSpeed)
             {
                 Rigidbody.velocity = Vector3.ClampMagnitude(Rigidbody.velocity, maxSpeed);
             }
@@ -55,19 +57,19 @@ namespace Units.Types
 
         public override void Jump()
         {
-            if (PlayerAnimation.isGrounded)
+            if (_playerAnimation.isGrounded)
             {
-                PlayerAnimation.Jump();
+                _playerAnimation.Jump();
                 Rigidbody.AddForce(Vector3.up * 1000, ForceMode.Impulse);
             }
-         
-         
+
+
         }
         public override void Look()
         {
             playerRotationLook.forward = (AimedPosition - playerRotationLook.position).normalized;
-            
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, playerRotationLook.transform.eulerAngles.y, 0), turningSpeed*Time.fixedDeltaTime);
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, playerRotationLook.transform.eulerAngles.y, 0), turningSpeed * Time.fixedDeltaTime);
 
         }
 

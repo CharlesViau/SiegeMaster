@@ -16,7 +16,7 @@ using General;
     public void Init()
     {
         timer = 0;
-           //only called on the 
+        //only called on the 
         movement_SO = Instantiate(movement_SO);
         onCollision_SO = Instantiate(onCollision_SO);
     }

@@ -9,7 +9,11 @@ namespace Managers
         ArcherTower,
         FireBallTower,
         CatapultTower,
-        SeekingTower
+        SeekingTower,
+        Storm,
+        Lightning,
+        Fire,
+        Blood,
     }
     public class SpellUIManager : Manager<SpellUI, SpellUIType, SpellUI.Args, SpellUIManager>
     {
