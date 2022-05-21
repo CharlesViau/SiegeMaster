@@ -1,6 +1,5 @@
 using System;
 using Units.Interfaces;
-using Units.Statistics;
 using UnityEngine;
 
 namespace Units.Types
@@ -10,27 +9,13 @@ namespace Units.Types
     {
         public Action OnRespawn;
         protected abstract override Vector3 AimedPosition { get; }
-
-        public Stats stats;
-
+        
         public override void Init()
         {
             base.Init();
             OnRespawn = OnRespawnEvent;
-            stats.Init(this);
         }
-
-        public override void Refresh()
-        {
-            base.Refresh();
-            
-            if(!IsDead)
-                stats.Refresh();
-            else
-            {
-                //TODO: Respawn Timer
-            }
-        }
+        
 
         public override void GotShot(float damage)
         {

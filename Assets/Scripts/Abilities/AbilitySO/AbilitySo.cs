@@ -130,8 +130,7 @@ namespace Abilities.AbilitySO
 
         private bool OwnerHasResources()
         {
-            //TODO : ADD MANA CHECK
-            return Owner.Gold >= stats.goldCost;
+            return Owner.Gold >= stats.goldCost && Owner.stats.mana.Current >= stats.manaCost;
         }
 
         #endregion
