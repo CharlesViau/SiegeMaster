@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Managers
 {
-    public enum SpellType { EnemyHp, NexusHp }
+    public enum SpellType {Storm,Lightning,Fire,Blood}
 
     public class SpellManager : Manager<Spell, SpellType, Spell.Args, SpellManager>
     {

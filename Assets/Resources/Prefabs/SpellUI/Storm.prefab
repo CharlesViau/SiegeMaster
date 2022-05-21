@@ -11,10 +11,9 @@ GameObject:
   - component: {fileID: 3107869348590249543}
   - component: {fileID: 7357309966027855028}
   - component: {fileID: 5979971682499611977}
-  - component: {fileID: 7724946545353294226}
-  - component: {fileID: -7054020090001244557}
+  - component: {fileID: -7733267055610206697}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Storm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 51a3015f28d518a4592d28ba285ebb60, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,20 +82,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7724946545353294226
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3329113376875349500}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-7054020090001244557
+--- !u!114 &-7733267055610206697
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -105,6 +91,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 3329113376875349500}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e984fa5fe404ff99cc859ba6ca582c5, type: 3}
+  m_Script: {fileID: 11500000, guid: 79be75ace1174870b3c88fe1a9679fbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
