@@ -12,7 +12,6 @@ public class CameraRaycast : MonoBehaviour
 
         RaycastHit hit;
         Vector3 hitPoint;
-        Debug.DrawRay(transform.position, transform.forward * maxDistanceForRay, Color.green);
         if (Physics.Raycast(transform.position + transform.forward* rayCastStartPointDistance, transform.forward, out hit, maxDistanceForRay,layerMask)) 
         
         {
