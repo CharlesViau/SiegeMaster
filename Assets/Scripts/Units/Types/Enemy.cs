@@ -217,7 +217,7 @@ namespace Units.Types
         {
             if (currentHp >= 0)
             {
-                loseHpSound.Play();
+                //loseHpSound.Play();
                 damage = Mathf.Clamp(damage, 0, currentHp);
                 currentHp -= (int) damage;
 
@@ -240,7 +240,7 @@ namespace Units.Types
         {
             if (gameObject.activeInHierarchy)
                 _enemyAgent.ResetPath();
-            DeathSound.Play();
+            //DeathSound.Play();
             Animator.SetTrigger(IsDead);
             alive = false;
             enemyState = EnemyStates.Death;
