@@ -17,10 +17,10 @@ public class GameFlowManager : MonoBehaviour
     GameState gameState;
     public Waves_SO[] waves_SO;
     public float delayToSartWave;
-    public GameObject BossEnemy;
     int maxAmountsOfWaves;
-    int currentWave;
+    int currentWave=0;
     float timer;
+    PuQUEST puQUEST;
     #endregion
     #endregion
     
@@ -30,8 +30,10 @@ public class GameFlowManager : MonoBehaviour
     {
         maxAmountsOfWaves = waves_SO.Length;
         gameState = GameState.WaitToSpawn;
+        currentWave =-1;
+        timer = 0;
+        puQUEST = FindObjectOfType<PuQUEST>();
 
-        
         foreach (Waves_SO wave_SO in waves_SO)
         {
             Waves_SO clone = Instantiate(wave_SO);
@@ -81,7 +83,7 @@ public class GameFlowManager : MonoBehaviour
         if (timer > delayToSartWave)
         {
             timer = 0;
-            gameState = GameState.Spawn;
+            gameState = GameState.LevelUp;
         }
     }
 
@@ -94,26 +96,28 @@ public class GameFlowManager : MonoBehaviour
     void CheckAliveEnemies()
     {
         if (EnemyManager.Instance.Count == 0)
-            gameState = GameState.LevelUp;
+            gameState = GameState.WaitToSpawn;
     }
     void BossEnemyActivated()
     {
-
+        
+        if (!puQUEST.balls.CheckIfItsAlive())
+        {
+             gameState = GameState.GameOver;
+        }
     }
 
     void LevelUp()
     {
-        if (currentWave <= maxAmountsOfWaves)
+        if (currentWave < maxAmountsOfWaves-1)
         {
             currentWave++;
-            gameState = GameState.WaitToSpawn;
+            gameState = GameState.Spawn;
         }
         else
         {
             gameState = GameState.BossEnemy;
-            BossEnemy.SetActive(true);
-
-
+            puQUEST.gameObject.SetActive(true);
         }
 
     }
