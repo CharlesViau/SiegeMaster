@@ -36,6 +36,7 @@ namespace Inputs
         private InputAction _ability2Action;
         private InputAction _ability3Action;
         private InputAction _ability4Action;
+        private InputAction _toggleBuildModeAction;
         
         private InputAction[] _abilityActions;
 
@@ -48,6 +49,7 @@ namespace Inputs
         private const string Ability2 = "Ability2";
         private const string Ability3 = "Ability3";
         private const string Ability4 = "Ability4";
+        private const string SwitchMode = "SwitchMode";
 
         #endregion
         
@@ -79,6 +81,8 @@ namespace Inputs
             _ability2Action = _playerInput.actions[Ability2];
             _ability3Action = _playerInput.actions[Ability3];
             _ability4Action = _playerInput.actions[Ability4];
+            _toggleBuildModeAction = _playerInput.actions[SwitchMode];
+            
             
             //Add Ability to an Array (Useful to avoid typing the same code multiple time in the future.
             //Since polling for those is the same and the ability handler also has the proper ability in an array)
@@ -90,6 +94,7 @@ namespace Inputs
             PollFireInput();
             PollAbilityInput();
             PollJumpInput();
+            PollSwitchInput();
         }
 
         public void FixedRefresh()
@@ -154,6 +159,14 @@ namespace Inputs
                 {
                     CommandManager.Instance.Add(new AbilityReleaseCommand(_unit, i));
                 }
+            }
+        }
+
+        private void PollSwitchInput()
+        {
+            if (_toggleBuildModeAction.WasPressedThisFrame())
+            {
+                CommandManager.Instance.Add(new SwitchCommand(_unit));
             }
         }
         #endregion
