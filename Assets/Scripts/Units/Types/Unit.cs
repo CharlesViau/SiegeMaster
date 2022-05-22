@@ -2,6 +2,7 @@ using System;
 using Abilities;
 using General;
 using Units.Interfaces;
+using Units.Statistics;
 using UnityEngine;
 
 namespace Units.Types
@@ -54,9 +55,11 @@ namespace Units.Types
 
         #endregion
         
+        public Stats stats;
+        
         #region Events
 
-        protected bool IsDead;
+        public bool IsDead { get; protected set; }
         public Action OnDeath;
         #endregion
 
@@ -72,6 +75,7 @@ namespace Units.Types
             AbilityHandler.Init();
 
             OnDeath = OnDeathEvent;
+            stats.Init(this);
         }
 
         public virtual void PostInit()
@@ -82,6 +86,8 @@ namespace Units.Types
         public virtual void Refresh()
         {
             AbilityHandler.Refresh();
+            if(!IsDead)
+                stats.Refresh();
         }
 
         public virtual void FixedRefresh()

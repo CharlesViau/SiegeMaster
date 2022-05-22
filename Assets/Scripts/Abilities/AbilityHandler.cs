@@ -33,6 +33,7 @@ namespace Abilities
         public Action<int> OnAbilityRelease;
         public Action OnFirePress;
         public Action OnFireRelease;
+        public Action ToggleBuildMode;
 
         #endregion
 
@@ -50,6 +51,7 @@ namespace Abilities
             OnAbilityRelease = OnAbilityReleaseEvent;
             OnFirePress = OnFirePressEvent;
             OnFireRelease = OnFireReleaseEvent;
+            ToggleBuildMode = ToggleBuildingMode;
 
             InitAbilities();
             InitBasicAttack();

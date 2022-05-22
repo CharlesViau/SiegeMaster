@@ -15,11 +15,12 @@ namespace Units.Types
         public float maxSpeed;
         private PlayerAnimation _playerAnimation;
 
+        public Vector3 hitPoint;
         protected override Vector3 AimedPosition
         {
             get
             {
-                return _cameraRayCast.RayCast(maxDistanceAiming, rayCastStartPointDistance);
+                return hitPoint;
             }
 
         }
@@ -34,6 +35,7 @@ namespace Units.Types
         public override void Refresh()
         {
             base.Refresh();
+            hitPoint = _cameraRayCast.RayCast(maxDistanceAiming, rayCastStartPointDistance);
         }
         public override void FixedRefresh()
         {

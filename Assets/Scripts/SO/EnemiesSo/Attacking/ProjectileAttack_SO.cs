@@ -13,6 +13,7 @@ public class ProjectileAttack_SO : Attack_SO
     [SerializeField] ProjectileType projectileType;
     [SerializeField] float projectileSpeed;
     [SerializeField] float AttackAnimationLengh;
+    AudioSource audio;
     #endregion
 
     #region Game Flow Control
@@ -26,6 +27,7 @@ public class ProjectileAttack_SO : Attack_SO
     {
         base.Init(_ownerNavMesh, _ownerPos, _target);
         attackState = AttackStates.GetReadyToShoot;
+        audio = _ownerNavMesh.GetComponent<AudioSource>();
     }
 
     public override void Refresh(Animator _anim)
@@ -60,7 +62,7 @@ public class ProjectileAttack_SO : Attack_SO
     }
 
     protected override void Attack(Animator _anim)
-    {        
+    {
         timer += Time.deltaTime;
         base.Attack(_anim);
         if (timer > AttackAnimationLengh)
@@ -76,7 +78,6 @@ public class ProjectileAttack_SO : Attack_SO
             new Projectile.Args(ownerPos.position, projectileType,
             target, projectileSpeed, attackDamage, Vector3.zero, false));
 
-
         attackState = AttackStates.Cooldown;
     }
     #endregion
@@ -85,7 +86,8 @@ public class ProjectileAttack_SO : Attack_SO
     protected override void Cooldown(Animator _anim)
     {
         base.Cooldown(_anim);
-        _anim.SetFloat(Speed, 0);        
+        if (!audio.isPlaying) audio.Play();
+        _anim.SetFloat(Speed, 0);
         if (isAnimSetted)
             _anim.SetTrigger(movementAnimState);
         isAnimSetted = false;
@@ -109,6 +111,7 @@ public class ProjectileAttack_SO : Attack_SO
         base.ResetBehaviors(_anim);
         attackState = AttackStates.GetReadyToShoot;
         timer = 0;
+        audio.Stop();
     }
     #endregion
 }

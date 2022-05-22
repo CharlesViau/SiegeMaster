@@ -22,7 +22,7 @@ namespace Abilities.AbilityStates
             _channelTime = 0;
             HasBeenInterrupt = false;
             AbilitySo.Owner.RemoveGold(AbilitySo.stats.goldCost);
-            //TODO CONSUME MANA
+            AbilitySo.Owner.stats.mana.Current -= AbilitySo.stats.manaCost;
         }
 
         public override void OnExit()
