@@ -13,6 +13,7 @@ public class MeleeAttack_SO : Attack_SO
     SwordCollision sword;
     Collider swordCollider;
     float distanceToHitPlayer;
+    AudioSource attackSound;
     #endregion
 
     #region Methods
@@ -21,6 +22,7 @@ public class MeleeAttack_SO : Attack_SO
     {
         base.Init(_ownerNavMesh, _ownerPos, _target);
 
+        attackSound = _ownerNavMesh.GetComponent<AudioSource>();
         sword = FindObjectOfType<SwordCollision>();
         swordCollider = sword.GetComponent<Collider>();
         sword.Init(attackDamage, target);
@@ -51,6 +53,8 @@ public class MeleeAttack_SO : Attack_SO
     protected override void Attack(Animator _anim)
     {
         base.Attack(_anim);
+        //if (!attackSound.isPlaying) attackSound.Play();
+        //attackSound.PlayDelayed(1);
         if (swordCollider.enabled == false)
             meleeState = MeleeStates.CollisionOff;
     }
@@ -83,10 +87,11 @@ public class MeleeAttack_SO : Attack_SO
         }
         if (distanceToTarget > distanceToHitPlayer)
         {
+            //attackSound.Stop();
             ownerNavMesh.SetDestination(target.position);
-            _anim.SetFloat(Speed, ownerSpeed/4);
+            _anim.SetFloat(Speed, ownerSpeed / 4);
             ownerNavMesh.isStopped = false;
-        }            
+        }
     }
     #endregion
     public override void ResetBehaviors(Animator _anim)
