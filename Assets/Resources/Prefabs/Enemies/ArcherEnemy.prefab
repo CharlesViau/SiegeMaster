@@ -1973,7 +1973,7 @@ RectTransform:
   m_GameObject: {fileID: 6585963860662406109}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.03, y: 0.0027565, z: 1}
+  m_LocalScale: {x: 0.02, y: 0.0027565, z: 1}
   m_Children: []
   m_Father: {fileID: 7109381498797108227}
   m_RootOrder: 1
@@ -2508,6 +2508,17 @@ MonoBehaviour:
   speed: 10
   shootingPosition: {fileID: 2855636505979012687}
   goldValue: 0
+  stats:
+    health:
+      baseValue: 0
+      regeneration:
+        baseValue: 0
+        timeInterval: 0
+    mana:
+      baseValue: 0
+      regeneration:
+        baseValue: 0
+        timeInterval: 0
   enemyType: 0
   movement_SO: {fileID: 11400000, guid: 12c3ff3e48a540748aca02716d57c38d, type: 2}
   targeting_SO: {fileID: 11400000, guid: cac941549c978834b8b983c5e7b75cbc, type: 2}
