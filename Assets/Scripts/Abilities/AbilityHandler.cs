@@ -1,6 +1,7 @@
 using System;
 using Abilities.AbilitySO;
 using General;
+using UI;
 using Units.Types;
 using UnityEngine;
 
@@ -58,13 +59,11 @@ namespace Abilities
             InitTowers();
         }
 
-        #region Not Use
-
         public void PostInit()
         {
+            if(_owner.IsPlayer)
+                UIPlayerBar.Instance.SetAbility(_abilitiesClone);
         }
-
-        #endregion
 
         #endregion
 
@@ -170,6 +169,7 @@ namespace Abilities
         private void ToggleBuildingMode()
         {
             _inBuildingMode = !_inBuildingMode;
+            UIPlayerBar.Instance.SetAbility(_inBuildingMode ? _towersClone : _abilitiesClone);
         }
 
         private void OnFirePressEvent()

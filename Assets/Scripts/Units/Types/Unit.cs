@@ -63,6 +63,9 @@ namespace Units.Types
         public Action OnDeath;
         #endregion
 
+        [SerializeField] private bool isPlayer;
+        public bool IsPlayer => isPlayer;
+
         #endregion
 
         public virtual void Init()
