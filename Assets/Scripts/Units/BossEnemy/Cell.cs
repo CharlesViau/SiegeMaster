@@ -2,7 +2,7 @@ using General;
 using Units.Interfaces;
 using Units.Types;
 using UnityEngine;
-using static puQUEST;
+using static PuQUEST;
 
 namespace Units.BossEnemy
 {

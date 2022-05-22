@@ -8,7 +8,7 @@ using UnityEngine.AI;
 using System.Linq;
 using Units.BossEnemy;
 
-public class puQUEST : MonoBehaviour
+public class PuQUEST : MonoBehaviour
 {
     PlayerUnit player;
     public Body balls;
@@ -20,6 +20,7 @@ public class puQUEST : MonoBehaviour
     {
         player = FindObjectOfType<PlayerUnit>();
         balls.StartBD(balls);
+        gameObject.SetActive(false);
      //   numberOfBatchFrameSave = balls.partsList.Count /15;
      //   numberOfBatchFrame = numberOfBatchFrameSave;
     }
@@ -60,11 +61,13 @@ public class puQUEST : MonoBehaviour
     public class Body
     {
         #region variables
-        bool isAlive = true;
         public string partName;
+        public bool IsAlive = true;
+
         public Transform centerOfCell;
         public int numberOfCells;
         public int numberOfDesireCells;
+        public HashSet<Cell> allCells= new HashSet<Cell>() ;
         public List<Body> children = new List<Body>();
         public HashSet<Cell> partsList = new HashSet<Cell>();
         public  Stack<Cell> toRemove=new Stack<Cell>();
@@ -75,14 +78,15 @@ public class puQUEST : MonoBehaviour
             {
                 for (int j = 0; j < bd.children[i].numberOfCells; j++)
                 {
-                    var v = CellManager.Instance.Create(CellType.Normal, new Cell.Args(bd.children[i].centerOfCell.position, bd.children[i].centerOfCell, bd.children[i]));
-                    bd.children[i].partsList.Add(v);
-                    v.gameObject.name = UnityEngine.Random.Range(0, 9999).ToString(); 
+                    var cell = CellManager.Instance.Create(CellType.Normal, new Cell.Args(bd.children[i].centerOfCell.position, bd.children[i].centerOfCell, bd.children[i]));
+                    bd.children[i].partsList.Add(cell);
+                    cell.gameObject.name = UnityEngine.Random.Range(0, 9999).ToString();
+                    allCells.Add(cell);
                 }
                 bd.children[i].numberOfDesireCells = bd.children[i].numberOfCells;
                 StartBD(bd.children[i]);
             }
-
+           
         }
 
 
@@ -97,6 +101,7 @@ public class puQUEST : MonoBehaviour
         public void CellDeath(Cell cell)
         {
             partsList.Remove(cell);
+            allCells.Remove(cell);
             if (CheckIfIhaveCellInChild(this))
             {
                 int rand = UnityEngine.Random.Range(0, this.children.Count);
@@ -125,6 +130,14 @@ public class puQUEST : MonoBehaviour
 
         }
 
+        public bool CheckIfItsAlive()
+        {
+            if (allCells.Count<2)
+            {
+                return false;
+            }
+            return true;
+        }
 
     }
 }

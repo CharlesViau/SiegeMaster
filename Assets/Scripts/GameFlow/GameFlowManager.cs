@@ -3,13 +3,14 @@ using Managers;
 using UnityEngine;
 using Units.Types;
 
-public enum GameState { WaitToSpawn, Spawn, CheckAliveEnemies, LevelUp }
+public enum GameState { WaitToSpawn, Spawn, CheckAliveEnemies, LevelUp, BossEnemy ,GameOver }
 public class GameFlowManager : MonoBehaviour
 {
     #region Fields
     #region Set Hierarchy info of enemies
     public Transform enemiesParent;
     public Transform[] spawnPositions;
+    
     #endregion
 
     #region Waves manage
@@ -17,8 +18,9 @@ public class GameFlowManager : MonoBehaviour
     public Waves_SO[] waves_SO;
     public float delayToSartWave;
     int maxAmountsOfWaves;
-    int currentWave;
+    int currentWave=0;
     float timer;
+    PuQUEST puQUEST;
     #endregion
     #endregion
     
@@ -28,8 +30,10 @@ public class GameFlowManager : MonoBehaviour
     {
         maxAmountsOfWaves = waves_SO.Length;
         gameState = GameState.WaitToSpawn;
+        currentWave =-1;
+        timer = 0;
+        puQUEST = FindObjectOfType<PuQUEST>();
 
-        
         foreach (Waves_SO wave_SO in waves_SO)
         {
             Waves_SO clone = Instantiate(wave_SO);
@@ -57,6 +61,14 @@ public class GameFlowManager : MonoBehaviour
             case GameState.LevelUp:
                 LevelUp();
                 break;
+            case GameState.BossEnemy:
+                BossEnemyActivated();
+                break;
+            case GameState.GameOver:
+                {
+                    Debug.Log("you won");
+                }
+                break;
             default:
                 break;
         }
@@ -71,7 +83,7 @@ public class GameFlowManager : MonoBehaviour
         if (timer > delayToSartWave)
         {
             timer = 0;
-            gameState = GameState.Spawn;
+            gameState = GameState.LevelUp;
         }
     }
 
@@ -84,18 +96,30 @@ public class GameFlowManager : MonoBehaviour
     void CheckAliveEnemies()
     {
         if (EnemyManager.Instance.Count == 0)
-            gameState = GameState.LevelUp;
+            gameState = GameState.WaitToSpawn;
+    }
+    void BossEnemyActivated()
+    {
+        
+        if (!puQUEST.balls.CheckIfItsAlive())
+        {
+             gameState = GameState.GameOver;
+        }
     }
 
     void LevelUp()
     {
-        if (currentWave <= maxAmountsOfWaves)
+        if (currentWave < maxAmountsOfWaves-1)
         {
             currentWave++;
-            gameState = GameState.WaitToSpawn;
+            gameState = GameState.Spawn;
         }
         else
-            Debug.Log("Geme is over");
+        {
+            gameState = GameState.BossEnemy;
+            puQUEST.gameObject.SetActive(true);
+        }
+
     }
     #endregion
 

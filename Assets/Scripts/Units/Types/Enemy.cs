@@ -54,10 +54,11 @@ namespace Units.Types
         #endregion
 
         #region Death
-
         public bool alive;
-        float _delayToPool = 10;
-
+        float _delayToPool = 7;
+        //[SerializeField] AudioSource loseHpSound;
+        //[SerializeField] AudioSource DeathSound;
+        Collider collider;
         #endregion
 
         #region Attacking
@@ -104,6 +105,7 @@ namespace Units.Types
             enemyState = EnemyStates.Wander;
             alive = true;
             _enemyAgent.speed = speed;
+            collider = GetComponent<Collider>();
             attackRange = Random.Range(minAttackRange, maxAttackRange);
 
             _fullHp = currentHp;
@@ -173,10 +175,11 @@ namespace Units.Types
             transform.position = constructionArgs.spawningPosition;
             _enemyAgent.enabled = true;
             transform.SetParent(constructionArgs.parent);
+            collider.enabled = true;
             enemyState = EnemyStates.Wander;
             currentHp = _fullHp;
             alive = true;
-            _delayToPool = 10;
+            _delayToPool = 7;
             attackRange = Random.Range(minAttackRange, maxAttackRange);
             _hpStack.Clear();
             CreateHp(_fullHp);
@@ -214,6 +217,7 @@ namespace Units.Types
         {
             if (currentHp >= 0)
             {
+                //loseHpSound.Play();
                 damage = Mathf.Clamp(damage, 0, currentHp);
                 currentHp -= (int) damage;
 
@@ -236,7 +240,7 @@ namespace Units.Types
         {
             if (gameObject.activeInHierarchy)
                 _enemyAgent.ResetPath();
-
+            //DeathSound.Play();
             Animator.SetTrigger(IsDead);
             alive = false;
             enemyState = EnemyStates.Death;
@@ -244,6 +248,7 @@ namespace Units.Types
 
         void Death()
         {
+            collider.enabled = false;
             StartCoroutine(DealyToPool());
         }
 

@@ -10,7 +10,7 @@ namespace Managers
         FireBallTower,
         CatapultTower,
         SeekingTower,
-        Storm,
+        Explositon,
         Lightning,
         Fire,
         Blood,
