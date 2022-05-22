@@ -9,6 +9,7 @@ public class SwordCollision : MonoBehaviour
     PlayerUnit target;
     Collider collider;
     float damage;
+    [SerializeField] AudioSource attackSound;
     #endregion
 
     #region Methods
@@ -28,6 +29,7 @@ public class SwordCollision : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+            attackSound.Play();
             target.GotShot(damage);
             ToggleColliderActive(false);
         }
