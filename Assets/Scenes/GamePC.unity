@@ -5451,7 +5451,7 @@ MonoBehaviour:
       regeneration:
         baseValue: 0
         timeInterval: 0
-  isPlayer: 0
+  isPlayer: 1
   playerRotationLook: {fileID: 1474787201}
   maxDistanceAiming: 50
   rayCastStartPointDistance: 2
