@@ -32,10 +32,10 @@ namespace Units.BossEnemy
         }
         public void Construct(Args constructionArgs)
         {
-            cellPosition = constructionArgs.parent;
-            transform.parent = constructionArgs.parent;
+            cellPosition = constructionArgs.cellPosition;
+            transform.parent = constructionArgs.cellPosition;
             body = constructionArgs.body;
-            transform.SetParent(null);
+            transform.SetParent(constructionArgs.parentTransfrom);
 
             //Calculate Random Force 
             randForce = Random.Range(Minforce, Maxforce);
@@ -57,30 +57,25 @@ namespace Units.BossEnemy
 
         public override void GotShot(float damage)
         {
-            
+            body.CellDeath(this);
+            CellManager.Instance.Pool(CellType.Normal, this);
         }
         public override void Pool()
         {
             gameObject.SetActive(false);
             base.Pool();
         }
-        private void OnCollisionEnter(Collision collision)
-        {
-            if (collision.gameObject.tag =="Projectile")
-            {
-               
-                body.CellDeath(this);
-                CellManager.Instance.Pool(CellType.Normal, this);
-            }
-            
-        }
+
         public class Args : ConstructionArgs
         {
-            public Transform parent;
+            public Transform cellPosition;
+            public Transform parentTransfrom;
             public Body body;
-            public Args(Vector3 _spawningPosition, Transform _parent,Body _body) : base(_spawningPosition)
+            
+            public Args(Vector3 _spawningPosition, Transform _cellPosition, Body _body, Transform _parentTransfrom) : base(_spawningPosition)
             {
-                parent = _parent;
+                cellPosition = _cellPosition;
+                parentTransfrom = _parentTransfrom;
                 body= _body;
 
             }

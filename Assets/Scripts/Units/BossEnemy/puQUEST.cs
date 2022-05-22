@@ -13,6 +13,7 @@ public class PuQUEST : MonoBehaviour
     PlayerUnit player;
     public Body balls;
     public float speed;
+
   //  int numberOfFrame = 0;
    // int numberOfList = 0;
    // int numberOfBatchFrame = 0;
@@ -20,9 +21,19 @@ public class PuQUEST : MonoBehaviour
     {
         player = FindObjectOfType<PlayerUnit>();
         balls.StartBD(balls);
-        gameObject.SetActive(false);
+        DeactiveTheBoss();
      //   numberOfBatchFrameSave = balls.partsList.Count /15;
      //   numberOfBatchFrame = numberOfBatchFrameSave;
+    }
+    private void DeactiveTheBoss()
+    {
+        gameObject.SetActive(false);
+        balls.ballParents.gameObject.SetActive(false);
+    }
+    public void ReactiveTheBoss()
+    {
+        gameObject.SetActive(true);
+        balls.ballParents.gameObject.SetActive(true);
     }
     public void Update()
     {
@@ -61,7 +72,10 @@ public class PuQUEST : MonoBehaviour
     public class Body
     {
         #region variables
+
         public string partName;
+        public Transform ballParents;
+
         public bool IsAlive = true;
 
         public Transform centerOfCell;
@@ -78,7 +92,7 @@ public class PuQUEST : MonoBehaviour
             {
                 for (int j = 0; j < bd.children[i].numberOfCells; j++)
                 {
-                    var cell = CellManager.Instance.Create(CellType.Normal, new Cell.Args(bd.children[i].centerOfCell.position, bd.children[i].centerOfCell, bd.children[i]));
+                    var cell = CellManager.Instance.Create(CellType.Normal, new Cell.Args(bd.children[i].centerOfCell.position, bd.children[i].centerOfCell, bd.children[i], ballParents));
                     bd.children[i].partsList.Add(cell);
                     cell.gameObject.name = UnityEngine.Random.Range(0, 9999).ToString();
                     allCells.Add(cell);

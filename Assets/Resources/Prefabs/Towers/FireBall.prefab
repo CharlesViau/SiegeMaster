@@ -149,6 +149,18 @@ MonoBehaviour:
   turningSpeed: 0
   speed: 0
   shootingPosition: {fileID: 4661301985406220709}
+  goldValue: 0
+  stats:
+    health:
+      baseValue: 0
+      regeneration:
+        baseValue: 0
+        timeInterval: 0
+    mana:
+      baseValue: 0
+      regeneration:
+        baseValue: 0
+        timeInterval: 0
   target: {fileID: 0}
   projectileType: 2
   towerParticleType: 2
@@ -5073,7 +5085,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0abc6c2f62e60ba4da4b458d892d4faf, type: 2}
+  - {fileID: 2100000, guid: 0da717a3c606b90428f06fcea0376bde, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

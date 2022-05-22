@@ -5,12 +5,12 @@ using General;
 using System;
 using System.Reflection;
 using Units.Interfaces;
-
+using Units.BossEnemy;
 [CreateAssetMenu(fileName = "OnCollision", menuName = "ScriptableObjects/OnCollision/HitObject")]
 
 public class OnCollition_CollideWithObject_SO : OnCollisionSO
 {
-    public override void OnEnterCollision(Vector3 position, ValueType type, IPoolable type2, Collision collisionObject, bool isPlayer)
+    public override void OnEnterCollision(Vector3 position, ValueType type, IPoolable type2, Collision collisionObject, bool OwnerIsPlayer)
     {
 
 
@@ -20,15 +20,21 @@ public class OnCollition_CollideWithObject_SO : OnCollisionSO
         var p = collisionObject.collider.gameObject.GetComponent(typeof(IHittable));
         if (p != null)
         {
-
-            if (isPlayer && p.gameObject.tag=="Target")
+            if (OwnerIsPlayer && p.gameObject.tag == "BossEnemy")
             {
+
+                ((Cell)p).GotShot(damage);
+            }
+            else if (OwnerIsPlayer && p.gameObject.tag=="Target")
+            {
+             
                 ((Units.Types.Enemy)p).GotShot(damage);
             }
-            if (!isPlayer && p.gameObject.tag == "Player")
+            else if (!OwnerIsPlayer && p.gameObject.tag == "Player")
             {
                 ((Units.Types.PlayerUnit)p).GotShot(damage);
             }
+
           
         }
 
