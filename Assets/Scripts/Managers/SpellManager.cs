@@ -3,7 +3,7 @@ using General;
 
 namespace Managers
 {
-    public enum SpellType {Storm,Lightning,Fire,Explositon}
+    public enum SpellType {Explositon, Lightning,Fire,Blood}
 
     public class SpellManager : Manager<Spell, SpellType, Spell.Args, SpellManager>
     {

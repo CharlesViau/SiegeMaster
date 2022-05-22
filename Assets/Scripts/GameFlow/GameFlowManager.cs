@@ -3,19 +3,21 @@ using Managers;
 using UnityEngine;
 using Units.Types;
 
-public enum GameState { WaitToSpawn, Spawn, CheckAliveEnemies, LevelUp }
+public enum GameState { WaitToSpawn, Spawn, CheckAliveEnemies, LevelUp, BossEnemy ,GameOver }
 public class GameFlowManager : MonoBehaviour
 {
     #region Fields
     #region Set Hierarchy info of enemies
     public Transform enemiesParent;
     public Transform[] spawnPositions;
+    
     #endregion
 
     #region Waves manage
     GameState gameState;
     public Waves_SO[] waves_SO;
     public float delayToSartWave;
+    public GameObject BossEnemy;
     int maxAmountsOfWaves;
     int currentWave;
     float timer;
@@ -57,6 +59,14 @@ public class GameFlowManager : MonoBehaviour
             case GameState.LevelUp:
                 LevelUp();
                 break;
+            case GameState.BossEnemy:
+                BossEnemyActivated();
+                break;
+            case GameState.GameOver:
+                {
+                    Debug.Log("you won");
+                }
+                break;
             default:
                 break;
         }
@@ -86,6 +96,10 @@ public class GameFlowManager : MonoBehaviour
         if (EnemyManager.Instance.Count == 0)
             gameState = GameState.LevelUp;
     }
+    void BossEnemyActivated()
+    {
+
+    }
 
     void LevelUp()
     {
@@ -95,7 +109,13 @@ public class GameFlowManager : MonoBehaviour
             gameState = GameState.WaitToSpawn;
         }
         else
-            Debug.Log("Geme is over");
+        {
+            gameState = GameState.BossEnemy;
+            BossEnemy.SetActive(true);
+
+
+        }
+
     }
     #endregion
 
