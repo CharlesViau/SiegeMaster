@@ -17174,7 +17174,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbdff949a6b381b4085af9ca6e40b1e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rot: {x: 0, y: 0, z: 0}
 --- !u!1 &2870547321516045394
 GameObject:
   m_ObjectHideFlags: 0
@@ -17493,7 +17492,7 @@ MonoBehaviour:
   rayCastStartPointDistance: 2
   playerForce: 3000
   maxSpeed: 10
-  hitpoint: {x: 0, y: 0, z: 0}
+  hitPoint: {x: 0, y: 0, z: 0}
 --- !u!1 &3029125517684759686
 GameObject:
   m_ObjectHideFlags: 0
@@ -20587,7 +20586,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4941380736535661778}
-  m_LocalRotation: {x: 0.04578307, y: -0.07754261, z: 0.0035646434, w: 0.9959309}
+  m_LocalRotation: {x: 0.045783065, y: -0.0775426, z: 0.0035646432, w: 0.9959309}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
