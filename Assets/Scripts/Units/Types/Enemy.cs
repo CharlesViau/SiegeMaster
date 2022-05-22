@@ -226,6 +226,7 @@ namespace Units.Types
         {
             if (gameObject.activeInHierarchy)
                 _enemyAgent.ResetPath();
+            if (!deathSound.isPlaying) deathSound.Play();
             Animator.SetTrigger(IsDead);
             alive = false;
             enemyState = EnemyStates.Death;
@@ -234,7 +235,6 @@ namespace Units.Types
         void Death()
         {
             loseHpSound.Stop();
-            if (!deathSound.isPlaying) deathSound.Play();
             collider.enabled = false;
             StartCoroutine(DealyToPool());
         }
