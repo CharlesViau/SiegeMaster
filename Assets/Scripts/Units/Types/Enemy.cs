@@ -20,15 +20,11 @@ namespace Units.Types
     public class Enemy : Unit, ICreatable<Enemy.Args>, IHittable
     {
         #region Fields
-
         #region Enemy states
-
         EnemyStates enemyState;
-
         #endregion
 
         #region Set Enemy Type
-
         public EnemyType enemyType;
         public EnemyMovement_SO movement_SO;
         public TargetingSo targeting_SO;
@@ -42,44 +38,34 @@ namespace Units.Types
                 return Vector3.zero;
             }
         }
-
         #endregion
 
         #region Get Components
-
         private NavMeshAgent _enemyAgent;
         private Transform _player;
         private Transform _objective;
-
         #endregion
 
         #region Death
         public bool alive;
         float _delayToPool = 7;
-        //[SerializeField] AudioSource loseHpSound;
-        //[SerializeField] AudioSource DeathSound;
         Collider collider;
         #endregion
 
         #region Attacking
-
         public float rangeToMoveTowardPlayer;
         public float maxAttackRange;
-        public float minAttackRange; 
+        public float minAttackRange;
         float attackRange;
         const float EnemyDamageToNexus = 1;
-
         #endregion
 
         #region Animation
-
         static readonly int Speed = Animator.StringToHash("Speed");
         static readonly int IsDead = Animator.StringToHash("IsDead");
-
         #endregion
 
         #region UI & HP
-
         public Canvas canvasParent;
         public Transform hpInPoolParent;
         public int currentHp;
@@ -89,12 +75,15 @@ namespace Units.Types
 
         #endregion
 
+        #region Sounds
+        [SerializeField] AudioSource loseHpSound;
+        [SerializeField] AudioSource deathSound;
+        [SerializeField] AudioSource nexusArrivedSound;
+        #endregion
         #endregion
 
         #region Methods
-
         #region Game Control & Flow
-
         public override void Init()
         {
             base.Init();
@@ -159,7 +148,6 @@ namespace Units.Types
         #endregion
 
         #region Factory & Pool manage
-
         public class Args : ConstructionArgs
         {
             public Transform parent;
@@ -201,7 +189,6 @@ namespace Units.Types
         #endregion
 
         #region Movement
-
         public override void Move(Vector3 direction)
         {
             Animator.SetFloat(Speed, speed);
@@ -212,14 +199,13 @@ namespace Units.Types
         #endregion
 
         #region Damage & Death manage
-
         public override void GotShot(float damage)
         {
             if (currentHp >= 0)
             {
-                //loseHpSound.Play();
+                loseHpSound.Play();
                 damage = Mathf.Clamp(damage, 0, currentHp);
-                currentHp -= (int) damage;
+                currentHp -= (int)damage;
 
                 for (var i = 0; i < damage; i++)
                 {
@@ -240,7 +226,6 @@ namespace Units.Types
         {
             if (gameObject.activeInHierarchy)
                 _enemyAgent.ResetPath();
-            //DeathSound.Play();
             Animator.SetTrigger(IsDead);
             alive = false;
             enemyState = EnemyStates.Death;
@@ -248,6 +233,7 @@ namespace Units.Types
 
         void Death()
         {
+            deathSound.Play();
             collider.enabled = false;
             StartCoroutine(DealyToPool());
         }
@@ -262,7 +248,6 @@ namespace Units.Types
         #endregion
 
         #region HP & UI manage
-
         private void CreateHp(int numberOfHp)
         {
             for (int i = 0; i < numberOfHp; i++)
@@ -281,9 +266,8 @@ namespace Units.Types
         #endregion
 
         #region Attacking Player & Nexus
-
         void GetReadyToAttack()
-        {            
+        {
             if (Vector3.Distance(transform.position, _player.transform.position) <= attackRange)
                 enemyState = EnemyStates.Attacking;
             if (Vector3.Distance(transform.position, _player.transform.position) > attackRange)
@@ -316,19 +300,17 @@ namespace Units.Types
         void OnCollisionEnter(Collision collision)
         {
             #region Deal damage to Nexus
-
             if (!collision.gameObject.CompareTag("Nexus")) return;
+            nexusArrivedSound.Play();
             GotShot(currentHp);
-            _delayToPool = 0;
+            _delayToPool = 1;
             NexusManager.Instance.DealDamage(EnemyDamageToNexus);
-
             #endregion
         }
 
         #endregion
 
         #region Old targeting logic
-
         /*public Transform[] targets;
         int waypointCounter = 0;
         void WaypointsCheck()
@@ -347,7 +329,6 @@ namespace Units.Types
         }*/
 
         #endregion
-
         #endregion
     }
 }
