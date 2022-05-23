@@ -22,7 +22,7 @@ namespace Units.Types
         public override void GotShot(float damage)
         {
             stats.health.Current -= damage;
-            Debug.Log("Player got damage, current health : " + stats.health.Current);
+           // Debug.Log("Player got damage, current health : " + stats.health.Current);
         }
 
         protected override void OnDeathEvent()
