@@ -2638,7 +2638,7 @@ MonoBehaviour:
   turningSpeed: 0
   speed: 10
   shootingPosition: {fileID: 2855636505979012687}
-  goldValue: 0
+  goldValue: 5
   stats:
     health:
       baseValue: 0
@@ -2650,6 +2650,7 @@ MonoBehaviour:
       regeneration:
         baseValue: 0
         timeInterval: 0
+  isPlayer: 0
   enemyType: 0
   movement_SO: {fileID: 11400000, guid: 12c3ff3e48a540748aca02716d57c38d, type: 2}
   targeting_SO: {fileID: 11400000, guid: cac941549c978834b8b983c5e7b75cbc, type: 2}
