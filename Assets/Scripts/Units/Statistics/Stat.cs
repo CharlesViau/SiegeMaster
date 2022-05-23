@@ -11,6 +11,8 @@ namespace Units.Statistics
         protected Unit Owner;
         public float Current { get; set; }
 
+        public float Maximum => baseValue;
+
         [SerializeField] protected float baseValue;
 
         public virtual void Init(Unit owner)
@@ -41,7 +43,7 @@ namespace Units.Statistics
         {
             _currentTime -= Time.deltaTime;
 
-            if (!(_currentTime <= 0)) return;
+            if (!(_currentTime <= 0) || !(_stat.Current < _stat.Maximum)) return;
             _stat.Current += baseValue;
             _currentTime = timeInterval;
         }

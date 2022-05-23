@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Lightning
   m_EditorClassIdentifier: 
   stats:
-    manaCost: 0
+    manaCost: 10
     goldCost: 0
     maxRange: 50
     baseChannelTime: 0.5
