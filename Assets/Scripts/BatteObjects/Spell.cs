@@ -36,9 +36,9 @@ namespace BatteObjects
         {
             gameObject.SetActive(true);
         }
-        void ExplosionDamage(Vector3 center, float radius, float damage)
+        void ExplosionDamage(Transform center, float radius, float damage)
         {
-            RaycastHit[] ray = Physics.SphereCastAll(center, radius, transform.forward);
+            RaycastHit[] ray = Physics.SphereCastAll(center.position, radius, center.forward);
 
             foreach (var hitCollider in ray)
             {
@@ -54,7 +54,7 @@ namespace BatteObjects
         public void Construct(Args constructionArgs)
         {
             transform.position = constructionArgs.spawningPosition;
-            ExplosionDamage(transform.position, constructionArgs.radius, constructionArgs.explosionDamage);
+            ExplosionDamage(transform, constructionArgs.radius, constructionArgs.explosionDamage);
         }
 
 

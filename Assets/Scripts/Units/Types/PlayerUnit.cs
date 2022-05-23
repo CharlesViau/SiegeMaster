@@ -7,6 +7,8 @@ namespace Units.Types
 
     public abstract class PlayerUnit : Unit,ICameraController
     {
+        public Transform RespawnPosition;
+
         public Action OnRespawn;
         protected abstract override Vector3 AimedPosition { get; }
         
@@ -25,8 +27,7 @@ namespace Units.Types
 
         protected override void OnDeathEvent()
         {
-            //TODO: trigger death animation, Put a countdown to Respawn player.
-         //   Debug.Log("IsDead");
+            transform.position = RespawnPosition.position;
         }
 
         protected void OnRespawnEvent()
@@ -35,6 +36,5 @@ namespace Units.Types
         }
 
         public abstract void Look();
-
     }
 }

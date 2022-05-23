@@ -12,7 +12,6 @@ namespace Units.Types
 
     {
         #region Properties and Variables
-
         //Component Cache
         protected Rigidbody Rigidbody;
         protected Animator Animator;
