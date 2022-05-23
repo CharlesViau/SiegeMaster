@@ -22,6 +22,7 @@ namespace Abilities.AbilitySO
         #region Properties and Variables
 
         [Header("Stats")] public AbilityStats stats;
+        public float CooldownTimeLeft => _stateMachine.CooldownTimeLeft;
 
         #region Cast Method (NOT IMPLEMENTED)
 
@@ -147,6 +148,9 @@ namespace Abilities.AbilitySO
         private class AbilityStateMachine : StateMachine
         {
             #region Properties and Variables
+            
+            //Values needed elsewhere
+            public float CooldownTimeLeft => _cooldownState.CooldownTimeLeft;
 
             //States
             private readonly AbilityReadyState _readyState;

@@ -7,13 +7,14 @@ namespace Abilities.AbilityStates
     {
         private float _cooldownTimeLeft;
 
+        public float CooldownTimeLeft => _cooldownTimeLeft;
+
         public bool CooldownIsOver => _cooldownTimeLeft <= 0;
-        
+
         public AbilityCooldownState(AbilitySo ability) : base(ability)
         {
-            
         }
-        
+
         public override void Refresh()
         {
             _cooldownTimeLeft -= Time.deltaTime;
@@ -26,7 +27,6 @@ namespace Abilities.AbilityStates
 
         public override void OnExit()
         {
-            
         }
 
         protected override void OnFirePressAction()

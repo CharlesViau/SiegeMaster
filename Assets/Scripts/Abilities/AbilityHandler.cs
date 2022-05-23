@@ -61,7 +61,7 @@ namespace Abilities
 
         public void PostInit()
         {
-            if(_owner.IsPlayer)
+            if (_owner.IsPlayer)
                 UIPlayerBar.Instance.SetAbility(_abilitiesClone);
         }
 
@@ -201,11 +201,13 @@ namespace Abilities
 
             if (!_inBuildingMode)
             {
+                if (!_abilitiesClone[i].IsReadyToCast) return;
                 SelectedAbility = _abilitiesClone[i];
                 SelectedAbility.OnFirePress?.Invoke();
             }
             else
             {
+                if (!_towersClone[i].IsReadyToCast) return;
                 SelectedAbility = _towersClone[i];
                 SelectedAbility.OnFirePress?.Invoke();
             }
