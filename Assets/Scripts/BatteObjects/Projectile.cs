@@ -51,7 +51,7 @@ using General;
     {
 
         onCollision_SO.OnEnterCollision(collision.contacts[0].point, type, this, collision,ownerIsPlayer);
-     //   ObjectPool.Instance.Pool(type,this);
+         ProjectileManager.Instance.Pool(type,this);
     }
 
     public void Pool()

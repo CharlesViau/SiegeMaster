@@ -48,7 +48,7 @@ namespace Units.Types
 
         #region Death
         public bool alive;
-        float _delayToPool = 7;
+        float _delayToPool = 8;
         Collider collider;
         #endregion
 
@@ -167,7 +167,7 @@ namespace Units.Types
             enemyState = EnemyStates.Wander;
             currentHp = _fullHp;
             alive = true;
-            _delayToPool = 7;
+            _delayToPool = 8;
             attackRange = Random.Range(minAttackRange, maxAttackRange);
             _hpStack.Clear();
             CreateHp(_fullHp);
@@ -203,7 +203,7 @@ namespace Units.Types
         {
             if (currentHp >= 0)
             {
-                loseHpSound.Play();
+                if (!loseHpSound.isPlaying) loseHpSound.Play();
                 damage = Mathf.Clamp(damage, 0, currentHp);
                 currentHp -= (int)damage;
 
@@ -226,6 +226,7 @@ namespace Units.Types
         {
             if (gameObject.activeInHierarchy)
                 _enemyAgent.ResetPath();
+            if (!deathSound.isPlaying) deathSound.Play();
             Animator.SetTrigger(IsDead);
             alive = false;
             enemyState = EnemyStates.Death;
@@ -233,7 +234,7 @@ namespace Units.Types
 
         void Death()
         {
-            deathSound.Play();
+            loseHpSound.Stop();
             collider.enabled = false;
             StartCoroutine(DealyToPool());
         }
@@ -241,6 +242,8 @@ namespace Units.Types
         IEnumerator DealyToPool()
         {
             yield return new WaitForSeconds(_delayToPool);
+            nexusArrivedSound.Stop();
+            deathSound.Stop();
             _enemyAgent.enabled = false;
             EnemyManager.Instance.Pool(enemyType, this);
         }
@@ -301,7 +304,7 @@ namespace Units.Types
         {
             #region Deal damage to Nexus
             if (!collision.gameObject.CompareTag("Nexus")) return;
-            nexusArrivedSound.Play();
+            if (!nexusArrivedSound.isPlaying) nexusArrivedSound.Play();
             GotShot(currentHp);
             _delayToPool = 1;
             NexusManager.Instance.DealDamage(EnemyDamageToNexus);

@@ -20,9 +20,13 @@ namespace Units.Types
             }
 
         }
-
+        public override void Init()
+        {
+            base.Init();
+        }
         public override void Refresh()
         {
+            base.Refresh();
             hitpoint = RayCastVR(rightController, maxDistanceAiming);
             Debug.Log(hitpoint);
 

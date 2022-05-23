@@ -117,7 +117,7 @@ public class GameFlowManager : MonoBehaviour
         else
         {
             gameState = GameState.BossEnemy;
-            puQUEST.gameObject.SetActive(true);
+            puQUEST.ReactiveTheBoss();
         }
 
     }

@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 4967596810860634753}
   m_Layer: 0
   m_Name: Normal
-  m_TagString: Target
+  m_TagString: BossEnemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -156,10 +156,24 @@ MonoBehaviour:
   turningSpeed: 0
   speed: 0
   shootingPosition: {fileID: 0}
+  goldValue: 0
+  stats:
+    health:
+      baseValue: 0
+      regeneration:
+        baseValue: 0
+        timeInterval: 0
+    mana:
+      baseValue: 0
+      regeneration:
+        baseValue: 0
+        timeInterval: 0
   Maxforce: 10
   Minforce: 20
   body:
     partName: 
+    ballParents: {fileID: 0}
+    IsAlive: 1
     centerOfCell: {fileID: 0}
     numberOfCells: 0
     numberOfDesireCells: 0
