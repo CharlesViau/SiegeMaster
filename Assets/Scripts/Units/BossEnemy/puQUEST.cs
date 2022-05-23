@@ -13,10 +13,11 @@ public class PuQUEST : MonoBehaviour
     PlayerUnit player;
     public Body balls;
     public float speed;
-
+    public Animator animator;
+    public float distancetoAttack;
   //  int numberOfFrame = 0;
-   // int numberOfList = 0;
-   // int numberOfBatchFrame = 0;
+  // int numberOfList = 0;
+  // int numberOfBatchFrame = 0;
     private void Start()
     {
         player = FindObjectOfType<PlayerUnit>();
@@ -39,6 +40,10 @@ public class PuQUEST : MonoBehaviour
     {
         var step = speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, player.transform.position, step);
+        if (Vector3.SqrMagnitude(transform.position-player.transform.position)<distancetoAttack)
+        {
+            animator.SetTrigger("Attack");
+        }
         #region Batching
         //Batching 
 
@@ -77,7 +82,7 @@ public class PuQUEST : MonoBehaviour
         public Transform ballParents;
 
         public bool IsAlive = true;
-
+        public CellType cellType;   
         public Transform centerOfCell;
         public int numberOfCells;
         public int numberOfDesireCells;
@@ -92,7 +97,7 @@ public class PuQUEST : MonoBehaviour
             {
                 for (int j = 0; j < bd.children[i].numberOfCells; j++)
                 {
-                    var cell = CellManager.Instance.Create(CellType.Normal, new Cell.Args(bd.children[i].centerOfCell.position, bd.children[i].centerOfCell, bd.children[i], ballParents));
+                    var cell = CellManager.Instance.Create(cellType, new Cell.Args(bd.children[i].centerOfCell.position, bd.children[i].centerOfCell, bd.children[i], ballParents));
                     bd.children[i].partsList.Add(cell);
                     cell.gameObject.name = UnityEngine.Random.Range(0, 9999).ToString();
                     allCells.Add(cell);

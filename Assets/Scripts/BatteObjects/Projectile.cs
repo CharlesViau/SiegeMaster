@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using General;
+using Units.Interfaces;
+
 [RequireComponent(typeof(Rigidbody))]
  public class Projectile : MonoBehaviour,IUpdatable,IPoolable,ICreatable<Projectile.Args>
 {
@@ -16,7 +18,7 @@ using General;
     public void Init()
     {
         timer = 0;
-        //only called on the 
+        
         movement_SO = Instantiate(movement_SO);
         onCollision_SO = Instantiate(onCollision_SO);
     }
@@ -33,6 +35,7 @@ using General;
         if (timer> timeToPoolIfDidntHitAnything )
         {
             ProjectileManager.Instance.Pool(type, this);
+            timer=0;
         }
         movement_SO.Refresh();
     }
@@ -50,7 +53,7 @@ using General;
     private void OnCollisionEnter(Collision collision)
     {
 
-        onCollision_SO.OnEnterCollision(collision.contacts[0].point, type, this, collision,ownerIsPlayer);
+        onCollision_SO.OnEnterCollision(collision.contacts[0].point, type, this, collision.contacts[0].otherCollider.gameObject, ownerIsPlayer); ;
          ProjectileManager.Instance.Pool(type,this);
     }
 

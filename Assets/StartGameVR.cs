@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class StartGame : MonoBehaviour
+public class StartGameVR : MonoBehaviour
 {
     
     public void StartThrGame()
     {
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("GameVRWithMap");
     }
 }

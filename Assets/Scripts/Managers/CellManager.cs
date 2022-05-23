@@ -5,7 +5,7 @@ using Units.BossEnemy;
 using Units.Types;
 using UnityEngine;
 
-public enum CellType { Normal};
+public enum CellType {Normal,Cube};
 public class CellManager : Manager<Cell, CellType, Cell.Args, CellManager>
 {
     protected override string PrefabLocation => "Prefabs/Cells/";

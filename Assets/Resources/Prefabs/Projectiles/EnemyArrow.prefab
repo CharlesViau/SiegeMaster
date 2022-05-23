@@ -116,7 +116,7 @@ MonoBehaviour:
   type: 5
   movement_SO: {fileID: 11400000, guid: bfa8f950e95ce98448392833b44becfc, type: 2}
   onCollision_SO: {fileID: 11400000, guid: edb97fc1a3e4ef74b8c6a49ecfdeda81, type: 2}
-  timeToPoolIfDidntHitAnything: 5
+  timeToPoolIfDidntHitAnything: 20
 --- !u!136 &-9004665924035180016
 CapsuleCollider:
   m_ObjectHideFlags: 0

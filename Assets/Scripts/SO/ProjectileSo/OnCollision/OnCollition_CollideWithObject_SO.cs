@@ -10,14 +10,14 @@ using Units.BossEnemy;
 
 public class OnCollition_CollideWithObject_SO : OnCollisionSO
 {
-    public override void OnEnterCollision(Vector3 position, ValueType type, IPoolable type2, Collision collisionObject, bool OwnerIsPlayer)
+    public override void OnEnterCollision(Vector3 position, ValueType type, IPoolable type2,GameObject collisionObject, bool OwnerIsPlayer)
     {
 
 
         ParticleSystemManager.Instance.Create(onCollisionParticleType, new ParticleSystemScript.Args(position));
 
         //deal damage to object that had Ihittable interface and deal damage
-        var p = collisionObject.collider.gameObject.GetComponent(typeof(IHittable));
+        var p = collisionObject.GetComponent(typeof(IHittable));
         if (p != null)
         {
             if (OwnerIsPlayer && p.gameObject.tag == "BossEnemy")

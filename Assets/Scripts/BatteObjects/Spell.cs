@@ -36,16 +36,18 @@ namespace BatteObjects
         {
             gameObject.SetActive(true);
         }
-        void ExplosionDamage(Vector3 center, float radius,float damage)
+        void ExplosionDamage(Vector3 center, float radius, float damage)
         {
             RaycastHit[] ray = Physics.SphereCastAll(center, radius, transform.forward);
-            
+
             foreach (var hitCollider in ray)
             {
-                if ( hitCollider.collider.gameObject.TryGetComponent(out IHittable hittable))
+                if (hitCollider.collider.gameObject.tag == "Target" && hitCollider.collider.gameObject.TryGetComponent(out IHittable hittable))
                 {
+
                     hittable.GotShot(damage);
-                } 
+                }
+
             }
         }
 
@@ -60,7 +62,7 @@ namespace BatteObjects
         {
             public float radius;
             public float explosionDamage;
-            public Args(Vector3 _spawningPosition,float _radius, float _explosionDamage) : base(_spawningPosition)
+            public Args(Vector3 _spawningPosition, float _radius, float _explosionDamage) : base(_spawningPosition)
             {
                 radius = _radius;
                 explosionDamage = _explosionDamage;

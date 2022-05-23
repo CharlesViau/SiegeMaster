@@ -28,7 +28,6 @@ namespace Units.Types
         {
             base.Refresh();
             hitpoint = RayCastVR(rightController, maxDistanceAiming);
-            Debug.Log(hitpoint);
 
         }
         public override void Look()

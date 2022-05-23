@@ -1,27 +1,12 @@
 fileFormatVersion: 2
-guid: c7bdb7db48e00e347b4e57e6672512d0
+guid: 684bef265f984224bb54f838c08cb716
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
       74: -203655887218126122
     second: mixamo.com
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: mutant_M
-    second: {fileID: 2100000, guid: 869b6a51b121c4f4e9e5b4f591724f8b, type: 2}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Mutant_diffuse
-    second: {fileID: 2800000, guid: d85318dffa0b9b8428d842d12fe26d6c, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Mutant_normal
-    second: {fileID: 2800000, guid: 175cc6ffdc55e354ca010e77af6b6ed1, type: 3}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0

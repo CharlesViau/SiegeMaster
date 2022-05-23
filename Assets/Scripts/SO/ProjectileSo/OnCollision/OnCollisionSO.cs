@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using General;
+using Units.Interfaces;
+
 public class OnCollisionSO : ScriptableObject
 {
     protected GameObject gameObject;
@@ -17,7 +19,7 @@ public class OnCollisionSO : ScriptableObject
         ownerIsPlayer = _isPlayer;
     }
 
-    public virtual void OnEnterCollision(Vector3 position, ValueType type, IPoolable type2,Collision collisionObject,bool isPlayer)
+    public virtual void OnEnterCollision(Vector3 position, ValueType type, IPoolable type2,GameObject collisionObject,bool isPlayer)
     {
     }
 
