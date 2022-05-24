@@ -5,11 +5,9 @@ namespace Abilities.AbilityStates
 {
     public class AbilityCooldownState : AbilityState
     {
-        private float _cooldownTimeLeft;
+        public float CooldownTimeLeft { get; private set; }
 
-        public float CooldownTimeLeft => _cooldownTimeLeft;
-
-        public bool CooldownIsOver => _cooldownTimeLeft <= 0;
+        public bool CooldownIsOver => CooldownTimeLeft <= 0;
 
         public AbilityCooldownState(AbilitySo ability) : base(ability)
         {
@@ -17,12 +15,12 @@ namespace Abilities.AbilityStates
 
         public override void Refresh()
         {
-            _cooldownTimeLeft -= Time.deltaTime;
+            CooldownTimeLeft -= Time.deltaTime;
         }
 
         public override void OnEnter()
         {
-            _cooldownTimeLeft = AbilitySo.stats.baseCooldown;
+            CooldownTimeLeft = AbilitySo.stats.baseCooldown;
         }
 
         public override void OnExit()
