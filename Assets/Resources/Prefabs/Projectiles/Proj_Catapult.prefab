@@ -75,11 +75,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5637f44ad71d16b4eb0ec19a2564e95c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ownerIsPlayer: 0
   type: 3
-  behavior_SO: {fileID: 11400000, guid: fb8029befc7fa5844bda97bd6353c746, type: 2}
   movement_SO: {fileID: 11400000, guid: b7e621c9d7a24be4dbb4655c3b3242d6, type: 2}
   onCollision_SO: {fileID: 11400000, guid: edb97fc1a3e4ef74b8c6a49ecfdeda81, type: 2}
-  timeToPoolIfDidntHitAnything: 5
+  timeToPoolIfDidntHitAnything: 10
 --- !u!1 &6344570743867902021
 GameObject:
   m_ObjectHideFlags: 0

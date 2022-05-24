@@ -4,15 +4,15 @@ using UnityEngine.AI;
 namespace Units.Types.Towers
 {
     public class NormalTower : Tower
-    {
+    {        // If you want want to use this predict bool you have to give the prediction projectile 
+             // have to set a projectile that has PredictionMovement_SO, 
+        #region Variables
         public float projectileSpeed;
-
-        // If you want want to use this predict bool you have to give the prediction projectile 
-        // have to set a projectile that has PredictionMovement_SO, 
         public bool predict;
-
         private Vector3 _projectileVelocity = Vector3.zero;
 
+        #endregion
+        #region Functions
         public override void Init()
         {
             base.Init();
@@ -65,5 +65,6 @@ namespace Units.Types.Towers
                 head.forward = (target.position - head.position).normalized;
             }
         }
+        #endregion
     }
 }

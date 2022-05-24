@@ -14,7 +14,7 @@ namespace Units.Types
 
         public override void Fire(Transform targetTransform)
         {
-
+            //https://byjus.com/trajectory-formula/
             Vector3 catapultPosition = new Vector3(transform.position.x, targetTransform.transform.position.y, transform.position.z);
             Vector3 pointToObject = (targetTransform.position - transform.position).normalized;
             head.forward = pointToObject;
@@ -26,11 +26,7 @@ namespace Units.Types
             ProjectileManager.Instance.Create(projectileType, new Projectile.Args(barrel.position, projectileType, targetTransform, 0, 0, finalvelocity,true));
 
             base.Fire(targetTransform);
-
-
         }
-
-        //
 
     }
 }

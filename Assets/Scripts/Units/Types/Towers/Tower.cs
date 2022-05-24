@@ -88,6 +88,7 @@ namespace Units.Types.Towers
             targetingSo.Init(this.gameObject, towerAttackRange);
         }
         #endregion
+        #region Args
         public class Args : ConstructionArgs
         {
 
@@ -97,6 +98,6 @@ namespace Units.Types.Towers
             }
 
         }
-
+        #endregion
     }
 }

@@ -146,7 +146,7 @@ MonoBehaviour:
   goldValue: 0
   stats:
     health:
-      baseValue: 20
+      baseValue: 7
       regeneration:
         baseValue: 0
         timeInterval: 0

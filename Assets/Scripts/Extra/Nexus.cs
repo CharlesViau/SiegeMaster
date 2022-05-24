@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 public class Nexus : MonoBehaviour, IUpdatable, IPoolable, IHittable, ICreatable<Nexus.Args>
 {
-    private int _fullHp;
+    public int _fullHp;
     public int currentHp;
 
     public void Init()

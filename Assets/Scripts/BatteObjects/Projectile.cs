@@ -7,7 +7,7 @@ using Units.Interfaces;
 [RequireComponent(typeof(Rigidbody))]
  public class Projectile : MonoBehaviour,IUpdatable,IPoolable,ICreatable<Projectile.Args>
 {
-
+    #region variables
     [HideInInspector]public bool ownerIsPlayer;
     public ProjectileType type;
     public Movement_SO movement_SO;
@@ -15,6 +15,8 @@ using Units.Interfaces;
     public float timeToPoolIfDidntHitAnything;
    
     float timer;
+    #endregion
+    #region Functions
     public void Init()
     {
         timer = 0;
@@ -79,7 +81,8 @@ using Units.Interfaces;
         movement_SO.Init(gameObject, constructionArgs.target, constructionArgs.bulletSpeed, constructionArgs.velocityDirection);
         onCollision_SO.Init(gameObject, constructionArgs.bulletDamage, constructionArgs.isPlayer);
     }
-
+    #endregion
+    #region Args
     public class Args :ConstructionArgs
     {
         public float bulletSpeed;
@@ -100,4 +103,5 @@ using Units.Interfaces;
         }
 
     }
+    #endregion
 }
