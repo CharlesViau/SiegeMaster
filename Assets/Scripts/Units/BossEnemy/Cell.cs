@@ -11,7 +11,7 @@ namespace Units.BossEnemy
         public float Maxforce;
         public float Minforce;
        [HideInInspector] public Body body;
-
+        [HideInInspector] private PuQUEST puQuest;
         public float maxDistance;
         public float minDistance;
         Rigidbody rigidbody;
@@ -26,8 +26,8 @@ namespace Units.BossEnemy
         {
             calculatedForce = 0;
             base.Init();
-           
-            rigidbody = GetComponent<Rigidbody>();
+            puQuest = FindObjectOfType<PuQUEST>();
+             rigidbody = GetComponent<Rigidbody>();
 
         }
         public void Construct(Args constructionArgs)
@@ -68,6 +68,7 @@ namespace Units.BossEnemy
         {
             body.CellDeath(this);
             gameObject.SetActive(false);
+            puQuest.balls.LoseCell();
             base.Pool();
         }
 

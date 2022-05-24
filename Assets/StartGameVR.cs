@@ -10,4 +10,8 @@ public class StartGameVR : MonoBehaviour
     {
         SceneManager.LoadScene("GameVRWithMap");
     }
+    public void CloseTheGame()
+    {
+        Application.Quit();
+    }
 }

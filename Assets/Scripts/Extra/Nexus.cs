@@ -1,9 +1,7 @@
 using General;
-using Managers;
 using UnityEngine;
-using UnityEngine.UI;
-using System.Collections.Generic;
 using Units.Interfaces;
+using UnityEngine.SceneManagement;
 
 public class Nexus : MonoBehaviour, IUpdatable, IPoolable, IHittable, ICreatable<Nexus.Args>
 {
@@ -59,5 +57,9 @@ public class Nexus : MonoBehaviour, IUpdatable, IPoolable, IHittable, ICreatable
     public void GotShot(float damage)
     {
         currentHp -= (int)damage;
+        if (currentHp<0)
+        {
+            SceneManager.LoadScene("StartMenuPC");
+        }
     }
 }

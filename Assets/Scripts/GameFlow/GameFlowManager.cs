@@ -2,6 +2,7 @@ using General;
 using Managers;
 using UnityEngine;
 using Units.Types;
+using UnityEngine.SceneManagement;
 
 public enum GameState { WaitToSpawn, Spawn, CheckAliveEnemies, LevelUp, BossEnemy ,GameOver }
 public class GameFlowManager : MonoBehaviour
@@ -66,7 +67,16 @@ public class GameFlowManager : MonoBehaviour
                 break;
             case GameState.GameOver:
                 {
-                    Debug.Log("you won");
+                    var y = SceneManager.GetActiveScene();
+                    if (y.name =="GamePC")
+                    {
+                        SceneManager.LoadScene("StartMenuPC");
+                    }
+                    if (y.name == "GameVRWithMap")
+                    {
+                        SceneManager.LoadScene("StartMenuvr");
+                    }
+
                 }
                 break;
             default:

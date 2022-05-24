@@ -10,4 +10,8 @@ public class StartGamePC : MonoBehaviour
     {
         SceneManager.LoadScene("GamePC");
     }
+    public void CloseTheGame()
+    {
+        Application.Quit();
+    }
 }
