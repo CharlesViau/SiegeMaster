@@ -2,23 +2,30 @@ using Abilities.AbilitySO;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AbilityIcon : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private Image background;
-    [SerializeField] private Image art;
-    [SerializeField] private Text text;
-
-    public void SetArt(AbilitySo ability)
+    public class AbilityIcon : MonoBehaviour
     {
-        background.sprite = ability.stats.art;
-        art.sprite = ability.stats.art;
-    }
+        [SerializeField] private Image background;
+        [SerializeField] private Image art;
+        [SerializeField] private Text text;
 
-    public void Refresh(float fillPercentage, string message = null)
-    {
-        art.fillAmount = fillPercentage;
-        if (message != null)
-            text.text = message;
-    }
+        public void SetArt(AbilitySo ability)
+        {
+            background.sprite = ability.stats.art;
+            art.sprite = ability.stats.art;
+            SetCooldownFillAmount(ability);
+        }
+
+        public void Refresh(AbilitySo ability)
+        {
+            SetCooldownFillAmount(ability);
+        }
+
+        private void SetCooldownFillAmount(AbilitySo ability)
+        {
+            art.fillAmount = ability.CooldownTimeLeft / ability.stats.baseCooldown;
+        }
     
+    }
 }

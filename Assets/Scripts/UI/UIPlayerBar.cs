@@ -83,7 +83,7 @@ namespace UI
             {
                 if (_current[i].IsOnCooldown)
                 {
-                    _abilityIcons[i].Refresh(_current[i].CooldownTimeLeft / _current[i].stats.baseCooldown);
+                    _abilityIcons[i].Refresh(_current[i]);
                 }
             }
         }
