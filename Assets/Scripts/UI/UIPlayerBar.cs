@@ -2,7 +2,6 @@ using System;
 using Abilities.AbilitySO;
 using Units.Types;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace UI
 {
@@ -81,10 +80,7 @@ namespace UI
 
             for (var i = 0; i < _current.Length; i++)
             {
-                if (_current[i].IsOnCooldown)
-                {
-                    _abilityIcons[i].Refresh(_current[i]);
-                }
+                _abilityIcons[i].Refresh(_current[i]);
             }
         }
 

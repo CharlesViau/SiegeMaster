@@ -7,12 +7,12 @@ using Units.Interfaces;
 
 public class Nexus : MonoBehaviour, IUpdatable, IPoolable, IHittable, ICreatable<Nexus.Args>
 {
-    private int _fullHp;
+    public int FullHp { get; private set; }
     public int currentHp;
 
     public void Init()
     {
-        _fullHp = currentHp;
+        FullHp = currentHp;
     }
 
     public void PostInit()
