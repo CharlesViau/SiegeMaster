@@ -2636,7 +2636,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turningSpeed: 0
-  speed: 10
+  speed: 5
   shootingPosition: {fileID: 2855636505979012687}
   goldValue: 5
   stats:
