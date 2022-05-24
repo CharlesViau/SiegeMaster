@@ -1021,7 +1021,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 581593721317780123, guid: c7bdb7db48e00e347b4e57e6672512d0, type: 3}
+  - {fileID: 2100000, guid: 869b6a51b121c4f4e9e5b4f591724f8b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2545,7 +2545,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 581593721317780123, guid: c7bdb7db48e00e347b4e57e6672512d0, type: 3}
+  - {fileID: 2100000, guid: 869b6a51b121c4f4e9e5b4f591724f8b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6027,7 +6027,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 581593721317780123, guid: c7bdb7db48e00e347b4e57e6672512d0, type: 3}
+  - {fileID: 2100000, guid: 869b6a51b121c4f4e9e5b4f591724f8b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7112,7 +7112,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 581593721317780123, guid: c7bdb7db48e00e347b4e57e6672512d0, type: 3}
+  - {fileID: 2100000, guid: 869b6a51b121c4f4e9e5b4f591724f8b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7300,7 +7300,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 581593721317780123, guid: c7bdb7db48e00e347b4e57e6672512d0, type: 3}
+  - {fileID: 2100000, guid: 869b6a51b121c4f4e9e5b4f591724f8b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7538,7 +7538,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 581593721317780123, guid: c7bdb7db48e00e347b4e57e6672512d0, type: 3}
+  - {fileID: 2100000, guid: 869b6a51b121c4f4e9e5b4f591724f8b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8007,7 +8007,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 869b6a51b121c4f4e9e5b4f591724f8b, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}

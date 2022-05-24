@@ -130,4 +130,4 @@ MonoBehaviour:
   type: 4
   movement_SO: {fileID: 11400000, guid: f7ce90766802c734dbede72f693bfd9c, type: 2}
   onCollision_SO: {fileID: 11400000, guid: edb97fc1a3e4ef74b8c6a49ecfdeda81, type: 2}
-  timeToPoolIfDidntHitAnything: 5
+  timeToPoolIfDidntHitAnything: 10

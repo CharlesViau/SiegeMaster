@@ -29,6 +29,7 @@ namespace Units.Types
         public EnemyMovement_SO movement_SO;
         public TargetingSo targeting_SO;
         public Attack_SO attack_SO;
+        const int SpeedOffset = 2;
 
         protected override Vector3 AimedPosition
         {
@@ -93,6 +94,7 @@ namespace Units.Types
 
             enemyState = EnemyStates.Wander;
             alive = true;
+            speed = Random.Range(speed, speed * SpeedOffset);
             _enemyAgent.speed = speed;
             collider = GetComponent<Collider>();
             attackRange = Random.Range(minAttackRange, maxAttackRange);
@@ -169,6 +171,7 @@ namespace Units.Types
             alive = true;
             _delayToPool = 8;
             attackRange = Random.Range(minAttackRange, maxAttackRange);
+            speed = Random.Range(speed, speed * SpeedOffset);
             _hpStack.Clear();
             CreateHp(_fullHp);
         }

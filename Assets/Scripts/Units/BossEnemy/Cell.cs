@@ -17,7 +17,7 @@ namespace Units.BossEnemy
         Rigidbody rigidbody;
         
         public float calculatedForce;
-        float randForce =1;
+        float randForce ;
         public Transform cellPosition;
 
         protected override Vector3 AimedPosition => throw new System.NotImplementedException();
@@ -40,7 +40,7 @@ namespace Units.BossEnemy
             //Calculate Random Force 
             randForce = Random.Range(Minforce, Maxforce);
             float randDis = Random.Range(minDistance, maxDistance);
-            calculatedForce = Mathf.Clamp(Vector3.Distance(cellPosition.position, transform.position), 0, 5);
+            calculatedForce = Mathf.Clamp(Vector3.Distance(cellPosition.position, transform.position), 0, randDis);
         }
         public override void FixedRefresh()
         {
@@ -54,14 +54,19 @@ namespace Units.BossEnemy
         {
 
         }
-
+        protected override void OnDeathEvent()
+        {
+            CellManager.Instance.Pool(CellType.Normal, this);
+        }
         public override void GotShot(float damage)
         {
-            body.CellDeath(this);
-            CellManager.Instance.Pool(CellType.Normal, this);
+            stats.health.Current -= damage;
+           
+           
         }
         public override void Pool()
         {
+            body.CellDeath(this);
             gameObject.SetActive(false);
             base.Pool();
         }

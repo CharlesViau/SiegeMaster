@@ -16,6 +16,6 @@ MonoBehaviour:
   - enemyType: 1
     count: 30
   - enemyType: 2
-    count: 20
+    count: 30
   - enemyType: 0
-    count: 20
+    count: 30

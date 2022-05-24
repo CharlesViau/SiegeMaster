@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8232218097094697520}
   - component: {fileID: 4967596810860634753}
   - component: {fileID: 713851804125870724}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube
   m_TagString: BossEnemy
   m_Icon: {fileID: 0}
@@ -146,7 +146,7 @@ MonoBehaviour:
   goldValue: 0
   stats:
     health:
-      baseValue: 0
+      baseValue: 7
       regeneration:
         baseValue: 0
         timeInterval: 0
