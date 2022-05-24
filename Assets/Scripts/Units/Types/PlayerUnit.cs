@@ -28,6 +28,7 @@ namespace Units.Types
         protected override void OnDeathEvent()
         {
             transform.position = RespawnPosition.position;
+            stats.health.Current = stats.health.Maximum;
         }
 
         protected void OnRespawnEvent()
