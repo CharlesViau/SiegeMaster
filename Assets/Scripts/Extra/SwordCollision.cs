@@ -16,7 +16,7 @@ public class SwordCollision : MonoBehaviour
     public void Init(float _damage, Transform _target)
     {
         damage = _damage;
-        target = _target.GetComponent<PlayerUnit>();
+        target = _target.GetComponentInParent<PlayerUnit>();
         collider = GetComponent<Collider>();
     }
 

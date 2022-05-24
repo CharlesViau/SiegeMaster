@@ -1884,7 +1884,7 @@ MonoBehaviour:
   turningSpeed: 0
   speed: 8
   shootingPosition: {fileID: 3673890563982373135}
-  goldValue: 5
+  goldValue: 3
   stats:
     health:
       baseValue: 0

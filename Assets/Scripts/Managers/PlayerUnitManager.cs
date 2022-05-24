@@ -9,6 +9,7 @@ namespace Managers
     {
         public Rigidbody GetRigidbody { get; private set; }
         public Transform GetTransform { get; private set; }
+        public Transform GetHipsTransform { get; private set; }
 
         public override void Init()
         {
@@ -17,6 +18,7 @@ namespace Managers
             {
                 Add(player);
                 GetTransform = player.transform;
+                GetHipsTransform= player.GetComponentInChildren<Hips>().transform;
                 GetRigidbody = player.GetComponent<Rigidbody>();
             }
 

@@ -24,5 +24,5 @@ MonoBehaviour:
   recastCharges: 0
   targetingStateSo: {fileID: 11400000, guid: f8d2b025ef6f0784885f7c9dd42b228d, type: 2}
   type: 0
-  projectileSpeed: 50
+  projectileSpeed: 200
   projectileDamage: 1

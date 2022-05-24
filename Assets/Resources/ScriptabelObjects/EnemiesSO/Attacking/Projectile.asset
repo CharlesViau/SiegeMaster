@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackAnimState: IsShoot
   movementAnimState: IsMoving
-  attackDamage: 1
-  cooldownTimer: 7
+  attackDamage: 5
+  cooldownTimer: 3
   isAnimSetted: 0
   projectileType: 5
-  projectileSpeed: 12
+  projectileSpeed: 50
   AttackAnimationLengh: 2.9

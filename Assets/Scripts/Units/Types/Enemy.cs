@@ -89,7 +89,7 @@ namespace Units.Types
         {
             base.Init();
             _enemyAgent = GetComponent<NavMeshAgent>();
-            _player = PlayerUnitManager.Instance.GetTransform;
+            _player = PlayerUnitManager.Instance.GetHipsTransform;
             _objective = NexusManager.Instance.GetTransform;
 
             enemyState = EnemyStates.Wander;
