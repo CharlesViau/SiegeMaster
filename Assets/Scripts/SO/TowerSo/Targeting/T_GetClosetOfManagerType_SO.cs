@@ -11,8 +11,8 @@ using SO.TowerSo.Targeting;
 
 public class T_GetClosetOfManagerType_SO : SO.TowerSo.Targeting.TargetingSo
 {
-    public enum ManagerType {Enemy,Tower,Projectile }
-    public ManagerType managerType;
+    public enum ManagerType {Enemy,Tower,Projectile,Cell }
+    public ManagerType[] managerType;
     private System.Type GetManagerType(ManagerType eType)
     {
         System.Type type = null;
@@ -27,6 +27,9 @@ public class T_GetClosetOfManagerType_SO : SO.TowerSo.Targeting.TargetingSo
             case ManagerType.Projectile:
                 type = typeof(ProjectileManager);
                 break;
+            case ManagerType.Cell:
+                type = typeof(CellManager);
+                break;
             default:
                 Debug.Log("unhandled SwitchCase");
                 break;
@@ -35,8 +38,12 @@ public class T_GetClosetOfManagerType_SO : SO.TowerSo.Targeting.TargetingSo
     }
     public override Transform GetTheTarget()
     {
-        
-        return Helper.GetClosetInRange(GetManagerType(managerType), Owner.transform,MaxRange);
+        foreach (var managerType in managerType)
+        {
+            return Helper.GetClosetInRange(GetManagerType(managerType), Owner.transform, MaxRange);
+        }
+         return null;
+       
     }
 
 }

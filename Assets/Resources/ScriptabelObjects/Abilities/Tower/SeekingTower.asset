@@ -14,12 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats:
     manaCost: 0
+    goldCost: 0
     maxRange: 50
     baseChannelTime: 0
-    baseCooldown: 1
+    baseCooldown: 40
     art: {fileID: 21300000, guid: a7934d80303e26a42b6a47fccb1c7201, type: 3}
-  castMethod: 0
-  castMethodIsLock: 0
   spellUIType: 5
   activeTime: 0
   recastCharges: 0

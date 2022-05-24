@@ -29,9 +29,10 @@ namespace Units.Types.Towers
         {
             if (predict)
             {
+                var targetNavemesh= target.GetComponent<NavMeshAgent>();
                 //this is the math for predict the intercept with between two object wqith different speed 
-                var targetMovementDirection = target.GetComponent<NavMeshAgent>().velocity;
-                var targetMovementVelocity = target.GetComponent<NavMeshAgent>().speed;
+                var targetMovementDirection = targetNavemesh.velocity;
+                var targetMovementVelocity = targetNavemesh.speed;
                 var angleTargetToPlayer = Vector3.Angle(targetMovementDirection.normalized,
                     (head.position - target.position).normalized);
                 var towerAngleFinalRotation =

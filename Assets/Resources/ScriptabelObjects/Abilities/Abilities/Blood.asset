@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Blood
   m_EditorClassIdentifier: 
   stats:
-    manaCost: 0
+    manaCost: 3
     goldCost: 0
     maxRange: 50
     baseChannelTime: 0.5
-    baseCooldown: 0
+    baseCooldown: 1
     art: {fileID: 21300000, guid: e881fd046010ad1428b021c7203cc43b, type: 3}
   spellUIType: 9
   activeTime: 0
@@ -25,4 +25,4 @@ MonoBehaviour:
   targetingStateSo: {fileID: 11400000, guid: 42321570041424145b976077f64cf828, type: 2}
   type: 3
   sphereCastRadius: 5
-  explosionDamage: 2
+  explosionDamage: 1

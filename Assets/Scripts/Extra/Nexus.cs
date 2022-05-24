@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using Units.Interfaces;
+using UnityEngine.SceneManagement;
+
 
 public class Nexus : MonoBehaviour, IUpdatable, IPoolable, IHittable, ICreatable<Nexus.Args>
 {
@@ -22,6 +24,10 @@ public class Nexus : MonoBehaviour, IUpdatable, IPoolable, IHittable, ICreatable
 
     public void Refresh()
     {
+        if (currentHp < 0)
+        {
+            SceneManager.LoadScene("StartMenuPC");
+        }
 
     }
 

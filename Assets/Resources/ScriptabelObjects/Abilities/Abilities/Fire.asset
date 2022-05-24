@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Fire
   m_EditorClassIdentifier: 
   stats:
-    manaCost: 0
+    manaCost: 5
     goldCost: 0
     maxRange: 50
     baseChannelTime: 0.01
-    baseCooldown: 0
+    baseCooldown: 5
     art: {fileID: 21300000, guid: 4b64b3c7a3247684799206ee37cac21c, type: 3}
   spellUIType: 8
   activeTime: 0

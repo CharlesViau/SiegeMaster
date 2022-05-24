@@ -17,7 +17,7 @@ MonoBehaviour:
     goldCost: 0
     maxRange: 50
     baseChannelTime: 0.5
-    baseCooldown: 3
+    baseCooldown: 10
     art: {fileID: 21300000, guid: 03b3e45068006df439772899ce98a1b0, type: 3}
   spellUIType: 7
   activeTime: 0

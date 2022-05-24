@@ -6,6 +6,7 @@ namespace Units.Types.Towers
     public class Tower : Unit,ICreatable<Tower.Args>
     {
 
+        #region variables
         [HideInInspector]public Transform target;
         public ProjectileType projectileType;
         public ParticleType towerParticleType;
@@ -21,9 +22,10 @@ namespace Units.Types.Towers
 
         // Must have fire animation and one trigger parameter , the name of trigger must be  "Fire"
         private static readonly int Fire1 = Animator.StringToHash("Fire");
-
         private float _timer = 0;
 
+        #endregion
+        #region Functions
         public override void Init()
         {
             //targetingSo = Instantiate(targetingSo);
@@ -38,12 +40,10 @@ namespace Units.Types.Towers
             CoolDown(attackSpeed);
             
         }
-
         public override void GotShot(float damage)
         {
             
         }
-
 
         protected virtual void GetTarget()
         {
@@ -87,7 +87,7 @@ namespace Units.Types.Towers
             transform.position = constructionArgs.spawningPosition;
             targetingSo.Init(this.gameObject, towerAttackRange);
         }
-
+        #endregion
         public class Args : ConstructionArgs
         {
 

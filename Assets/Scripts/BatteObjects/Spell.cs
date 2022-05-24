@@ -42,7 +42,7 @@ namespace BatteObjects
 
             foreach (var hitCollider in ray)
             {
-                if (hitCollider.collider.gameObject.tag == "Target" && hitCollider.collider.gameObject.TryGetComponent(out IHittable hittable))
+                if ((hitCollider.collider.gameObject.tag == "Target" || hitCollider.collider.gameObject.tag == "BossEnemy") && hitCollider.collider.gameObject.TryGetComponent(out IHittable hittable))
                 {
 
                     hittable.GotShot(damage);

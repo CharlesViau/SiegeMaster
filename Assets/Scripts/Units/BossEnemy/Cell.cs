@@ -54,14 +54,19 @@ namespace Units.BossEnemy
         {
 
         }
-
+        protected override void OnDeathEvent()
+        {
+            CellManager.Instance.Pool(CellType.Normal, this);
+        }
         public override void GotShot(float damage)
         {
-            body.CellDeath(this);
-            CellManager.Instance.Pool(CellType.Normal, this);
+            stats.health.Current -= damage;
+           
+           
         }
         public override void Pool()
         {
+            body.CellDeath(this);
             gameObject.SetActive(false);
             base.Pool();
         }

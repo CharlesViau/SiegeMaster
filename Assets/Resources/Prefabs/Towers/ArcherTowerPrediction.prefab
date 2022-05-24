@@ -269,6 +269,7 @@ GameObject:
   - component: {fileID: 8005040781669466768}
   - component: {fileID: 2554144636171595740}
   - component: {fileID: 8738701059680584076}
+  - component: {fileID: -4986106853704006690}
   m_Layer: 12
   m_Name: ArcherTowerPrediction
   m_TagString: Tower
@@ -343,6 +344,18 @@ MonoBehaviour:
   speed: 0
   shootingPosition: {fileID: 833737523209293073}
   goldValue: 0
+  stats:
+    health:
+      baseValue: 0
+      regeneration:
+        baseValue: 0
+        timeInterval: 0
+    mana:
+      baseValue: 0
+      regeneration:
+        baseValue: 0
+        timeInterval: 0
+  isPlayer: 0
   target: {fileID: 0}
   projectileType: 4
   towerParticleType: 1
@@ -392,3 +405,19 @@ CapsuleCollider:
   m_Height: 7.4424453
   m_Direction: 1
   m_Center: {x: 0, y: 3.2212226, z: 0}
+--- !u!208 &-4986106853704006690
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8005040781669466772}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5

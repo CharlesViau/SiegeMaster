@@ -8,9 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/StartMenuvr.unity
     guid: ef7be271e393761498115751c84b1e1b
-  - enabled: 1
-    path: Assets/Scenes/GameVRWithMap.unity
-    guid: 197ac2d827bf72c46a163df823c8a613
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/StartMenuPC.unity
     guid: f7d4c1ec82c02bc45ad49dd07c203d1a

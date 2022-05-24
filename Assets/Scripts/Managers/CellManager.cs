@@ -21,5 +21,20 @@ public class CellManager : Manager<Cell, CellType, Cell.Args, CellManager>
 
         base.Init();
     }
+    public Transform GetClosest(Transform currentPosition, float range)
+    {
+        Transform transform = null;
+        range *= range;
+        foreach (var cell in collection)
+        {
+            var newDistance = Vector3.SqrMagnitude(currentPosition.position - cell.transform.position);
+            if (newDistance < range ) // if in the range and they are alive (not in the pool)
+            {
+                range = newDistance;
+                transform = cell.transform;
+            }
+        }
+        return transform;
+    }
 
 }
