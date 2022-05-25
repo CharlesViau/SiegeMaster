@@ -86,13 +86,15 @@ public class PuQUEST : MonoBehaviour
         public Transform centerOfCell;
         public int numberOfCells;
         public int numberOfDesireCells;
-        public float fullPH;
+        private float fullPH;
+        private float deadHP;
         public List<Body> children = new List<Body>();
         public HashSet<Cell> partsList = new HashSet<Cell>();
         public  Stack<Cell> toRemove=new Stack<Cell>();
         #endregion
         public void StartBD(Body bd)
         {
+            deadHP = fullPH / 3;
             for (int i = 0; i < bd.children.Count; i++)
             {
                 for (int j = 0; j < bd.children[i].numberOfCells; j++)
@@ -100,7 +102,7 @@ public class PuQUEST : MonoBehaviour
                     var cell = CellManager.Instance.Create(cellType, new Cell.Args(bd.children[i].centerOfCell.position, bd.children[i].centerOfCell, bd.children[i], ballParents));
                     bd.children[i].partsList.Add(cell);
                     cell.gameObject.name = UnityEngine.Random.Range(0, 9999).ToString();
-                    
+                    fullPH += 1;
                 }
                 bd.children[i].numberOfDesireCells = bd.children[i].numberOfCells;
                 StartBD(bd.children[i]);
@@ -154,7 +156,7 @@ public class PuQUEST : MonoBehaviour
         }
         public bool CheckIfItsAlive()
         {
-            if (fullPH < fullPH/2)
+            if (deadHP < fullPH)
             {
                 return false;
             }
