@@ -156,7 +156,7 @@ public class PuQUEST : MonoBehaviour
         }
         public bool CheckIfItsAlive()
         {
-            if (deadHP < fullPH)
+            if (fullPH < deadHP  )
             {
                 return false;
             }
